@@ -75,10 +75,9 @@ export default new Vuex.Store({
         },
 
         call ({ commit }, payload) {
-            console.log(payload.type, payload.id, payload.action)
             axios
                 .put('http://10.0.1.100/api/988112a4e198cc1211/'+payload.type+'/'+payload.id+'/'+payload.obj, payload.action)
-                .then(r => {
+                .then(() => {
                     if (payload.type == 'lights'){
                         commit('SET_LIGHT', payload)
                     } else if (payload.type == 'groups'){

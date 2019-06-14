@@ -1,8 +1,8 @@
 <template>
 
     <div>
-        <div v-for="(group, key) in groups">
-            <group-toggle :group="group" :id="key"></group-toggle>
+        <div v-for="device in devices">
+            <device-info v-bind:device="device"></device-info>
         </div>
     </div>
 
@@ -13,10 +13,10 @@
     import { mapState } from 'vuex'
 
     export default {
-        name: 'GroupList',
+        name: 'DeviceList',
         props: {},
         computed: mapState([
-            'groups'
+            'devices'
         ])
     }
 

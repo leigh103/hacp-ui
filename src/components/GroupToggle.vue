@@ -7,7 +7,7 @@
 <script>
 
     module.exports = {
-        props: ['group'],
+        props: ['group', 'id'],
         data: function () {
             return {
                 //nothing
@@ -24,7 +24,7 @@
 
                 let payload = {
                     type:'groups',
-                    id:'7',
+                    id:this.id,
                     obj: 'action',
                     action:{
                         on:action

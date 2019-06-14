@@ -1,8 +1,8 @@
 <template>
 
     <div>
-        <div v-for="(group, key) in groups">
-            <group-toggle :group="group" :id="key"></group-toggle>
+        <div v-for="sensor in sensors">
+            <sensor-info v-bind:sensor="sensor"></sensor-info>
         </div>
     </div>
 
@@ -13,10 +13,10 @@
     import { mapState } from 'vuex'
 
     export default {
-        name: 'GroupList',
+        name: 'SensorList',
         props: {},
         computed: mapState([
-            'groups'
+            'sensors'
         ])
     }
 

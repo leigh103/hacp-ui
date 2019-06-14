@@ -1,10 +1,7 @@
 <template>
-    <div class="home">
-        <group-toggle v-bind:group="groups['7']"></group-toggle>
-        <light-toggle v-bind:light="lights['11']"></light-toggle>
-        <light-toggle v-bind:light="lights['11']"></light-toggle>
-        <group-list />
-    </div>
+  <div class="about">
+    <h1>This is the home page</h1>
+  </div>
 </template>
 
 <script>
@@ -13,11 +10,8 @@
 import { mapState } from 'vuex'
 
 export default {
-    name: 'home',
-    computed: mapState([
-        'groups',
-        'lights'
-    ]),
+    name: 'groups',
+    computed: mapState([]),
     mounted () {
         this.$store.dispatch('init')
     },

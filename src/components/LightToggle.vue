@@ -1,5 +1,5 @@
 <template>
-    <div class="" @click.prevent="toggle" v-if="light">
+    <div class="" @click.prevent="toggle(light.id)" v-if="light">
         <label><input type="checkbox" v-model="light.state.on">{{ light.name }}</label>
     </div>
 </template>
@@ -7,14 +7,14 @@
 <script>
 
     module.exports = {
-        props: ['light'],
+        props: ['light','id'],
         data: function () {
             return {
                 //nothing
             }
         },
         methods: {
-            toggle: function (event) {
+            toggle(event) {
 
                 if (this.light.state.on){
                     var action = false
@@ -24,7 +24,7 @@
 
                 let payload = {
                     type:'lights',
-                    id:'11',
+                    id:this.id,
                     obj: 'state',
                     action:{
                         on:action
