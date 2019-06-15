@@ -1,6 +1,6 @@
 <template>
     <div class="group-list" v-if="group" :class="{'on':group.state.any_on === true,'off':group.state.any_on === false,'unavailable':group.state.reachable === false}">
-        <div class="indicator" @click.prevent="toggle()"><div class="indicator-led"></div></div>
+        <div class="indicator" @click.prevent="toggle()"><div class="indicator-led" v-show="group.lights.length > 0"></div></div>
         <div class="name">{{ group.name }}</div>
     </div>
 </template>
@@ -66,10 +66,11 @@
         justify-content: flex-start;
         padding-left: 0;
         cursor: pointer;
+        color: white;
     }
 
     .indicator {
-        flex: 0 0 1.5em;
+        flex: 0 0 3em;
         display: flex;
         align-items: center;
         justify-content: center;

@@ -1,7 +1,9 @@
 <template>
 
-    <div>
-        <group-list :group="group" :id="key" v-for="(group, key) in groups"></group-list>
+    <div class="row">
+        <div class="block-20 bg-grey vh100 overflow-y">
+            <group-list :group="group" :id="key" v-for="(group, key) in groups"></group-list>
+        </div>
     </div>
 
 </template>
