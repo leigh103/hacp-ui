@@ -1,6 +1,7 @@
 <template>
     <div class="" v-if="device">
         <p>{{ device.name }}</p>
+        <p>{{ device.present }}</p>
     </div>
 </template>
 
@@ -10,7 +11,7 @@
         props: ['device'],
         data: function () {
             return {
-                //nothing
+
             }
         },
         methods: {

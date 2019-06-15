@@ -1,6 +1,7 @@
 <template>
-    <div class="" @click.prevent="toggle(light.id)" v-if="light">
-        <label><input type="checkbox" v-model="light.state.on">{{ light.name }}</label>
+    <div class="light-toggle" @click.prevent="toggle()" v-if="light" :class="{'on':light.state.on === true,'off':light.state.on === false,'unavailable':light.state.reachable === false}">
+        <div class="indicator"></div>
+        <p>{{ light.name }}</p>
     </div>
 </template>
 
@@ -36,3 +37,9 @@
     }
 
 </script>
+
+<style lang="stylus">
+
+
+
+</style>

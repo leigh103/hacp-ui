@@ -47,9 +47,21 @@ export default new Vuex.Store({
             state.alarm = alarm
         }
     },
+    mutations: {
+        sendToServer(state, message) {
+            console.log(state, message)
+            this.$socket.send(message);
+        },
+    },
     actions: {
 
         init ({ commit }) {
+
+
+
+        },
+
+        all ({ commit }) {
             axios
                 .get('http://zigbee.local:3000/all')
                 .then(r => {
@@ -64,13 +76,13 @@ export default new Vuex.Store({
 
         },
 
-        getGroups ({ commit }) {
+        getEntities ({ commit }, type) {
+
             axios
-                .get('http://zigbee.local:3000/groups')
-                .then(r => r.data)
-                .then(groups => {
-                //    console.log(groups)
-                    commit('SET_GROUPS', groups)
+                .get('http://zigbee.local:3000/'+type)
+                .then(res => {
+                    let commit_var = type.toUpperCase()
+                    commit('SET_'+commit_var, res.data)
                 })
         },
 

@@ -1,8 +1,8 @@
 <template>
 
     <div>
-        <div v-for="(light,key) in lights">
-            <light-toggle :light="light" :id="key"></light-toggle>
+        <div>
+            <light-toggle :light="light" :id="key" v-for="(light,key) in lights"></light-toggle>
         </div>
     </div>
 
@@ -14,9 +14,13 @@
 import { mapState } from 'vuex'
 
 export default {
-    name: 'groups',
+    name: 'lights',
     computed: mapState([
         'lights'
-    ]),
+    ]),mounted () {
+        if (Object.keys(this.lights).length == 0){
+            this.$store.dispatch('getEntities','lights')
+        }
+    },
 }
 </script>

@@ -1,6 +1,7 @@
 <template>
-    <div class="" @click.prevent="toggle" v-if="group">
-        <label><input type="checkbox" v-model="group.action.on">{{ group.name }}</label>
+    <div class="group-toggle" @click.prevent="toggle()" v-if="group" :class="{'on':group.state.any_on === true,'off':group.state.any_on === false,'unavailable':group.state.reachable === false}">
+        <div class="indicator"></div>
+        <p>{{ group.name }}</p>
     </div>
 </template>
 
@@ -30,7 +31,9 @@
                         on:action
                     }
                 }
+                
                 this.$store.dispatch('call',payload)
+
             }
         }
     }

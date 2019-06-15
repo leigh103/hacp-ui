@@ -1,7 +1,7 @@
 <template>
 
     <div>
-        <group-list />
+        <group-toggle :group="group" :id="key" v-for="(group, key) in groups"></group-toggle>
     </div>
 
 </template>
@@ -17,5 +17,10 @@ export default {
         'groups',
         'lights'
     ]),
+    mounted () {
+        if (Object.keys(this.groups).length == 0){
+            this.$store.dispatch('getEntities','groups')
+        }
+    },
 }
 </script>
