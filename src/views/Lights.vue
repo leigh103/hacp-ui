@@ -17,7 +17,8 @@ export default {
     name: 'lights',
     computed: mapState([
         'lights'
-    ]),mounted () {
+    ]),
+    mounted () {
         if (Object.keys(this.lights).length == 0){
             this.$store.dispatch('getEntities','lights')
         }

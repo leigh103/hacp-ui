@@ -17,7 +17,7 @@
         methods: {
             toggle: function (event) {
 
-                if (this.group.action.on){
+                if (this.group.state.any_on === true){
                     var action = false
                 } else {
                     var action = true
@@ -31,7 +31,7 @@
                         on:action
                     }
                 }
-                
+
                 this.$store.dispatch('call',payload)
 
             }

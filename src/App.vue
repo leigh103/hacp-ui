@@ -8,6 +8,7 @@
       <router-link to="/devices">Devices</router-link> |
     </div>
     <router-view/>
+    <ws />
   </div>
 </template>
 
@@ -20,7 +21,7 @@
         margin: 0 1em 1em 0;
         background-color: #efefef;
         border-radius: 5px;
-        padding: 2em;
+        padding: 1.5em;
         width: 8em;
         height: 12em;
 

@@ -17,20 +17,21 @@ export default new Vuex.Store({
         alarm:{}
     },
     mutations: {
-        SET_GROUPS (state, groups) {
-            state.groups = groups
+        SET_GROUPS (state, data) {
+            if (data.id){
+                state.groups[data.id] = data.data
+            } else {
+                state.groups = data
+            }
         },
-        SET_GROUP (state, data) {
-            // TODO needs to be set by the ws connection
-            state.groups[data.id][data.obj] = Object.assign(state.groups[data.id][data.obj], data.action)
+        SET_LIGHTS (state, data) {
+            if (data.id){
+                state.lights[data.id] = data.data
+            } else {
+                state.lights = data
+            }
         },
-        SET_LIGHTS (state, lights) {
-            state.lights = lights
-        },
-        SET_LIGHT (state, data) {
-            // TODO needs to be set by the ws connection
-            state.lights[data.id][data.obj] = Object.assign(state.lights[data.id][data.obj], data.action)
-        },
+
         SET_SENSORS (state, sensors) {
             state.sensors = sensors
         },
@@ -46,12 +47,6 @@ export default new Vuex.Store({
         SET_ALARM (state, alarm) {
             state.alarm = alarm
         }
-    },
-    mutations: {
-        sendToServer(state, message) {
-            console.log(state, message)
-            this.$socket.send(message);
-        },
     },
     actions: {
 
@@ -86,15 +81,26 @@ export default new Vuex.Store({
                 })
         },
 
+        getEntity ({ commit }, payload) {
+
+            axios
+                .get('http://zigbee.local:3000/'+payload.type+'/'+payload.id)
+                .then(res => {
+                    let commit_var = payload.type.toUpperCase()
+                    commit('SET_'+commit_var, {id:payload.id, data:res.data})
+                })
+        },
+
         call ({ commit }, payload) {
+            console.log(payload)
             axios
                 .put('http://10.0.1.100/api/988112a4e198cc1211/'+payload.type+'/'+payload.id+'/'+payload.obj, payload.action)
                 .then(() => {
-                    if (payload.type == 'lights'){
-                        commit('SET_LIGHT', payload)
-                    } else if (payload.type == 'groups'){
-                        commit('SET_GROUP', payload)
-                    }
+                    // if (payload.type == 'lights'){
+                    //     commit('SET_LIGHT', payload)
+                    // } else if (payload.type == 'groups'){
+                    //     commit('SET_GROUP', payload)
+                    // }
 
                 })
         }
