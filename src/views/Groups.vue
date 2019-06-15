@@ -1,7 +1,7 @@
 <template>
 
     <div>
-        <group-toggle :group="group" :id="key" v-for="(group, key) in groups"></group-toggle>
+        <group-list :group="group" :id="key" v-for="(group, key) in groups"></group-list>
     </div>
 
 </template>
