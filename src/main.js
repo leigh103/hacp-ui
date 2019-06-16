@@ -8,31 +8,15 @@ import Socket from "./socket"
 import './style/framework33.css'
 import './style/global.styl'
 
-// HACP Single File Components
+// Import and register all Single File Components from components folder
 
-import GroupToggle from './components/GroupToggle.vue'
-import GroupList from './components/GroupList.vue'
-import GroupPage from './components/GroupPage.vue'
+const req = require.context('./components/', true, /\.(js|vue)$/i);
+req.keys().map(key => {
+  const name = key.match(/\w+/)[0];
+  return Vue.component(name, req(key).default)
+});
 
-import LightToggle from './components/LightToggle.vue'
-
-import SensorList from './components/SensorList.vue'
-import SensorInfo from './components/SensorInfo.vue'
-
-import DeviceList from './components/DeviceList.vue'
-import DeviceInfo from './components/DeviceInfo.vue'
-
-Vue.component('group-toggle', GroupToggle);
-Vue.component('group-list', GroupList);
-Vue.component('group-page', GroupPage);
-
-Vue.component('light-toggle', LightToggle);
-
-Vue.component('sensor-list', SensorList);
-Vue.component('sensor-info', SensorInfo);
-
-Vue.component('device-list', DeviceList);
-Vue.component('device-info', DeviceInfo);
+// Import and register the WebSocket component
 
 Vue.component('ws', Ws);
 

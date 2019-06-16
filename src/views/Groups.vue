@@ -5,7 +5,7 @@
             <group-list />
         </div>
         <div class="block-80 bg-white vh100 overflow-y">
-            <group-page />
+            <group-page v-if="view.selected_group"/>
         </div>
     </div>
 
@@ -19,12 +19,8 @@ import { mapState } from 'vuex'
 export default {
     name: 'groups',
     computed: mapState([
-        'groups',
+        'view'
     ]),
-    mounted () {
-        if (Object.keys(this.groups).length == 0){
-            this.$store.dispatch('getEntities','groups')
-        }
-    },
+
 }
 </script>

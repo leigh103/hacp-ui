@@ -50,7 +50,12 @@
             selectGroup(key){
                 this.$store.dispatch('updateView',{obj:'selected_group', val:key})
             }
-        }
+        },
+        mounted () {
+            if (Object.keys(this.groups).length == 0){
+                this.$store.dispatch('getEntities','groups')
+            }
+        },
     }
 
 </script>

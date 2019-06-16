@@ -1,25 +1,30 @@
 <template>
-    <div class="light-toggle" @click.prevent="toggle()" v-if="light" :class="{'on':light.state.on === true,'off':light.state.on === false,'unavailable':light.state.reachable === false}">
+    <div class="light-toggle" v-if="lights[id]" @click.prevent="toggle()" :class="{'on':lights[id].state.on === true,'off':lights[id].state.on === false,'unavailable':lights[id].state.reachable === false}">
         <div class="indicator"></div>
-        <div class="name">{{ light.name }}</div>
+        <div class="name">{{ lights[id].name }}</div>
     </div>
 </template>
 
 <script>
 
-    module.exports = {
-        props: ['light','id'],
+    import { mapState } from 'vuex'
+
+    export default {
+        props: ['id'],
         data: function () {
             return {
                 //nothing
             }
         },
+        computed: mapState([
+            'lights'
+        ]),
         methods: {
             toggle() {
 
                 var action = true
 
-                if (this.light.state.on){
+                if (this.lights[this.id].state.on){
                     action = false
                 }
 
@@ -33,6 +38,14 @@
                 }
                 this.$store.dispatch('call',payload)
             }
+        },
+        mounted(){
+
+            if (!this.lights[this.id] || !this.lights[this.id].name){
+                console.log('getting light')
+                this.$store.dispatch('getEntity',{type:'lights', id:this.id})
+            }
+
         }
     }
 

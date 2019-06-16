@@ -1,6 +1,13 @@
 <template>
     <div>
-        {{ groups[view.selected_group] }}
+        <div class="p-2 text-left">
+            <h1 class="" v-text="groups[view.selected_group].name"></h1>
+            <h4>This group contains <span v-show="groups[view.selected_group].scenes.length>0">{{ groups[view.selected_group].scenes.length }} scenes and </span>{{ groups[view.selected_group].lights.length }} lights</h4>
+
+            <div class="mt-2">
+                <light-toggle :key="light" :id="light" v-for="light in groups[view.selected_group].lights"></light-toggle>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -11,17 +18,20 @@
     export default {
 
         name: 'groups',
+        data(){
+            return {
+
+            }
+        },
         computed: mapState([
             'groups',
+            'lights',
             'view'
         ]),
         mounted () {
-            // if (Object.keys(this.groups).length == 0){
-            //     this.$store.dispatch('getEntities','groups')
-            // }
+
         },
 
     }
-
 
 </script>

@@ -83,7 +83,6 @@ export default new Vuex.Store({
         },
 
         getEntities ({ commit }, type) {
-
             axios
                 .get('http://zigbee.local:3000/'+type)
                 .then(res => {
@@ -93,7 +92,6 @@ export default new Vuex.Store({
         },
 
         getEntity ({ commit }, payload) {
-
             axios
                 .get('http://zigbee.local:3000/'+payload.type+'/'+payload.id)
                 .then(res => {
@@ -103,17 +101,14 @@ export default new Vuex.Store({
         },
 
         updateView ({ commit }, payload) {
-
             if (payload.obj){
                 commit('SET_VIEW', {obj:payload.obj, val:payload.val})
             } else {
                 commit('SET_VIEW', payload)
             }
-
         },
 
         call ({ commit }, payload) {
-            console.log(payload)
             axios
                 .put('http://10.0.1.100/api/988112a4e198cc1211/'+payload.type+'/'+payload.id+'/'+payload.obj, payload.action)
                 .then(() => {

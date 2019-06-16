@@ -9,7 +9,7 @@
 
     module.exports = {
         props: ['group', 'id'],
-        data: function () {
+        data() {
             return {
                 //nothing
             }
