@@ -13,10 +13,10 @@ const emitter = new Vue({
 
 socket.onmessage = function(msg){
 
+    var payload = msg.data
+
     if (msg.data.match(/^\{(.*?)\}$/)){
-        var payload = JSON.parse(msg.data)
-    } else {
-        var payload = msg.data
+        payload = JSON.parse(msg.data)
     }
     // console.log(payload)
     emitter.$emit("message", payload)

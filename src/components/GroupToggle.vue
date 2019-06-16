@@ -15,17 +15,17 @@
             }
         },
         methods: {
-            toggle: function (event) {
+            toggle() {
+
+                var action = true
 
                 if (this.group.state.any_on === true){
-                    var action = false
-                } else {
-                    var action = true
+                    action = false
                 }
 
                 let payload = {
                     type:'groups',
-                    id:this.id,
+                    id:this.key,
                     obj: 'action',
                     action:{
                         on:action

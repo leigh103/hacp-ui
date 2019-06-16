@@ -12,6 +12,7 @@ import './style/global.styl'
 
 import GroupToggle from './components/GroupToggle.vue'
 import GroupList from './components/GroupList.vue'
+import GroupPage from './components/GroupPage.vue'
 
 import LightToggle from './components/LightToggle.vue'
 
@@ -23,6 +24,7 @@ import DeviceInfo from './components/DeviceInfo.vue'
 
 Vue.component('group-toggle', GroupToggle);
 Vue.component('group-list', GroupList);
+Vue.component('group-page', GroupPage);
 
 Vue.component('light-toggle', LightToggle);
 

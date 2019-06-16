@@ -2,7 +2,10 @@
 
     <div class="row">
         <div class="block-20 bg-grey vh100 overflow-y">
-            <group-list :group="group" :id="key" v-for="(group, key) in groups"></group-list>
+            <group-list />
+        </div>
+        <div class="block-80 bg-white vh100 overflow-y">
+            <group-page />
         </div>
     </div>
 
@@ -17,7 +20,6 @@ export default {
     name: 'groups',
     computed: mapState([
         'groups',
-        'lights'
     ]),
     mounted () {
         if (Object.keys(this.groups).length == 0){

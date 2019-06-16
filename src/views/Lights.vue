@@ -1,7 +1,7 @@
 <template>
 
     <div class="text-left p-2">
-        <light-toggle :light="light" :id="key" v-for="(light,key) in lights"></light-toggle>
+        <light-toggle :light="light" :key="key" :id="key" v-for="(light,key) in lights"></light-toggle>
     </div>
 
 </template>

@@ -1,7 +1,7 @@
 <template>
     <div class="light-toggle" @click.prevent="toggle()" v-if="light" :class="{'on':light.state.on === true,'off':light.state.on === false,'unavailable':light.state.reachable === false}">
         <div class="indicator"></div>
-        <p>{{ light.name }}</p>
+        <div class="name">{{ light.name }}</div>
     </div>
 </template>
 
@@ -15,12 +15,12 @@
             }
         },
         methods: {
-            toggle(event) {
+            toggle() {
+
+                var action = true
 
                 if (this.light.state.on){
-                    var action = false
-                } else {
-                    var action = true
+                    action = false
                 }
 
                 let payload = {
@@ -52,7 +52,7 @@
     width: 8em;
     height: 10em;
 
-    p {
+    .name {
         position: absolute;
         display: block;
         bottom: 1.5em;

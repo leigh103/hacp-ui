@@ -1,31 +1,43 @@
 <template>
-    <div class="group-list" v-if="group" :class="{'on':group.state.any_on === true,'off':group.state.any_on === false,'unavailable':group.state.reachable === false}">
-        <div class="indicator" @click.prevent="toggle()"><div class="indicator-led" v-show="group.lights.length > 0"></div></div>
-        <div class="name">{{ group.name }}</div>
+    <div>
+        <div class="group-list"
+                v-for="(group, key) in groups"
+                v-if="group"
+                :class="{'on':group.state.any_on === true,'off':group.state.any_on === false,'unavailable':group.state.reachable === false}"
+        >
+            <div class="indicator" @click.prevent="toggle(key)"><div class="indicator-led" v-show="group.lights.length > 0"></div></div>
+            <div class="name" @click.prevent="selectGroup(key)">{{ group.name }}</div>
+        </div>
     </div>
 </template>
 
 <script>
 
-    module.exports = {
+    import { mapState } from 'vuex'
+
+    export default {
         props: ['group', 'id'],
         data: function () {
             return {
-                //nothing
+
             }
         },
+        computed: mapState([
+            'groups',
+            'view',
+        ]),
         methods: {
-            toggle: function (event) {
+            toggle(key) {
+
+                var action = true
 
                 if (this.group.state.any_on === true){
-                    var action = false
-                } else {
-                    var action = true
+                    action = false
                 }
 
                 let payload = {
                     type:'groups',
-                    id:this.id,
+                    id:key,
                     obj: 'action',
                     action:{
                         on:action
@@ -34,6 +46,9 @@
 
                 this.$store.dispatch('call',payload)
 
+            },
+            selectGroup(key){
+                this.$store.dispatch('updateView',{obj:'selected_group', val:key})
             }
         }
     }

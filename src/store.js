@@ -14,7 +14,10 @@ export default new Vuex.Store({
         weather:{},
         devices:{},
         time:{},
-        alarm:{}
+        alarm:{},
+        view:{
+            selected_group:0
+        }
     },
     mutations: {
         SET_GROUPS (state, data) {
@@ -46,6 +49,14 @@ export default new Vuex.Store({
         },
         SET_ALARM (state, alarm) {
             state.alarm = alarm
+        },
+        SET_VIEW (state, data) {
+            if (data.obj){
+                state.view[data.obj] = data.val
+            } else {
+                state.view = data
+            }
+
         }
     },
     actions: {
@@ -89,6 +100,16 @@ export default new Vuex.Store({
                     let commit_var = payload.type.toUpperCase()
                     commit('SET_'+commit_var, {id:payload.id, data:res.data})
                 })
+        },
+
+        updateView ({ commit }, payload) {
+
+            if (payload.obj){
+                commit('SET_VIEW', {obj:payload.obj, val:payload.val})
+            } else {
+                commit('SET_VIEW', payload)
+            }
+
         },
 
         call ({ commit }, payload) {
