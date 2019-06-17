@@ -16,7 +16,9 @@ export default new Vuex.Store({
         time:{},
         alarm:{},
         view:{
-            selected_group:0
+            selected_group:0,
+            selected_sensor:0,
+            selected_device:0
         }
     },
     mutations: {
@@ -35,14 +37,22 @@ export default new Vuex.Store({
             }
         },
 
-        SET_SENSORS (state, sensors) {
-            state.sensors = sensors
+        SET_SENSORS (state, data) {
+            if (data.id){
+                state.sensors[data.id] = data.data
+            } else {
+                state.sensors = data
+            }
         },
         SET_WEATHER (state, weather) {
             state.weather = weather
         },
-        SET_DEVICES (state, devices) {
-            state.devices = devices
+        SET_DEVICES (state, data) {
+            if (data.id){
+                state.devices[data.id] = data.data
+            } else {
+                state.devices = data
+            }
         },
         SET_TIME (state, time) {
             state.time = time
@@ -62,8 +72,6 @@ export default new Vuex.Store({
     actions: {
 
         init ({ commit }) {
-
-
 
         },
 
@@ -112,11 +120,6 @@ export default new Vuex.Store({
             axios
                 .put('http://10.0.1.100/api/988112a4e198cc1211/'+payload.type+'/'+payload.id+'/'+payload.obj, payload.action)
                 .then(() => {
-                    // if (payload.type == 'lights'){
-                    //     commit('SET_LIGHT', payload)
-                    // } else if (payload.type == 'groups'){
-                    //     commit('SET_GROUP', payload)
-                    // }
 
                 })
         }

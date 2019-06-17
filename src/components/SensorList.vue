@@ -1,11 +1,15 @@
 <template>
-
-    <div class="row">
-        <div class="block-20 margin p-1 bg-topaz text-white" v-for="sensor in sensors">
-            <sensor-info v-bind:sensor="sensor"></sensor-info>
+    <div>
+        <div class="list-item"
+                v-for="(sensor, key) in sensors"
+                v-if="sensor"
+                :class="{'selected':view.selected_sensor === key}"
+        >
+            <div class="indicator">
+            </div>
+            <div class="name" @click.prevent="selectSensor(key)">{{ sensor.name }}</div>
         </div>
     </div>
-
 </template>
 
 <script>
@@ -13,15 +17,31 @@
     import { mapState } from 'vuex'
 
     export default {
-        name: 'SensorList',
-        props: {},
+        data: function () {
+            return {
+
+            }
+        },
         computed: mapState([
-            'sensors'
-        ])
+            'sensors',
+            'view',
+        ]),
+        methods: {
+            selectSensor(key){
+                this.$store.dispatch('updateView',{obj:'selected_sensor', val:key})
+            }
+        },
+        mounted () {
+            if (Object.keys(this.sensors).length == 0){
+                this.$store.dispatch('getEntities','sensors')
+            }
+        },
     }
 
 </script>
 
-<style scoped>
+<style lang="stylus">
+
+
 
 </style>
