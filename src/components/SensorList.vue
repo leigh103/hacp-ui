@@ -5,7 +5,7 @@
                 v-if="sensor.type != 'ZHASwitch'"
                 :class="{'selected':view.selected_sensor === key}"
         >
-            <div class="indicator" v-html="getMainStat(sensor)">
+            <div class="indicator text-white" v-html="getMainStat(sensor)">
             </div>
             <div class="name" @click.prevent="selectSensor(key)">{{ sensor.name }}</div>
         </div>
@@ -33,7 +33,7 @@
                 this.$store.dispatch('updateView',{obj:'selected_sensor', val:key})
             },
             getMainStat(sensor){
-                
+
                 if (sensor.type == 'ZHATemperature'){
                     return (sensor.state.temperature/100).toFixed(0)+'&deg;C'
                 } else if (sensor.type == 'ZHALightLevel'){

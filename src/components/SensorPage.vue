@@ -8,6 +8,9 @@
             <div class="mt-2">
                 <sensor-info v-for="(stat, key) in sensors[this.view.selected_sensor].state" :id="view.selected_sensor" :name="key" :val="stat"></sensor-info>
             </div>
+            <div class="mt-2">
+                <sensor-info v-for="(stat, key) in sensors[this.view.selected_sensor].config" :id="view.selected_sensor" :name="key" :val="stat"></sensor-info>
+            </div>
         </div>
     </div>
 </template>

@@ -1,7 +1,7 @@
 <template>
     <div class="toggle" v-if="hideStat()">
         <div class="indicator">
-            <div class="stat" v-html="parseStat()">
+            <div class="stat capitalise" v-html="parseStat()">
             </div>
         </div>
         <div class="name">
