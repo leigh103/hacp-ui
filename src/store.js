@@ -24,14 +24,15 @@ export default new Vuex.Store({
     mutations: {
         SET_GROUPS (state, data) {
             if (data.id){
-                state.groups[data.id] = data.data
+                Vue.set(state.groups, data.id, data.data)
             } else {
                 state.groups = data
             }
         },
         SET_LIGHTS (state, data) {
             if (data.id){
-                state.lights[data.id] = data.data
+                Vue.set(state.lights, data.id, data.data)
+                // state.lights[data.id] = data.data
             } else {
                 state.lights = data
             }
@@ -39,7 +40,7 @@ export default new Vuex.Store({
 
         SET_SENSORS (state, data) {
             if (data.id){
-                state.sensors[data.id] = data.data
+                Vue.set(state.sensors, data.id, data.data)
             } else {
                 state.sensors = data
             }
@@ -49,7 +50,7 @@ export default new Vuex.Store({
         },
         SET_DEVICES (state, data) {
             if (data.id){
-                state.devices[data.id] = data.data
+                Vue.set(state.devices, data.id, data.data)
             } else {
                 state.devices = data
             }
@@ -103,6 +104,7 @@ export default new Vuex.Store({
             axios
                 .get('http://zigbee.local:3000/'+payload.type+'/'+payload.id)
                 .then(res => {
+                    console.log(res)
                     let commit_var = payload.type.toUpperCase()
                     commit('SET_'+commit_var, {id:payload.id, data:res.data})
                 })
@@ -117,11 +119,21 @@ export default new Vuex.Store({
         },
 
         call ({ commit }, payload) {
-            axios
-                .put('http://10.0.1.100/api/988112a4e198cc1211/'+payload.type+'/'+payload.id+'/'+payload.obj, payload.action)
-                .then(() => {
 
-                })
+            if (payload.scene_id){
+                axios
+                    .put('http://10.0.1.100/api/988112a4e198cc1211/groups/'+payload.id+'/scenes/'+payload.scene_id+"/recall")
+                    .then(res => {
+
+                    })
+            } else {
+                axios
+                    .put('http://10.0.1.100/api/988112a4e198cc1211/'+payload.type+'/'+payload.id+'/'+payload.obj, payload.action)
+                    .then(() => {
+
+                    })
+            }
+
         }
 
     }

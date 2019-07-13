@@ -32,7 +32,7 @@
         mounted(){
             if (!this.sensors || !this.sensors[this.id]){
                 console.log('Getting sensor '+this.id)
-            //    this.$store.dispatch('getEntity',{type:'sensors', id:this.id})
+                this.$store.dispatch('getEntity',{type:'sensors', id:this.id})
             }
         }
     }
