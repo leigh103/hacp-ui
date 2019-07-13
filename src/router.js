@@ -29,6 +29,11 @@ export default new Router({
             component: () => import('./views/Sensors.vue')
         },
         {
+            path: '/switches',
+            name: 'switches',
+            component: () => import('./views/Switches.vue')
+        },
+        {
             path: '/devices',
             name: 'devices',
             component: () => import('./views/Devices.vue')

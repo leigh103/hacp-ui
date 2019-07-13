@@ -2,10 +2,10 @@
     <div>
         <div class="list-item"
                 v-for="(sensor, key) in sensors"
-                v-if="sensor"
+                v-if="sensor.type != 'ZHASwitch'"
                 :class="{'selected':view.selected_sensor === key}"
         >
-            <div class="indicator">
+            <div class="indicator" v-html="getMainStat(sensor)">
             </div>
             <div class="name" @click.prevent="selectSensor(key)">{{ sensor.name }}</div>
         </div>
@@ -22,13 +22,36 @@
 
             }
         },
-        computed: mapState([
-            'sensors',
-            'view',
-        ]),
+        computed: {
+            ...mapState([
+                'sensors',
+                'view',
+            ])
+        },
         methods: {
             selectSensor(key){
                 this.$store.dispatch('updateView',{obj:'selected_sensor', val:key})
+            },
+            getMainStat(sensor){
+                
+                if (sensor.type == 'ZHATemperature'){
+                    return (sensor.state.temperature/100).toFixed(0)+'&deg;C'
+                } else if (sensor.type == 'ZHALightLevel'){
+                    return sensor.state.lux
+                } else if (sensor.type == 'ZHAPresence'){
+                    if (sensor.state.presence === true){
+                        return '<div class="led on"></div>'
+                    } else {
+                        return '<div class="led off"></div>'
+                    }
+                } else if (sensor.type == 'ZHAOpenClose'){
+                    if (sensor.state.open === true){
+                        return '<div class="led on"></div>'
+                    } else {
+                        return '<div class="led off"></div>'
+                    }
+                }
+
             }
         },
         mounted () {

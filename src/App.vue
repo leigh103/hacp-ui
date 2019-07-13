@@ -5,6 +5,7 @@
             <router-link to="/groups">Groups</router-link>
             <router-link to="/lights">Lights</router-link>
             <router-link to="/sensors">Sensors</router-link>
+            <router-link to="/switches">Switches</router-link>
             <router-link to="/devices">Devices</router-link>
         </div>
         <div class="block-90 text-left">
