@@ -1,3 +1,6 @@
+$color-led-on = rgb(91, 240, 80);
+$color-led-off = #888;
+
 #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -52,18 +55,26 @@
             height: 0.5em;
             border-radius:0.25em;
             margin: auto;
+
+            &.on {
+                background-color: $color-led-on;
+            }
+
+            &.off {
+                background-color: $color-led-off;
+            }
         }
     }
 
     &.on {
         .indicator .led {
-            background-color: rgb(91, 240, 80);
+            background-color: $color-led-on;
         }
     }
 
     &.off {
         .indicator .led {
-            background-color: #888;
+            background-color: $color-led-off;
         }
     }
 
@@ -101,7 +112,7 @@
     }
 
     .indicator {
-        flex: 0 0 3em;
+        flex: 0 0 5em;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -112,18 +123,26 @@
             width: 0.5em;
             height: 0.5em;
             border-radius:0.25em;
+
+            &.on {
+                background-color: $color-led-on;
+            }
+
+            &.off {
+                background-color: $color-led-off;
+            }
         }
     }
 
     &.on {
         .indicator .led {
-            background-color: rgb(91, 240, 80);
+            background-color: $color-led-on;
         }
     }
 
     &.off {
         .indicator .led {
-            background-color: #888;
+            background-color: $color-led-off;
         }
     }
 

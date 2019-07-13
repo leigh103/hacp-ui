@@ -63,7 +63,8 @@ export default new Vuex.Store({
         },
         SET_VIEW (state, data) {
             if (data.obj){
-                state.view[data.obj] = data.val
+                Vue.set(state.view, data.obj, data.val)
+            //    state.view[data.obj] = data.val
             } else {
                 state.view = data
             }

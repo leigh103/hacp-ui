@@ -1,12 +1,11 @@
 <template>
-    <div class="toggle">
+    <div class="toggle" v-if="hideStat()">
         <div class="indicator">
-            <div class="stat">
-                {{ sensors[id].state[obj] }}
+            <div class="stat" v-html="parseStat()">
             </div>
         </div>
         <div class="name">
-            {{ obj }}
+            {{ name }}
         </div>
     </div>
 </template>
@@ -17,7 +16,7 @@
 
     export default {
         name:'sensor-info',
-        props: ['id','obj'],
+        props: ['id','name','val'],
         data: function () {
             return {
 
@@ -27,7 +26,24 @@
             'sensors'
         ]),
         methods: {
-
+            hideStat(){
+                if (this.name == 'lastupdated'){
+                    return false
+                } else {
+                    return true
+                }
+            },
+            parseStat(){
+                if (this.name == 'temperature'){
+                    return (this.val/100).toFixed(0)+'&deg;C'
+                } else if (this.val === true || this.val == 'open'){
+                    return '<div class="led on"></div>'
+                } else if (this.val === false || this.val == 'closed'){
+                    return '<div class="led off"></div>'
+                } else {
+                    return this.val
+                }
+            }
         },
         mounted(){
             if (!this.sensors || !this.sensors[this.id]){

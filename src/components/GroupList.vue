@@ -5,7 +5,7 @@
                 v-if="group.lights.length > 0"
                 :class="{'selected':view.selected_group === key}"
         >
-            <div class="indicator" @click.prevent="toggle(key)"><div class="led" v-show="group.lights.length > 0"></div></div>
+            <div class="indicator" @click.prevent="toggle(key)"><div class="led" :class="{'on':group.state.any_on === true, 'off':group.state.any_on === false}" v-show="group.lights.length > 0"></div></div>
             <div class="name" @click.prevent="selectGroup(key)">{{ group.name }}</div>
         </div>
     </div>
@@ -31,7 +31,7 @@
 
                 var action = true
 
-                if (this.group.state.any_on === true){
+                if (this.groups[key].state.any_on === true){
                     action = false
                 }
 
