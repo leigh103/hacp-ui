@@ -51,6 +51,7 @@ $color-led-replace = rgb(240, 80, 80);
         width: 100%;
         text-align: left;
 
+
         .led {
             display:block;
             width: 0.5em;
@@ -106,7 +107,7 @@ $color-led-replace = rgb(240, 80, 80);
 
     & > div {
         height:100%;
-        padding: 1em;
+        padding: 1em 2em;
     }
 
     .name {
@@ -171,4 +172,28 @@ $color-led-replace = rgb(240, 80, 80);
         font-weight: bold;
     }
 
+}
+
+.table-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+    text-align: left;
+    border-radius: 5px;
+    width: 100%;
+    padding: 1.4em 0 0 0;
+
+    &.hide {
+        padding: 0;
+    }
+
+    & > div {
+        flex: 1;
+
+        &:last-child {
+            text-align: right;
+        }
+    }
 }

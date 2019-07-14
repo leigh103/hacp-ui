@@ -12,6 +12,11 @@
             <div class="mt-2">
                 <scene-toggle :scene="scene" :id="scene.id" :gid="view.selected_group" v-for="scene in groups[view.selected_group].scenes"></scene-toggle>
             </div>
+
+            <div class="mt-2">
+                <automations-list :id="view.selected_group" :type="'groups'"></automations-list>
+            </div>
+
         </div>
     </div>
 </template>

@@ -14,6 +14,11 @@ export default new Router({
             component: Home
         },
         {
+            path: '/rooms',
+            name: 'rooms',
+            component: () => import('./views/Rooms.vue')
+        },
+        {
             path: '/groups',
             name: 'groups',
             component: () => import('./views/Groups.vue')
@@ -37,6 +42,11 @@ export default new Router({
             path: '/devices',
             name: 'devices',
             component: () => import('./views/Devices.vue')
+        },
+        {
+            path: '/alarms',
+            name: 'alarms',
+            component: () => import('./views/Alarms.vue')
         }
     ]
 })

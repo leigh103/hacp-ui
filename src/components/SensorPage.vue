@@ -11,6 +11,10 @@
             <div class="mt-2">
                 <sensor-info v-for="(stat, key) in sensors[this.view.selected_sensor].config" :id="view.selected_sensor" :name="key" :val="stat"></sensor-info>
             </div>
+
+            <div class="mt-2">
+                <automations-list :id="view.selected_sensor" :type="'sensors'"></automations-list>
+            </div>
         </div>
     </div>
 </template>

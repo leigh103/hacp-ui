@@ -15,6 +15,7 @@ export default new Vuex.Store({
         devices:{},
         time:{},
         alarm:{},
+        automations:{},
         view:{
             selected_group:0,
             selected_sensor:0,
@@ -55,6 +56,13 @@ export default new Vuex.Store({
                 state.devices = data
             }
         },
+        SET_AUTOMATIONS (state, data) {
+            if (data.id){
+                Vue.set(state.automations, data.id, data.data)
+            } else {
+                state.automations = data
+            }
+        },
         SET_TIME (state, time) {
             state.time = time
         },
@@ -93,22 +101,27 @@ export default new Vuex.Store({
         },
 
         getEntities ({ commit }, type) {
-            axios
-                .get('http://zigbee.local:3000/'+type)
-                .then(res => {
-                    let commit_var = type.toUpperCase()
-                    commit('SET_'+commit_var, res.data)
-                })
+            return new Promise((resolve, reject) => {
+                axios
+                    .get('http://zigbee.local:3000/'+type)
+                    .then(res => {
+                        let commit_var = type.toUpperCase()
+                        commit('SET_'+commit_var, res.data)
+                        resolve(res);
+                    })
+            })
         },
 
         getEntity ({ commit }, payload) {
-            axios
-                .get('http://zigbee.local:3000/'+payload.type+'/'+payload.id)
-                .then(res => {
-                    console.log(res)
-                    let commit_var = payload.type.toUpperCase()
-                    commit('SET_'+commit_var, {id:payload.id, data:res.data})
-                })
+            return new Promise((resolve, reject) => {
+                axios
+                    .get('http://zigbee.local:3000/'+payload.type+'/'+payload.id)
+                    .then(res => {
+                        let commit_var = payload.type.toUpperCase()
+                        commit('SET_'+commit_var, {id:payload.id, data:res.data})
+                        resolve(res);
+                    })
+            })
         },
 
         updateView ({ commit }, payload) {
@@ -121,19 +134,21 @@ export default new Vuex.Store({
 
         call ({ commit }, payload) {
 
-            if (payload.scene_id){
-                axios
-                    .put('http://10.0.1.100/api/988112a4e198cc1211/groups/'+payload.id+'/scenes/'+payload.scene_id+"/recall")
-                    .then(res => {
-
-                    })
-            } else {
-                axios
-                    .put('http://10.0.1.100/api/988112a4e198cc1211/'+payload.type+'/'+payload.id+'/'+payload.obj, payload.action)
-                    .then(() => {
-
-                    })
-            }
+            return new Promise((resolve, reject) => {
+                if (payload.scene_id){
+                    axios
+                        .put('http://10.0.1.100/api/988112a4e198cc1211/groups/'+payload.id+'/scenes/'+payload.scene_id+"/recall")
+                        .then(res => {
+                            resolve(res);
+                        })
+                } else {
+                    axios
+                        .put('http://10.0.1.100/api/988112a4e198cc1211/'+payload.type+'/'+payload.id+'/'+payload.obj, payload.action)
+                        .then(() => {
+                            resolve(res);
+                        })
+                }
+            })
 
         }
 
