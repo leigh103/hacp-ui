@@ -16,16 +16,14 @@ $color-led-replace = rgb(240, 80, 80);
     display: inline-block;
     position: relative;
     border-radius: 0.2em;
-    width: 100%;
     margin-bottom: 0.2em;
-    font-size: 1.2em;
+    color: #444;
 
     &-bg {
         background-color: #ccc;
     }
 
     &.delete, &.close {
-        width: auto;
     }
 
     &.delete {
@@ -197,10 +195,45 @@ $color-led-replace = rgb(240, 80, 80);
         // padding: 0;
     }
 
+    .indicator {
+        flex: 0 0 5em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+
+        .led {
+            display:block;
+            width: 0.5em;
+            height: 0.5em;
+            border-radius:0.25em;
+
+            &.on {
+                background-color: $color-led-on;
+            }
+
+            &.off {
+                background-color: $color-led-off;
+            }
+
+            &.replace {
+                background-color: $color-led-replace;
+            }
+
+            &.warn {
+                background-color: $color-led-warn;
+            }
+        }
+    }
+
     & > div {
         flex: 1;
 
-        &:first-child {
+        &.indicator, &.user-action {
+            flex: 0 0 5em;
+        }
+
+        &.extend {
             flex: 2;
         }
 
@@ -233,4 +266,21 @@ i.fas {
     padding-top: 1em;
     margin-bottom: 2em;
     border-bottom:1px solid #ccc;
+}
+
+.color-pallet {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    vertical-align: top;
+    width: 100%;
+    height: 100%;
+
+    & div {
+        background-color: #ccc;
+        border-radius:50%;
+        height: 2rem;
+        width: 2rem;
+        margin-right: 1em;
+    }
 }

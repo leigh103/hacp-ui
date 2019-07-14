@@ -19,7 +19,7 @@
             <div class="mt-2">
                 <h3>Automations</h3>
                 <div class="underline"></div>
-                <automations-list :id="view.selected_sensor" :type="'sensors'"></automations-list>
+                <automations-table :id="view.selected_sensor" :type="'sensors'"></automations-table>
             </div>
 
             <div class="p-5">
