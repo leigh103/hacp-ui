@@ -45,10 +45,10 @@
 
 <style lang="stylus">
 
-$color-led-on = rgb(91, 240, 80);
+$color-led-on = rgb(80, 240, 168);
 $color-led-off = #888;
-$color-led-warn = rgb(240, 171, 80);
-$color-led-replace = rgb(240, 80, 80);
+$color-led-warn = rgb(240, 176, 80);
+$color-led-replace = rgb(240, 85, 80);
 
 input[type="range"]:not(.circular) {
     margin: auto;
@@ -77,6 +77,7 @@ input[type="range"]:not(.circular)::-webkit-slider-thumb {
     border-radius: 0.5em;
     background: #fff;
     box-shadow: -100vw 0 0 100vw $color-led-on;
+    transition: all 1s ease;
 }
 
 input[type="range"]:not(.circular)::-moz-range-track {
