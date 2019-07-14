@@ -1,5 +1,6 @@
 <template>
     <div id="app" class="row vh100">
+
         <div class="block-10 vh100 bg-dark-grey main-menu">
             <router-link to="/">Home</router-link>
             <router-link to="/rooms">Rooms</router-link>
@@ -10,13 +11,41 @@
             <router-link to="/devices">Devices</router-link>
             <router-link to="/alarms">Alarms</router-link>
         </div>
+
         <div class="block-90 text-left">
             <router-view/>
             <ws />
         </div>
 
+        <detect-automation v-show="view.popup == 'add_automation'"></detect-automation>
+        <set-automation v-show="view.popup == 'set_automation'"></set-automation>
+
     </div>
 </template>
+
+<script>
+
+    import { mapState } from 'vuex'
+
+    export default {
+
+        data(){
+            return {
+
+            }
+        },
+        computed: mapState([
+                'view'
+            ]),
+        methods: {
+
+        },
+        mounted () {
+
+        },
+    }
+
+</script>
 
 <style lang="stylus">
 

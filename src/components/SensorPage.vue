@@ -17,7 +17,14 @@
             </div>
 
             <div class="mt-2">
-                <h3>Automations</h3>
+                <div class="row">
+                    <div class="block-50">
+                        <h3 class="inline">Automations</h3>
+                    </div>
+                    <div class="block-50 text-right">
+                        <a class="btn" @click.prevent="openAddAutomation()">+ Add Automation</a>
+                    </div>
+                </div>
                 <div class="underline"></div>
                 <automations-table :id="view.selected_sensor" :type="'sensors'"></automations-table>
             </div>
@@ -25,7 +32,10 @@
             <div class="p-5">
             </div>
 
+
+
         </div>
+
     </div>
 </template>
 
@@ -38,7 +48,8 @@
         name: 'sensor-page',
         data(){
             return {
-                stats:[]
+                stats:[],
+                add_automation: false
             }
         },
         computed: mapState([
@@ -46,7 +57,9 @@
                 'view'
             ]),
         methods: {
-
+            openAddAutomation(){
+                this.$store.dispatch('updateView',{obj:'popup', val:'add_automation'})
+            }
         },
         mounted () {
             if (!this.sensors || !this.sensors[this.view.selected_sensor]){

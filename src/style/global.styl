@@ -133,6 +133,7 @@ $color-led-replace = rgb(240, 80, 80);
         align-items: center;
         justify-content: center;
         cursor: pointer;
+        padding:0;
 
         .led {
             display:block;
@@ -283,4 +284,42 @@ i.fas {
         width: 2rem;
         margin-right: 1em;
     }
+}
+
+.popup {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    z-index: 500;
+    background-color: rgba(0,0,0,0.75);
+    transition: all 1s ease;
+
+    & > div {
+        background-color: white;
+        text-align: left;
+        padding: 2em;
+        min-width: 50vw;
+        max-width: 80vw;
+        max-height: 80vh;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+}
+
+.spinner {
+    display: block;
+    text-align: center;
+    font-size: 2em;
+    color: $color-led-on;
+    padding: 3em;
+    animation-name: spin;
+    animation-duration: 2000ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
 }

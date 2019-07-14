@@ -21,7 +21,6 @@ Vue.component('ws', Ws);
 
 Vue.config.productionTip = false
 
-
 new Vue({
   router,
   store,

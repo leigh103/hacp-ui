@@ -38,7 +38,7 @@
                 if (this.name == 'temperature'){
                     return (this.val/100).toFixed(0)+'&deg;C'
                 } else if (this.name == 'lastupdated'){
-                    return moment(this.val).format('YYYY-MM-DD')
+                    return moment(this.val).format('MMM Do[<br>]h:mma')
                 } else if (this.val === true || this.val == 'open'){
                     return '<div class="led on"></div>'
                 } else if (this.val === false || this.val == 'closed'){

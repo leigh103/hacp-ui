@@ -50,6 +50,8 @@
                     } else {
                         return '<div class="led off"></div>'
                     }
+                } else if (sensor.type == 'Daylight'){
+                    return sensor.state.status
                 }
 
             }
