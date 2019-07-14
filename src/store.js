@@ -20,8 +20,7 @@ export default new Vuex.Store({
             selected_group:0,
             selected_sensor:0,
             selected_device:0,
-            popup:'',
-            new_automation:{}
+            popup:''
         }
     },
     mutations: {
@@ -131,22 +130,13 @@ export default new Vuex.Store({
         updateView ({ commit }, payload) {
             if (payload.obj){
 
-                if (payload.subval){
+                commit('SET_VIEW', {obj:payload.obj, val:payload.val})
 
-                    commit('SET_VIEW', {obj:payload.obj, val:payload.val, subval:payload.subval})
-
+                if (payload.obj == 'popup' && payload.val != false){
+                    document.getElementsByTagName('body')[0].classList.add("overflow-hidden");
                 } else {
-
-                    commit('SET_VIEW', {obj:payload.obj, val:payload.val})
-
-                    if (payload.obj == 'popup' && payload.val != false){
-                        document.getElementsByTagName('body')[0].classList.add("overflow-hidden");
-                    } else {
-                        document.getElementsByTagName('body')[0].classList.remove("overflow-hidden");
-                    }
-
+                    document.getElementsByTagName('body')[0].classList.remove("overflow-hidden");
                 }
-
 
             } else {
                 commit('SET_VIEW', payload)

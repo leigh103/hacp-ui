@@ -25,7 +25,7 @@
                         <div class="capitalise text-bold" v-if="msg.id && msg.state" v-text="sensors[msg.id].name"></div>
                         <div class="capitalise" v-text="parseButton(msg.state.buttonevent)"></div>
                         <div class="">
-                            <a class="btn" @click.prevent="setAutomation(msg.state.buttonevent)">Use <i class="fas fa-chevron-right"></i></a>
+                            <a class="btn" @click.prevent="setAutomation('v'+msg.state.buttonevent)">Use <i class="fas fa-chevron-right"></i></a>
                         </div>
                     </div>
 
@@ -33,7 +33,7 @@
                         <div class="capitalise text-bold" v-if="msg.id && msg.state" v-text="sensors[msg.id].name"></div>
                         <div class="capitalise" v-text="parseTemp(msg.state.temperature)"></div>
                         <div class="">
-                            <a class="btn" @click.prevent="setAutomation(msg.state.temperature)">Use <i class="fas fa-chevron-right"></i></a>
+                            <a class="btn" @click.prevent="setAutomation('t'+msg.state.temperature)">Use <i class="fas fa-chevron-right"></i></a>
                         </div>
                     </div>
 
@@ -41,7 +41,7 @@
                         <div class="capitalise text-bold" v-if="msg.id && msg.state" v-text="sensors[msg.id].name"></div>
                         <div class="capitalise" v-text="parseMotion(msg.state.presence)"></div>
                         <div class="">
-                            <a class="btn" @click.prevent="setAutomation(msg.state.presence)">Use <i class="fas fa-chevron-right"></i></a>
+                            <a class="btn" @click.prevent="setAutomation('p'+msg.state.presence)">Use <i class="fas fa-chevron-right"></i></a>
                         </div>
                     </div>
 
@@ -49,7 +49,7 @@
                         <div class="capitalise text-bold" v-if="msg.id && msg.state" v-text="sensors[msg.id].name"></div>
                         <div class="capitalise" v-text="parseDoor(msg.state.open)"></div>
                         <div class="">
-                            <a class="btn" @click.prevent="setAutomation(msg.state.open)">Use <i class="fas fa-chevron-right"></i></a>
+                            <a class="btn" @click.prevent="setAutomation('d'+msg.state.open)">Use <i class="fas fa-chevron-right"></i></a>
                         </div>
                     </div>
 
@@ -63,7 +63,7 @@
                     </div>
 
                     <div class="">
-                        <a class="btn" @click.prevent="setAutomation(automation_key)">Use <i class="fas fa-chevron-right"></i></a>
+                        <a class="btn" v-show="automation_key" @click.prevent="setAutomation('v'+automation_key)">Use <i class="fas fa-chevron-right"></i></a>
                     </div>
                 </div>
             </div>
@@ -137,9 +137,9 @@
                 }
             },
             setAutomation(automation_key){
-                automation_key = 's'+automation_key
-                console.log(automation_key)
-                this.$store.dispatch('updateView',{obj:'new_automation', val:automation_key, subval:{}})
+
+                localStorage.setItem('automation_sid','s'+this.view.selected_sensor);
+                localStorage.setItem('automation_key',automation_key);
                 this.$store.dispatch('updateView',{obj:'popup', val:'set_automation'})
             }
         },
