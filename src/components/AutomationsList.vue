@@ -1,15 +1,50 @@
 <template>
     <div>
+
         <div class="table-item" v-for="(automation, index) in automations_arr" :class="hidePrev(automation.trigger, automations_arr[index-1])">
-            <div class="trigger capitalize" v-if="automation.delete === true" v-text="automation.time"></div>
+
+            <div class="trigger capitalize text-bold" v-if="automation.delete === true" v-text="parseStr(automation.time)"></div>
+
             <div class="trigger capitalize" v-else-if="sensors[automation.orig_sensor]" :class="hidePrev(automation.trigger, automations_arr[index-1])">
-                <span class="mr-1" v-show="type == 'groups'" v-text="sensors[automation.orig_sensor].name"></span> <span v-show="automation.trigger" v-text="parseVal(automation.trigger)"></span>
+                <span class="text-bold mr-1" v-show="type == 'groups'" v-text="sensors[automation.orig_sensor].name"></span>
+                <span v-show="automation.trigger" v-html="parseVal(automation.trigger)" :class="{'text-bold':type != 'groups'}"></span>
             </div>
-            <div class="trigger capitalize" v-else v-text="parseStr(automation.orig_sensor)"></div>
+
+            <div class="trigger capitalize text-bold" v-else v-text="parseStr(automation.orig_sensor)"></div>
+
+
             <div class="entity capitalize" v-if="match(automation.action, 'lights')" v-text="lights[automation.entity_id].name"></div>
             <div class="entity capitalize" v-else-if="match(automation.action, 'groups|scene')" v-text="groups[automation.entity_id].name"></div>
-            <div class="action capitalize" v-text="parseStr(automation.action)"></div>
+            <div class="entity capitalize" v-else-if="automation.action == 'play_audio'">Play Audio via HACP</div>
+
+
+            <div class="action">
+
+                <i v-if="automation.duration" class="fas fa-clock on mr-1"></i>
+                <i v-if="automation.conditions && automation.conditions.length>0" class="fas fa-clipboard-list on mr-1"></i>
+                <i v-if="automation.action == 'groups_toggle'" class="fas fa-toggle-on on"></i>
+                <i v-if="automation.action == 'groups_turn_on'" class="fas fa-lightbulb on"></i>
+                <i v-if="automation.action == 'groups_turn_off'" class="fas fa-lightbulb off"></i>
+                <i v-if="automation.action == 'lights_toggle'" class="fas fa-toggle-on on"></i>
+                <i v-if="automation.action == 'lights_turn_on'" class="fas fa-lightbulb on"></i>
+                <i v-if="automation.action == 'lights_turn_off'" class="fas fa-lightbulb off"></i>
+
+                <span v-if="automation.action == 'activate_scene'">
+                    <i class="fas fa-image on mr-1"></i><span v-text="groups[automation.entity_id].scenes[automation.value-1].name"></span>
+                </span>
+
+                <span v-if="automation.action == 'play_audio'">
+                    <i class="fas fa-play on mr-1"></i><span class="capitalise" v-text="parseStr(automation.value)"></span>
+                </span>
+
+            </div>
+
+            <div class="user-action">
+                <div class="btn delete">&times;</div>
+            </div>
+
         </div>
+
     </div>
 </template>
 
@@ -108,6 +143,7 @@
                 }
             },
             parseStr(str){
+                console.log(str)
                 if (str && str.match(/[0-9]{4}/)){
                     str = str.split('')
                     return str[0]+str[1]+':'+str[2]+str[3]
@@ -127,7 +163,14 @@
                     }
 
                     return 'Button '+str[0]+' '+press_type
-
+                } else if (str == 'ptrue') {
+                    return '<i class="fas fa-eye on"></i>'
+                } else if (str == 'pfalse') {
+                    return '<i class="fas fa-eye-slash off"></i>'
+                } else if (str == 'dtrue') {
+                    return '<i class="fas fa-door-open on"></i>'
+                } else if (str == 'dfalse') {
+                    return '<i class="fas fa-door-close off"></i>'
                 } else if (str) {
                     return str
                 }
@@ -184,5 +227,6 @@
     .trigger.hide {
         visibility: hidden;
     }
+
 
 </style>

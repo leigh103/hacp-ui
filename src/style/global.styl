@@ -13,15 +13,23 @@ $color-led-replace = rgb(240, 80, 80);
 
 .btn {
 
-    display: block;
+    display: inline-block;
     position: relative;
-    padding: 2em;
     border-radius: 0.2em;
     width: 100%;
+    margin-bottom: 0.2em;
+    font-size: 1.2em;
 
     &-bg {
         background-color: #ccc;
+    }
 
+    &.delete, &.close {
+        width: auto;
+    }
+
+    &.delete {
+        color: #c40000;
     }
 }
 
@@ -186,14 +194,43 @@ $color-led-replace = rgb(240, 80, 80);
     padding: 1.4em 0 0 0;
 
     &.hide {
-        padding: 0;
+        // padding: 0;
     }
 
     & > div {
         flex: 1;
 
+        &:first-child {
+            flex: 2;
+        }
+
         &:last-child {
             text-align: right;
         }
     }
+}
+
+i.fas {
+    &.on {
+        color: $color-led-on;
+    }
+
+    &.off {
+        color: $color-led-off;
+    }
+
+    &.replace {
+        color: $color-led-replace;
+    }
+
+    &.warn {
+        color: $color-led-warn;
+    }
+}
+
+.underline {
+    width:100%;
+    padding-top: 1em;
+    margin-bottom: 2em;
+    border-bottom:1px solid #ccc;
 }
