@@ -13,6 +13,7 @@
 <script>
 
     import { mapState } from 'vuex'
+    import moment from 'moment'
 
     export default {
         name:'sensor-info',
@@ -28,7 +29,7 @@
         methods: {
             hideStat(){
                 if (this.name == 'lastupdated'){
-                    return false
+                    return true
                 } else {
                     return true
                 }
@@ -36,6 +37,8 @@
             parseStat(){
                 if (this.name == 'temperature'){
                     return (this.val/100).toFixed(0)+'&deg;C'
+                } else if (this.name == 'lastupdated'){
+                    return moment(this.val).format('YYYY-MM-DD')
                 } else if (this.val === true || this.val == 'open'){
                     return '<div class="led on"></div>'
                 } else if (this.val === false || this.val == 'closed'){

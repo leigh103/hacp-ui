@@ -3,7 +3,6 @@ import App from './App.vue'
 import Ws from './Ws.vue'
 import router from './router'
 import store from './store'
-import Socket from "./socket"
 
 import './style/framework33.css'
 import './style/global.styl'

@@ -3,14 +3,14 @@
 
         <div class="table-item" v-for="(automation, index) in automations_arr" :class="hidePrev(automation.trigger, automations_arr[index-1])">
 
-            <div class="trigger capitalize text-bold extend" v-if="automation.delete === true" v-text="parseStr(automation.time)"></div>
+            <div class="trigger capitalize text-bold" v-if="automation.delete === true" v-text="parseStr(automation.time)"></div>
 
-            <div class="trigger extend capitalize" v-else-if="sensors[automation.orig_sensor]" :class="hidePrev(automation.trigger, automations_arr[index-1])">
+            <div class="trigger capitalize" v-else-if="sensors[automation.orig_sensor]" :class="hidePrev(automation.trigger, automations_arr[index-1])">
                 <span class="text-bold mr-1" v-show="type == 'groups'" v-text="sensors[automation.orig_sensor].name"></span>
                 <span v-show="automation.trigger" v-html="parseVal(automation.trigger)" :class="{'text-bold':type != 'groups'}"></span>
             </div>
 
-            <div class="trigger extend capitalize text-bold" v-else v-text="parseStr(automation.orig_sensor)"></div>
+            <div class="trigger capitalize text-bold" v-else v-text="parseStr(automation.orig_sensor)"></div>
 
 
             <div class="entity capitalize" v-if="match(automation.action, 'lights')" v-text="lights[automation.entity_id].name"></div>
