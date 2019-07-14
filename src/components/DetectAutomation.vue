@@ -63,7 +63,7 @@
                     </div>
 
                     <div class="">
-                        <a class="btn" v-show="automation_key" @click.prevent="setAutomation('v'+automation_key)">Use <i class="fas fa-chevron-right"></i></a>
+                        <a class="btn" v-show="automation_key" @click.prevent="setAutomation('p'+automation_key)">Use <i class="fas fa-chevron-right"></i></a>
                     </div>
                 </div>
             </div>

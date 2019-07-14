@@ -115,9 +115,8 @@
                     </div>
 
                     <div class="mb-1" v-if="checkAutomation()">
-                        <a class="btn bg-green text-white" @click.prevent="">Save Automation</a>
+                        <a class="btn bg-green text-white" @click.prevent="saveAutomation()">Save Automation</a>
                     </div>
-
 
                 </div>
 
@@ -235,6 +234,32 @@
             },
             checkAutomation(){
                 return true
+            },
+            saveAutomation(){
+
+                let new_automation_key = localStorage.getItem('automation_key')
+                let new_automation_sid = localStorage.getItem('automation_sid')
+
+                this.automation_data.orig_sensor = new_automation_sid.replace(/^s/,'')
+                this.automation_data.orig_value = new_automation_key.replace(/^[svdltp]/,'')
+
+                let new_automation = {}
+
+                if (this.automations[new_automation_sid] && this.automations[new_automation_sid][new_automation_key]){
+
+                    this.automations[new_automation_sid][new_automation_key].push(this.automation_data)
+                    new_automation[new_automation_sid] = this.automations[new_automation_sid]
+
+                } else {
+
+                    new_automation[new_automation_sid] = {}
+                    new_automation[new_automation_sid][new_automation_key] = []
+                    new_automation[new_automation_sid][new_automation_key].push(this.automation_data)
+
+                }
+
+                this.$store.dispatch('hacpCall',{method:'put', url:'automations',data: new_automation})
+
             }
         },
         mounted () {
@@ -253,6 +278,7 @@
             if (!this.automations){
                 this.$store.dispatch('getEntities','automations')
             }
+
         }
     }
 

@@ -143,7 +143,6 @@
                 }
             },
             parseStr(str){
-                console.log(str)
                 if (str && str.match(/[0-9]{4}/)){
                     str = str.split('')
                     return str[0]+str[1]+':'+str[2]+str[3]

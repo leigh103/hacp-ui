@@ -161,6 +161,22 @@ export default new Vuex.Store({
                 }
             })
 
+        },
+
+        hacpCall ({ commit }, payload) {
+
+            return new Promise((resolve, reject) => {
+                if (payload.method){
+                    axios({
+                        method: payload.method,
+                        url:'http://10.0.1.100:3000/'+payload.url,
+                        data: payload.data
+                    }).then(res => {
+                        resolve(res);
+                    })
+                }
+            })
+
         }
 
     }
