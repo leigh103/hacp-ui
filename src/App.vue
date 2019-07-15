@@ -1,18 +1,18 @@
 <template>
     <div id="app" class="row vh100">
 
-        <div class="block-10 vh100 bg-dark-grey main-menu">
-            <router-link to="/">Home</router-link>
-            <router-link to="/rooms">Rooms</router-link>
-            <router-link to="/groups">Groups</router-link>
-            <router-link to="/lights">Lights</router-link>
-            <router-link to="/sensors">Sensors</router-link>
-            <router-link to="/switches">Switches</router-link>
-            <router-link to="/devices">Devices</router-link>
-            <router-link to="/alarms">Alarms</router-link>
+        <div class="view-menu main-menu">
+            <router-link to="/"><i class="fas fa-home"></i></router-link>
+            <router-link to="/rooms"><i class="fas fa-vector-square"></i></router-link>
+            <router-link to="/groups"><i class="fas fa-layer-group"></i></router-link>
+            <router-link to="/lights"><i class="fas fa-lightbulb"></i></router-link>
+            <router-link to="/sensors"><i class="fas fa-eye"></i></router-link>
+            <router-link to="/switches"><i class="fas fa-toggle-on"></i></router-link>
+            <router-link to="/devices"><i class="fas fa-mobile"></i></router-link>
+            <router-link to="/alarms"><i class="fas fa-bell"></i></router-link>
         </div>
 
-        <div class="block-90 text-left">
+        <div class="view-viewport">
             <router-view/>
             <ws />
         </div>

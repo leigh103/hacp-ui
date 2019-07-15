@@ -5,7 +5,7 @@
                 :class="{'selected':view.selected_group === key}"
         >
             <div class="indicator" @click.prevent="toggle(key)"><div class="led" :class="{'on':group.state.any_on === true, 'off':group.state.any_on === false}" v-show="group.lights.length > 0"></div></div>
-            <div class="name text-white" @click.prevent="selectGroup(key)">{{ group.name }}</div>
+            <div class="name" @click.prevent="selectGroup(key)">{{ group.name }}</div>
         </div>
         <div class="list-item" @click.prevent="selectGroup('new')">
             <div class="indicator text-white">+</div>

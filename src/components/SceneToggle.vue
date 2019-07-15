@@ -1,9 +1,9 @@
 <template>
-    <div class="toggle" @click.prevent="toggle()" :class="{'on':groups[gid].action.scene == scene.id && groups[gid].action.on === true}">
+    <div class="toggle" @click.prevent="toggle()" :class="{'on':groups[gid].action.scene == scene.id && groups[gid].action.on === true,'off':groups[gid].action.scene != scene.id}">
         <div class="indicator">
             <div class="led" :class="{'delete':del}"></div>
         </div>
-        <div class="name">{{ scene.name }}</div>
+        <div class="name text-bold">{{ scene.name }}</div>
     </div>
 </template>
 

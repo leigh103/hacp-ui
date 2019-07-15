@@ -1,10 +1,10 @@
 <template>
 
     <div class="row">
-        <div class="block-20 bg-grey vh100 overflow-y">
+        <div class="block-20 bg-list vh100 overflow-y pt-2">
             <group-list />
         </div>
-        <div class="block-80 bg-white vh100 overflow-y">
+        <div class="block-80 view-page vh100 overflow-y">
             <group-page v-if="view.selected_group"/>
         </div>
     </div>

@@ -3,7 +3,7 @@
         <div class="indicator">
             <div class="led"></div>
         </div>
-        <div class="name">{{ lights[id].name }}</div>
+        <div class="name text-bold">{{ lights[id].name }}</div>
     </div>
 </template>
 
