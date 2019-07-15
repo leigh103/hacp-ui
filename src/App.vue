@@ -17,8 +17,9 @@
             <ws />
         </div>
 
-        <detect-automation v-show="view.popup == 'add_automation'"></detect-automation>
-        <set-automation v-show="view.popup == 'set_automation'"></set-automation>
+        <detect-automation v-if="view.popup == 'add_automation'"></detect-automation>
+        <set-automation v-if="view.popup == 'set_automation'"></set-automation>
+        <manage-lights v-if="view.popup == 'manage_lights'"></manage-lights>
 
     </div>
 </template>

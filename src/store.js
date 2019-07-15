@@ -147,17 +147,31 @@ export default new Vuex.Store({
 
             return new Promise((resolve, reject) => {
                 if (payload.scene_id){
+
                     axios
                         .put('http://10.0.1.100/api/988112a4e198cc1211/groups/'+payload.id+'/scenes/'+payload.scene_id+"/recall")
                         .then(res => {
                             resolve(res);
                         })
+
+                } else if (payload.method){
+
+                    axios({
+                        method:payload.method,
+                        url:'http://10.0.1.100/api/988112a4e198cc1211/'+payload.url,
+                        data:payload.data
+                    }).then(res => {
+                        resolve(res);
+                    })
+
                 } else {
+
                     axios
                         .put('http://10.0.1.100/api/988112a4e198cc1211/'+payload.type+'/'+payload.id+'/'+payload.obj, payload.action)
-                        .then(() => {
+                        .then(res => {
                             resolve(res);
                         })
+
                 }
             })
 
@@ -166,15 +180,28 @@ export default new Vuex.Store({
         hacpCall ({ commit }, payload) {
 
             return new Promise((resolve, reject) => {
-                if (payload.method){
-                    axios({
+
+                if (payload.data){
+
+                    var axios_payload = {
                         method: payload.method,
                         url:'http://10.0.1.100:3000/'+payload.url,
                         data: payload.data
-                    }).then(res => {
-                        resolve(res);
-                    })
+                    }
+
+                } else {
+
+                    var axios_payload = {
+                        method: payload.method,
+                        url:'http://10.0.1.100:3000/'+payload.url
+                    }
+
                 }
+
+                axios(axios_payload).then(res => {
+                    resolve(res);
+                })
+
             })
 
         }

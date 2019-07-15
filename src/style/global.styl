@@ -1,7 +1,8 @@
-$color-led-on = rgb(80, 240, 168);
+$color-led-on = #14e2b9;
+$color-green-bg = #09cda6;
 $color-led-off = #888;
-$color-led-warn = rgb(240, 176, 80);
-$color-led-replace = rgb(240, 85, 80);
+$color-led-warn = #cd9109;
+$color-led-replace = #cd0956;
 
 #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
@@ -96,6 +97,17 @@ $color-led-replace = rgb(240, 85, 80);
 
     &.unavailable {
         opacity: 0.5;
+    }
+
+    &.unselected {
+        opacity: 0.5;
+    }
+
+    &.selected {
+        opacity: 1;
+        background-color: $color-green-bg;
+        color: white;
+        font-weight: bold
     }
 
 }

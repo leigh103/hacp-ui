@@ -12,6 +12,7 @@
                         <h3 class="inline">Lights</h3>
                     </div>
                     <div class="block-50 text-right">
+                        <a class="btn bg-light-grey mr-1" v-show="light_edit" @click.prevent="showPopup('manage_lights')">+ Manage Lights</a>
                         <a class="btn" @click.prevent="light_edit = !light_edit"><span v-show="light_edit">Close</span><span v-show="!light_edit">Edit</span></a>
                     </div>
                 </div>
@@ -65,9 +66,14 @@
             'lights',
             'view'
         ]),
+        methods: {
+            showPopup(){
+                this.$store.dispatch('updateView',{obj:'popup', val:'manage_lights'})
+            }
+        },
         mounted () {
 
-        },
+        }
 
     }
 

@@ -15,9 +15,6 @@
             <slider :light="id" :type="lights[id].state.colormode"></slider>
         </div>
 
-        <div class="user-action">
-            <div class="btn delete">&times;</div>
-        </div>
 
     </div>
 </template>
