@@ -43,14 +43,13 @@
                 }
 
                 let payload = {
-                    type:'lights',
-                    id:this.id,
-                    obj: 'state',
-                    action:{
+                    url:'lights/'+this.id+'/state',
+                    data:{
                         on:action
                     }
                 }
                 this.$store.dispatch('call',payload)
+                
             }
         },
         mounted(){

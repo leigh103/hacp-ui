@@ -24,10 +24,8 @@
                 }
 
                 let payload = {
-                    type:'groups',
-                    id:this.key,
-                    obj: 'action',
-                    action:{
+                    url:'groups/'+this.key+'/action',
+                    data:{
                         on:action
                     }
                 }
