@@ -39,10 +39,8 @@
                 }
 
                 let payload = {
-                    type:'groups',
-                    id:key,
-                    obj: 'action',
-                    action:{
+                    url:'groups/'+key+'/action',
+                    data:{
                         on:action
                     }
                 }
