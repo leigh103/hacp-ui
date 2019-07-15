@@ -1,15 +1,9 @@
 <template>
     <div class="px-1">
 
-        <input type="range" name="brightness" v-model="lights[light].state.bri" min="0" max="255" v-if="type == 'bri'">
+        <input type="range" name="brightness" v-model="lights[light].state.bri" min="0" max="255" v-if="type == 'bri'" @change="changeLight()">
 
-        <input type="range" name="color-temp" v-model="lights[light].state.ct" :min="lights[light].ctmin" :max="lights[light].ctmax" v-else-if="type == 'ct'">
-
-        <div class="color-pallet" v-else-if="type == 'xy'">
-            <div v-for="color in colors">
-                <div :style="{'background-color':color}"></div>
-            </div>
-        </div>
+        <input type="range" name="color-temp" v-model="lights[light].state.ct" :min="lights[light].ctmin" :max="lights[light].ctmax" v-else @change="changeLight()">
 
     </div>
 </template>
@@ -34,7 +28,41 @@
             'lights'
         ]),
         methods: {
+            changeLight(){
 
+                if (this.type == 'bri'){
+
+                    let payload = {
+                        method:'put',
+                        url:'lights/'+this.light+'/state',
+                        data:{
+                            bri:parseInt(this.lights[this.light].state.bri)
+                        }
+                    }
+
+                    this.$store.dispatch('call',payload)
+                        .then(res => {
+                            console.log(res)
+                        })
+
+                } else {
+
+                    let payload = {
+                        method:'put',
+                        url:'lights/'+this.light+'/state',
+                        data:{
+                            ct:parseInt(this.lights[this.light].state.ct)
+                        }
+                    }
+
+                    this.$store.dispatch('call',payload)
+                        .then(res => {
+                            console.log(res)
+                        })
+
+                }
+
+            }
         },
         mounted(){
 
@@ -45,10 +73,11 @@
 
 <style lang="stylus">
 
-$color-led-on = rgb(80, 240, 168);
+$color-led-on = #14e2b9;
+$color-green-bg = #09cda6;
 $color-led-off = #888;
-$color-led-warn = rgb(240, 176, 80);
-$color-led-replace = rgb(240, 85, 80);
+$color-led-warn = #cd9109;
+$color-led-replace = #cd0956;
 
 input[type="range"]:not(.circular) {
     margin: auto;
