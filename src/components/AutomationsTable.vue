@@ -40,7 +40,7 @@
             </div>
 
             <div class="user-action">
-                <div class="btn delete">&times;</div>
+                <div class="btn delete"><i class="fas fa-times"></i></div>
             </div>
 
         </div>

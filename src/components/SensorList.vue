@@ -7,7 +7,7 @@
         >
             <div class="indicator text-white" v-html="getMainStat(sensor)">
             </div>
-            <div class="name" @click.prevent="selectSensor(key)">{{ sensor.name }}</div>
+            <div class="name text-white" @click.prevent="selectSensor(key)">{{ sensor.name }}</div>
         </div>
     </div>
 </template>

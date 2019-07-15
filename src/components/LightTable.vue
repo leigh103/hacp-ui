@@ -1,5 +1,5 @@
 <template>
-    <div class="table-item" v-if="lights[id]">
+    <div class="table-item" v-if="lights[id]" :class="{'unavailable':lights[id].state.reachable === false}">
 
         <div class="indicator" @click.prevent="toggle()">
             <div class="led" :class="{'on':lights[id].state.on === true,'off':lights[id].state.on === false,'unavailable':lights[id].state.reachable === false}"></div>
@@ -49,7 +49,7 @@
                     }
                 }
                 this.$store.dispatch('call',payload)
-                
+
             }
         },
         mounted(){

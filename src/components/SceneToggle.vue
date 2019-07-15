@@ -31,6 +31,14 @@
                     }
 
                     this.$store.dispatch('call',payload)
+                    .then(res => {
+                        let payload = {
+                            method:'GET',
+                            url:'init/groups/'+this.gid
+                        }
+                        this.$store.dispatch('hacpCall',payload)
+
+                    })
 
                 } else {
 

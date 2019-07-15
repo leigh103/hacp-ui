@@ -22,11 +22,11 @@
                         <h3 class="inline">Automations</h3>
                     </div>
                     <div class="block-50 text-right">
-                        <a class="btn" @click.prevent="openAddAutomation()">+ Add Automation</a>
+                        <a class="btn add" @click.prevent="openAddAutomation()"><i class="fas fa-plus"></i></a>
                     </div>
                 </div>
                 <div class="underline"></div>
-                <automations-table :id="view.selected_sensor" :type="'sensors'"></automations-table>
+                <automations-toggle :id="view.selected_sensor" :type="'sensors'"></automations-toggle>
             </div>
 
             <div class="p-5">

@@ -14,8 +14,8 @@
                     </p>
                 </div>
                 <div class="block-50 text-right">
-                    <a @click.prevent="set_val = !set_val" class="btn bg-light-grey mr-1"><span v-show="!set_val">+ Enter Value</span><span v-show="set_val">< View Events</span></a>
-                    <a class="btn" @click.prevent="closePopup()">&times; Close</a>
+                    <a @click.prevent="set_val = !set_val" class="btn bg-light-grey mr-1"><span v-show="!set_val"><i class="fas fa-edit"></i></span><span v-show="set_val"><i class="fas fa-list-alt"></i></span></a>
+                    <a class="btn close" @click.prevent="closePopup()"><i class="fas fa-times"></i></a>
                 </div>
             </div>
             <div v-show="!set_val" class="py-3">

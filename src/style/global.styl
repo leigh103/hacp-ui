@@ -1,5 +1,6 @@
 $color-led-on = #14e2b9;
 $color-green-bg = #09cda6;
+$color-blue-bg = #09b6cd;
 $color-led-off = #888;
 $color-led-warn = #cd9109;
 $color-led-replace = #cd0956;
@@ -27,8 +28,39 @@ $color-led-replace = #cd0956;
     &.delete, &.close {
     }
 
+    &.close {
+        background: none;
+    }
+
     &.delete {
-        color: #c40000;
+        background-color: $color-led-replace;
+        color: white;
+    }
+
+    &.save {
+        background-color: $color-green-bg;
+        color: white;
+    }
+
+    &.add {
+        background-color: $color-blue-bg;
+        color: white;
+    }
+
+    &.saved::before {
+        display:flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top:0;
+        left:0;
+        width: 100%;
+        height:100%;
+        content:'SAVED';
+        background-color: $color-led-on;
+        color: white;
+        font-weight: bold;
+        border-radius: 0.2em;
     }
 }
 
@@ -42,7 +74,7 @@ $color-led-replace = #cd0956;
     border-radius: 5px;
     padding: 1.5em;
     width: 9.5em;
-    height: 11em;
+    height: 12em;
 
     .name {
         position: absolute;
@@ -57,8 +89,9 @@ $color-led-replace = #cd0956;
         position: relative;
         width: 100%;
         text-align: left;
-
-
+        color: $color-green-bg;
+        font-weight: bold;
+        
         .led {
             display:block;
             width: 0.5em;
@@ -136,7 +169,6 @@ $color-led-replace = #cd0956;
         justify-content: flex-start;
         padding-left: 0;
         cursor: pointer;
-        color: white;
     }
 
     .indicator {
@@ -239,6 +271,10 @@ $color-led-replace = #cd0956;
         }
     }
 
+    &.unavailable {
+        opacity: 0.5;
+    }
+
     & > div {
         flex: 1;
 
@@ -334,4 +370,10 @@ i.fas {
     animation-duration: 2000ms;
     animation-iteration-count: infinite;
     animation-timing-function: linear;
+}
+
+.no-style {
+    border:none !important;
+    padding:0 !important;
+    margin:0 !important;
 }
