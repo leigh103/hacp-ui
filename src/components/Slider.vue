@@ -1,9 +1,9 @@
 <template>
     <div class="px-1">
 
-        <input type="range" name="brightness" v-model="lights[light].state.bri" min="0" max="255" v-if="type == 'bri'" @change="changeLight()">
+        <input type="range" name="brightness" step="10" v-model="lights[light].state.bri" min="0" max="255" v-if="type == 'bri'" @change="changeLight()">
 
-        <input type="range" name="color-temp" v-model="lights[light].state.ct" :min="lights[light].ctmin" :max="lights[light].ctmax" v-else @change="changeLight()">
+        <input type="range" name="color-temp" step="10" v-model="lights[light].state.ct" :min="lights[light].ctmin" :max="lights[light].ctmax" v-else @change="changeLight()">
 
     </div>
 </template>
