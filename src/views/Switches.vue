@@ -1,10 +1,10 @@
 <template>
 
     <div class="row">
-        <div class="block-20 bg-grey vh100 overflow-y">
+        <div class="view-list vh100 overflow-y">
             <switch-list />
         </div>
-        <div class="block-80 bg-white vh100 overflow-y">
+        <div class="view-page vh100 overflow-y">
             <sensor-page v-if="view.selected_sensor"/>
         </div>
     </div>

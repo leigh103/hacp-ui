@@ -5,7 +5,7 @@
             <div class="row">
                 <div class="block-50">
                     <h3 class="inline">Set Automation</h3>
-                    <p>Set the options below to set your automation's actions</p>
+                    <p>Set the options below to create your automation</p>
                     </p>
                 </div>
                 <div class="block-50 text-right">
@@ -63,7 +63,7 @@
                         <select v-model="automation_data.value" v-if="automation_data.entity_id == 'clipall' || automation_data.entity_id == 'playaudio'">
                             <option value="" disabled selected>Select an audio file...</option>
                             <option value="Doorbell-ringtone.mp3">Large Doorbell</option>
-                            <option value="Houe-bell.mp3">House Doorbell</option>
+                            <option value="House-bell.mp3">House Doorbell</option>
                             <option value="Christmas-doorbell.mp3">Christmas Doorbell</option>
                             <option value="nice_sms_tone.mp3">SMS Tone</option>
                             <option value="haunted_mansion.mp3">Haunted Mansion - Welcome</option>
@@ -277,6 +277,10 @@
 
             if (!this.automations){
                 this.$store.dispatch('getEntities','automations')
+            }
+
+            if (localStorage.getItem('automation_data')){
+                this.automation_data = JSON.parse(localStorage.getItem('automation_data'))
             }
 
         }

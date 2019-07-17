@@ -1,7 +1,12 @@
 <template>
 
     <div>
-        <device-list />
+        <div class="view-list vh100 overflow-y pt-2">
+            <device-list />
+        </div>
+        <div class="view-page vh100 overflow-y">
+            <device-page v-if="view.selected_device"/>
+        </div>
     </div>
 
 </template>

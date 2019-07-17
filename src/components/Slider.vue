@@ -73,9 +73,10 @@
 
 <style lang="stylus">
 
-$color-led-on = #14e2b9;
-$color-green-bg = #09cda6;
-$color-led-off = #888;
+$color-green = #09cda6;
+$color-blue = #00DCEA;
+$color-led-on = $color-blue;
+$color-led-off = #222;
 $color-led-warn = #cd9109;
 $color-led-replace = #cd0956;
 
@@ -84,18 +85,18 @@ input[type="range"]:not(.circular) {
     -webkit-appearance: none;
     position: relative;
     overflow: hidden;
-    height: 10px;
+    height: 0.4em;
     padding:0;
     width: 100%;
     cursor: pointer;
-    border-radius: 0.5em;
+    border-radius: 0.2em;
     border: none;
-    background: #8b8b8b;
+    background: #111;
     transition: all 1s ease;
 }
 
 input[type="range"]:not(.circular)::-webkit-slider-runnable-track {
-    background: #aaa;
+    background: #222;
 }
 
 input[type="range"]:not(.circular)::-webkit-slider-thumb {
@@ -111,11 +112,11 @@ input[type="range"]:not(.circular)::-webkit-slider-thumb {
 
 input[type="range"]:not(.circular)::-moz-range-track {
     height: 40px;
-    background: #8b8b8b;
+    background: #111111;
 }
 
 input[type="range"]:not(.circular)::-moz-range-thumb {
-    background: #8b8b8b;
+    background: #111;
     height: 40px;
     width: 20px;
     box-shadow: -100vw 0 0 100vw $color-led-on;

@@ -3,22 +3,25 @@
 
         <div class="table-item" v-for="(automation, index) in automations_arr" :class="hidePrev(automation.trigger, automations_arr[index-1])">
 
-            <div class="trigger capitalize text-bold" v-if="automation.delete === true" v-text="parseStr(automation.time)"></div>
+            <div @click.prevent="showAutomation(automation, index)">
 
-            <div class="trigger capitalize" v-else-if="sensors[automation.orig_sensor]" :class="hidePrev(automation.trigger, automations_arr[index-1])">
-                <span class="text-bold mr-1" v-show="type == 'groups'" v-text="sensors[automation.orig_sensor].name"></span>
-                <span v-show="automation.trigger" v-html="parseVal(automation.trigger)" :class="{'text-bold':type != 'groups'}"></span>
+                <div class="trigger capitalize text-bold" v-if="automation.delete === true" v-text="parseStr(automation.time)"></div>
+
+                <div class="trigger capitalize" v-else-if="sensors[automation.orig_sensor]" :class="hidePrev(automation.trigger, automations_arr[index-1])">
+                    <span class="text-bold mr-1" v-show="type == 'groups'" v-text="sensors[automation.orig_sensor].name"></span>
+                    <span v-show="automation.trigger" v-html="parseVal(automation.trigger)" :class="{'text-bold':type != 'groups'}"></span>
+                </div>
+
+                <div class="trigger capitalize text-bold" v-else v-text="parseStr(automation.orig_sensor)"></div>
+
+
+                <div class="entity capitalize" v-if="match(automation.action, 'lights')" v-text="lights[automation.entity_id].name"></div>
+                <div class="entity capitalize" v-else-if="match(automation.action, 'groups|scene')" v-text="groups[automation.entity_id].name"></div>
+                <div class="entity capitalize" v-else-if="automation.action == 'play_audio'">Play Audio via HACP</div>
+
             </div>
 
-            <div class="trigger capitalize text-bold" v-else v-text="parseStr(automation.orig_sensor)"></div>
-
-
-            <div class="entity capitalize" v-if="match(automation.action, 'lights')" v-text="lights[automation.entity_id].name"></div>
-            <div class="entity capitalize" v-else-if="match(automation.action, 'groups|scene')" v-text="groups[automation.entity_id].name"></div>
-            <div class="entity capitalize" v-else-if="automation.action == 'play_audio'">Play Audio via HACP</div>
-
-
-            <div class="action">
+            <div class="action" @click.prevent="showAutomation(automation, index)">
 
                 <i v-if="automation.duration" class="fas fa-clock on mr-1"></i>
                 <i v-if="automation.conditions && automation.conditions.length>0" class="fas fa-clipboard-list on mr-1"></i>
@@ -68,6 +71,14 @@
             ])
         },
         methods: {
+            showAutomation(automation, key){
+
+                localStorage.setItem('automation_sid','s'+this.view.selected_sensor);
+                localStorage.setItem('automation_key',key);
+                localStorage.setItem('automation_data',JSON.stringify(automation));
+                this.$store.dispatch('updateView',{obj:'popup', val:'set_automation'})
+
+            },
             findAutomations(){
 
                 this.automations_arr = []

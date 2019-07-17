@@ -1,7 +1,7 @@
 <template>
     <div>
 
-        <div class="toggle" v-for="(automation, index) in automations_arr" :class="hidePrev(automation.trigger, automations_arr[index-1])">
+        <div class="toggle" v-for="(automation, index) in automations_arr" :class="hidePrev(automation.trigger, automations_arr[index-1])" @click.prevent="showAutomation(automation, index)">
 
             <div class="indicator">
                 <div class="capitalize text-bold" v-if="automation.delete === true" v-text="parseStr(automation.time)"></div>
@@ -50,6 +50,14 @@
             ])
         },
         methods: {
+            showAutomation(automation, key){
+
+                localStorage.setItem('automation_sid','s'+this.view.selected_sensor);
+                localStorage.setItem('automation_key',key);
+                localStorage.setItem('automation_data',JSON.stringify(automation));
+                this.$store.dispatch('updateView',{obj:'popup', val:'set_automation'})
+                
+            },
             findAutomations(){
 
                 this.automations_arr = []
