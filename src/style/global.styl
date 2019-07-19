@@ -34,6 +34,12 @@ h4 {
     font-weight: normal;
 }
 
+.text {
+    &-blue {
+        color: $color-blue;
+    }
+}
+
 .view {
 
     &-menu {
@@ -49,7 +55,7 @@ h4 {
         a {
             opacity: 0.5;
 
-            &.router-link-exact-active {
+            &.selected {
                 opacity: 1;
                 color: $color-blue;
             }
@@ -148,7 +154,13 @@ h4 {
     vertical-align: top;
     text-align: left;
     margin: 0 1em 1em 0;
-    background: $color-bg-grey;
+background: rgba(43,46,48,1);
+background: -moz-linear-gradient(-45deg, rgba(43,46,48,1) 0%, rgba(57,60,66,1) 100%);
+background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(43,46,48,1)), color-stop(100%, rgba(57,60,66,1)));
+background: -webkit-linear-gradient(-45deg, rgba(43,46,48,1) 0%, rgba(57,60,66,1) 100%);
+background: -o-linear-gradient(-45deg, rgba(43,46,48,1) 0%, rgba(57,60,66,1) 100%);
+background: -ms-linear-gradient(-45deg, rgba(43,46,48,1) 0%, rgba(57,60,66,1) 100%);
+background: linear-gradient(135deg, rgba(43,46,48,1) 0%, rgba(57,60,66,1) 100%);
     border-radius: $border-radius;
     padding: 1.5em;
     width: 9.5em;
@@ -237,7 +249,7 @@ h4 {
     background-color: $color-bg-grey;
     margin-bottom: 0.5em;
     opacity: 0.5;
-    transition: all 1s ease;
+    transition: all 0.5s ease;
 
     & > div {
         height:100%;
