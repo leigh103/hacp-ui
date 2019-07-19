@@ -5,7 +5,17 @@
                 v-if="sensor.type != 'ZHASwitch'"
                 :class="{'selected':view.selected_sensor === key}"
         >
-            <div class="indicator text-white" v-html="getMainStat(sensor)">
+            <div class="indicator">
+                <div class="led"
+                    :class="{
+                        'off':!sensor.config.on,
+                        'replace':sensor.config.on && sensor.config.battery > 1 && sensor.config.battery <= 20,
+                        'warn':sensor.config.on && sensor.config.battery > 20 && sensor.config.battery <= 30 || !sensor.config.battery && !sensor.config.configured,
+                        'on':sensor.config.on && sensor.config.battery > 30 || !sensor.config.battery && sensor.config.on
+                    }
+                ">
+
+                </div>
             </div>
             <div class="name text-white" @click.prevent="selectSensor(key)">{{ sensor.name }}</div>
         </div>

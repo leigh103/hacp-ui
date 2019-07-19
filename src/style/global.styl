@@ -5,6 +5,8 @@ $color-led-on = $color-blue;
 $color-led-off = #222;
 $color-led-warn = #cd9109;
 $color-led-replace = #cd0956;
+$color-bg-grey = rgb(57, 60, 66);
+$border-radius = 0.2em;
 
 #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
@@ -41,8 +43,17 @@ h4 {
         font-size: 1rem;
         height: 100vh;
         vertical-align: top;
-        background-color: #101010;
+        background-color: #000;
         padding-top: 2em;
+
+        a {
+            opacity: 0.5;
+
+            &.router-link-exact-active {
+                opacity: 1;
+                color: $color-blue;
+            }
+        }
     }
 
     &-viewport {
@@ -52,13 +63,7 @@ h4 {
         font-size: 1rem;
         height: 100vh;
         vertical-align: top;
-        background: rgba(51,57,62,1);
-        background: -moz-linear-gradient(-45deg, rgba(51,57,62,1) 0%, rgba(20,20,20,1) 100%);
-        background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(51,57,62,1)), color-stop(100%, rgba(20,20,20,1)));
-        background: -webkit-linear-gradient(-45deg, rgba(51,57,62,1) 0%, rgba(20,20,20,1) 100%);
-        background: -o-linear-gradient(-45deg, rgba(51,57,62,1) 0%, rgba(20,20,20,1) 100%);
-        background: -ms-linear-gradient(-45deg, rgba(51,57,62,1) 0%, rgba(20,20,20,1) 100%);
-        background: linear-gradient(135deg, rgba(51,57,62,1) 0%, rgba(20,20,20,1) 100%);
+        background: #000;
         color: #fff;
     }
 
@@ -74,7 +79,7 @@ h4 {
     &-list {
         display: inline-block;
         width: 17em;
-        background:#1D1F20;
+        background:rgba(0,0,0,0.5);
         color: white;
         vertical-align: top;
         padding-top: 2em;
@@ -90,7 +95,7 @@ h4 {
 
     display: inline-block;
     position: relative;
-    border-radius: 0.2em;
+    border-radius: $border-radius;
     margin-bottom: 0.2em;
     color: #444;
 
@@ -143,14 +148,8 @@ h4 {
     vertical-align: top;
     text-align: left;
     margin: 0 1em 1em 0;
-    background: rgba(57,67,76,1);
-    background: -moz-linear-gradient(-45deg, rgba(57,67,76,1) 0%, rgba(50,56,60,1) 100%);
-    background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(57,67,76,1)), color-stop(100%, rgba(50,56,60,1)));
-    background: -webkit-linear-gradient(-45deg, rgba(57,67,76,1) 0%, rgba(50,56,60,1) 100%);
-    background: -o-linear-gradient(-45deg, rgba(57,67,76,1) 0%, rgba(50,56,60,1) 100%);
-    background: -ms-linear-gradient(-45deg, rgba(57,67,76,1) 0%, rgba(50,56,60,1) 100%);
-    background: linear-gradient(135deg, rgba(57,67,76,1) 0%, rgba(50,56,60,1) 100%);
-    border-radius: 0.5em;
+    background: $color-bg-grey;
+    border-radius: $border-radius;
     padding: 1.5em;
     width: 9.5em;
     height: 12em;
@@ -232,9 +231,13 @@ h4 {
     justify-content: center;
     position: relative;
     text-align: left;
-    border-radius: 5px;
+    border-radius: $border-radius;
     width: 100%;
     height: 4em;
+    background-color: $color-bg-grey;
+    margin-bottom: 0.5em;
+    opacity: 0.5;
+    transition: all 1s ease;
 
     & > div {
         height:100%;
@@ -296,12 +299,13 @@ h4 {
     }
 
     &.unavailable {
-        opacity: 0.5;
+        opacity: 0.3;
     }
 
     &.selected {
-        font-weight: bold;
+        opacity: 1;
     }
+
 
 }
 

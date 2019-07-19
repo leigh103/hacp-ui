@@ -52,11 +52,15 @@
         methods: {
             showAutomation(automation, key){
 
-                localStorage.setItem('automation_sid','s'+this.view.selected_sensor);
-                localStorage.setItem('automation_key',key);
-                localStorage.setItem('automation_data',JSON.stringify(automation));
-                this.$store.dispatch('updateView',{obj:'popup', val:'set_automation'})
-                
+                if (!automation.delete){
+                    localStorage.setItem('automation_sid','s'+this.view.selected_sensor);
+                    localStorage.setItem('automation_key',key);
+                    localStorage.setItem('automation_data',JSON.stringify(automation));
+                    this.$store.dispatch('updateView',{obj:'popup', val:'set_automation'})
+                } else {
+                    alert('This is a scheduled automation set by HACP. It cannot be edited, but it can be deleted')
+                }
+
             },
             findAutomations(){
 

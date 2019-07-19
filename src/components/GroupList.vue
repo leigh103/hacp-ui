@@ -2,7 +2,7 @@
     <div>
         <div class="list-item"
                 v-for="(group, key) in groups"
-                :class="{'selected':view.selected_group === key}"
+                :class="{'selected':view.selected_group === key || !view.selected_group}"
         >
             <div class="indicator" @click.prevent="toggle(key)"><div class="led" :class="{'on':group.state.any_on === true, 'off':group.state.any_on === false}" v-show="group.lights.length > 0"></div></div>
             <div class="name" @click.prevent="selectGroup(key)">{{ group.name }}</div>
