@@ -107,7 +107,7 @@
 
                         this.alarm_code = ''
                         document.getElementById('popup-content').classList.add('shake');
-                        
+
                     })
 
                 } else if (num == 'cancel'){
@@ -151,28 +151,5 @@
     stroke-dashoffset: 0;
 }
 
-.shake {
-  animation: shake 0.5s linear;
-}
 
-@keyframes shake {
-  0% {
-    transform: translate(0);
-  }
-  20% {
-    transform: translate(3em);
-  }
-  40% {
-    transform: translate(-3em);
-  }
-  60% {
-    transform: translate(3em);
-  }
-  80% {
-    transform: translate(-3em);
-  }
-  100% {
-    transform: translate(0);
-  }
-}
 </style>
