@@ -193,6 +193,8 @@ export default new Vuex.Store({
 
                 axios(axios_payload).then(res => {
                     resolve(res);
+                }).catch(res => {
+                    reject(res);
                 })
 
             })

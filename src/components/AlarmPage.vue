@@ -49,6 +49,9 @@
                             </div>
                         </div>
                     </div>
+                    <div class="block-50 block-s-100 text-right">
+                        <button @click.prevent="setAlarm()" class="bg-red"><span v-if="alarm.key === view.selected_alarm">Disarm</span><span v-else>Set Alarm</span></button>
+                    </div>
                 </div>
 
             </div>
@@ -84,7 +87,9 @@
             'view'
         ]),
         methods: {
-
+            setAlarm(){
+                this.$store.dispatch('updateView',{obj:'popup', val:'set_alarm'})
+            }
 
         },
         mounted () {
