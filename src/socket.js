@@ -1,4 +1,5 @@
 import Vue from "vue"
+import { mapState } from 'vuex'
 
 const socket = new WebSocket("ws://10.0.1.100:6409")
 
@@ -18,7 +19,7 @@ socket.onmessage = function(msg){
     if (msg.data.match(/^\{(.*?)\}$/)){
         payload = JSON.parse(msg.data)
     }
-    // console.log(payload)
+
     emitter.$emit("message", payload)
 
 }

@@ -1,13 +1,13 @@
 <template>
     <div>
         <div class="list-item"
-                v-for="(group, key) in groups"
-                :class="{'selected':view.selected_group === key}"
+                v-for="(alarm, key) in alarm.alarms"
+                :class="{'selected':view.selected_alarm === key}"
         >
-            <div class="indicator" @click.prevent="toggle(key)"><div class="led" :class="{'on':group.state.any_on === true, 'off':group.state.any_on === false}" v-show="group.lights.length > 0"></div></div>
-            <div class="name" @click.prevent="selectGroup(key)">{{ group.name }}</div>
+            <div class="indicator"><div class="led"></div></div>
+            <div class="name" @click.prevent="selectAlarm(key)">{{ alarm.name }}</div>
         </div>
-        <div class="list-item" @click.prevent="selectGroup('new')">
+        <div class="list-item" @click.prevent="selectAlarm('new')">
             <div class="indicator text-white">+</div>
             <div class="name text-grey"></div>
         </div>
@@ -19,42 +19,24 @@
     import { mapState } from 'vuex'
 
     export default {
-        props: ['group', 'id'],
+        props: [],
         data: function () {
             return {
 
             }
         },
         computed: mapState([
-            'groups',
+            'alarm',
             'view',
         ]),
         methods: {
-            toggle(key) {
-
-                var action = true
-
-                if (this.groups[key].state.any_on === true){
-                    action = false
-                }
-
-                let payload = {
-                    url:'groups/'+key+'/action',
-                    data:{
-                        on:action
-                    }
-                }
-
-                this.$store.dispatch('call',payload)
-
-            },
-            selectGroup(key){
-                this.$store.dispatch('updateView',{obj:'selected_group', val:key})
+            selectAlarm(key){
+                this.$store.dispatch('updateView',{obj:'selected_alarm', val:key})
             }
         },
         mounted () {
-            if (Object.keys(this.groups).length == 0){
-                this.$store.dispatch('getEntities','groups')
+            if (Object.keys(this.alarm).length == 0){
+                this.$store.dispatch('getEntities','alarm')
             }
         },
     }

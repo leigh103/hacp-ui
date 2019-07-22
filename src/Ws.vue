@@ -28,6 +28,16 @@
                 } else if (msg.r == 'scenes'){
                 //    console.log(this.view.selected_group)
                     this.$store.dispatch('getEntity',{type:'groups',id:this.view.selected_group})
+
+                } else if (msg.r == 'automation_run'){
+
+                    if (msg.state.entity_id == 'playaudio'){
+                        let payload = {
+                            file:msg.state.value
+                        }
+                        this.$store.dispatch('playAudio',payload)
+                    }
+
                 }
 
             }

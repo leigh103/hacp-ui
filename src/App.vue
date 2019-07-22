@@ -1,5 +1,5 @@
 <template>
-    <div id="app" class="row vh100">
+    <div id="app" class="vh100">
 
         <div class="view-menu main-menu">
             <router-link to="/" :class="{'selected': !$route.name}"><i class="fas fa-home"></i></router-link>

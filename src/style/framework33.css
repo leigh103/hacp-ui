@@ -933,7 +933,7 @@ div.background {
   margin: auto; }
 
 .container > *, .row > * {
-  font-size: 1vw; }
+  font-size: 1rem; }
 
 .h10 {
   height: 10rem; }

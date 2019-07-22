@@ -20,6 +20,7 @@ export default new Vuex.Store({
             selected_group:0,
             selected_sensor:0,
             selected_device:0,
+            selected_alarm:0,
             popup:''
         }
     },
@@ -90,7 +91,7 @@ export default new Vuex.Store({
 
         all ({ commit }) {
             axios
-                .get('http://zigbee.local:3000/all')
+                .get('http://10.0.1.100:3000/all')
                 .then(r => {
                     commit('SET_GROUPS', r.data.groups)
                     commit('SET_LIGHTS', r.data.lights)
@@ -106,7 +107,7 @@ export default new Vuex.Store({
         getEntities ({ commit }, type) {
             return new Promise((resolve, reject) => {
                 axios
-                    .get('http://zigbee.local:3000/'+type)
+                    .get('http://10.0.1.100:3000/'+type)
                     .then(res => {
                         let commit_var = type.toUpperCase()
                         commit('SET_'+commit_var, res.data)
@@ -118,7 +119,7 @@ export default new Vuex.Store({
         getEntity ({ commit }, payload) {
             return new Promise((resolve, reject) => {
                 axios
-                    .get('http://zigbee.local:3000/'+payload.type+'/'+payload.id)
+                    .get('http://10.0.1.100:3000/'+payload.type+'/'+payload.id)
                     .then(res => {
                         let commit_var = payload.type.toUpperCase()
                         commit('SET_'+commit_var, {id:payload.id, data:res.data})
@@ -189,6 +190,15 @@ export default new Vuex.Store({
                 })
 
             })
+
+        },
+
+        playAudio ({commit}, payload){
+            console.log(payload)
+            if (payload.file) {
+                var audio = new Audio(require('./assets/audio/'+payload.file));
+                audio.play();
+            }
 
         }
 
