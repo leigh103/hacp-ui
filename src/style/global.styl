@@ -8,12 +8,17 @@ $color-led-replace = #cd0956;
 $color-bg-grey = rgb(57, 60, 66);
 $border-radius = 0.2em;
 
+html, body {
+    font-size: 1.2vw;
+}
+
 #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
+
 }
 
 h1 {
@@ -148,19 +153,19 @@ h4 {
     }
 }
 
-.toggle {
+div.toggle {
     display: inline-block;
     position: relative;
     vertical-align: top;
     text-align: left;
     margin: 0 1em 1em 0;
-background: rgba(43,46,48,1);
-background: -moz-linear-gradient(-45deg, rgba(43,46,48,1) 0%, rgba(57,60,66,1) 100%);
-background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(43,46,48,1)), color-stop(100%, rgba(57,60,66,1)));
-background: -webkit-linear-gradient(-45deg, rgba(43,46,48,1) 0%, rgba(57,60,66,1) 100%);
-background: -o-linear-gradient(-45deg, rgba(43,46,48,1) 0%, rgba(57,60,66,1) 100%);
-background: -ms-linear-gradient(-45deg, rgba(43,46,48,1) 0%, rgba(57,60,66,1) 100%);
-background: linear-gradient(135deg, rgba(43,46,48,1) 0%, rgba(57,60,66,1) 100%);
+    background: rgba(43,46,48,1);
+    background: -moz-linear-gradient(-45deg, rgba(43,46,48,1) 0%, rgba(57,60,66,1) 100%);
+    background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(43,46,48,1)), color-stop(100%, rgba(57,60,66,1)));
+    background: -webkit-linear-gradient(-45deg, rgba(43,46,48,1) 0%, rgba(57,60,66,1) 100%);
+    background: -o-linear-gradient(-45deg, rgba(43,46,48,1) 0%, rgba(57,60,66,1) 100%);
+    background: -ms-linear-gradient(-45deg, rgba(43,46,48,1) 0%, rgba(57,60,66,1) 100%);
+    background: linear-gradient(135deg, rgba(43,46,48,1) 0%, rgba(57,60,66,1) 100%);
     border-radius: $border-radius;
     padding: 1.5em;
     width: 9.5em;
@@ -232,6 +237,52 @@ background: linear-gradient(135deg, rgba(43,46,48,1) 0%, rgba(57,60,66,1) 100%);
         background-color: $color-green;
         color: white;
         font-weight: bold
+    }
+
+}
+
+input[type="checkbox"].toggle {
+
+    position: relative;
+    display: none;
+    width: 2em;
+    height: 1em;
+
+    & + label {
+        display: inline-block;
+        position: relative;
+        top:0;
+        left:0;
+        content:'';
+        width: 2.55em;
+        height: 1.5em;
+        border-radius: 0.75em;
+        background: none;
+        border: 2px solid $color-blue;
+        transition: all 0.5s ease;
+    }
+
+    & + label:after {
+        display: block;
+        position: absolute;
+        top:0;
+        left:0;
+        content:'';
+        width: 1em;
+        height: 1em;
+        margin: 0.15em;
+        border-radius: 0.5em;
+        background-color: $color-bg-grey;
+        transform: translateX(0);
+        transition: all 0.5s ease;
+    }
+
+    &:checked + label {
+    }
+
+    &:checked + label:after {
+        transform: translateX(1em);
+        background-color: $color-blue;
     }
 
 }
