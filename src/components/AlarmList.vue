@@ -2,9 +2,9 @@
     <div>
         <div class="list-item"
                 v-for="(alarm, key) in alarm.alarms"
-                :class="{'selected':view.selected_alarm === key}"
+                :class="{'selected':view.selected_alarm === key || !view.selected_group}"
         >
-            <div class="indicator"><div class="led"></div></div>
+            <div class="indicator"><div class="led" :class="{'on':alarm.key == key,'off': alarm.key != key}"></div></div>
             <div class="name" @click.prevent="selectAlarm(key)">{{ alarm.name }}</div>
         </div>
         <div class="list-item" @click.prevent="selectAlarm('new')">

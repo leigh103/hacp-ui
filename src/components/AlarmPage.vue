@@ -14,7 +14,7 @@
 
         </div>
 
-        <div class="text-left" v-if="view.selected_alarm != 'new'">
+        <div class="text-left" v-if="view.selected_alarm != 'new' && alarm.alarms && alarm.alarms.length>0 && alarm.alarms[view.selected_alarm]">
 
             <h1 class="" v-text="alarm.alarms[view.selected_alarm].name"></h1>
             <h4 v-text="alarm.alarms[view.selected_alarm].description"></h4>
@@ -37,7 +37,7 @@
                                 Email Alert
                             </div>
                             <div class="block-50 text-right align-middle">
-                                <input type="checkbox" class="toggle" id="email"><label for="email"></label>
+                                <input type="checkbox" class="toggle" v-model="alarm.alarms[view.selected_alarm].email" id="email"><label for="email"></label>
                             </div>
                         </div>
                         <div class="row mb-1">
@@ -45,7 +45,7 @@
                                 Audible Alert
                             </div>
                             <div class="block-50 text-right align-middle">
-                                <input type="checkbox" class="toggle" id="audible"><label for="audible"></label>
+                                <input type="checkbox" class="toggle" v-model="alarm.alarms[view.selected_alarm].alert" id="audible"><label for="audible"></label>
                             </div>
                         </div>
                     </div>

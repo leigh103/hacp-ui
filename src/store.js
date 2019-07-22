@@ -17,10 +17,10 @@ export default new Vuex.Store({
         alarm:{},
         automations:{},
         view:{
-            selected_group:0,
-            selected_sensor:0,
-            selected_device:0,
-            selected_alarm:0,
+            selected_group:false,
+            selected_sensor:false,
+            selected_device:false,
+            selected_alarm:false,
             popup:''
         }
     },
@@ -131,7 +131,7 @@ export default new Vuex.Store({
         updateView ({ commit }, payload) {
             if (payload.obj){
 
-                if (payload.obj.match(/^selected/) && this.state.view[payload.obj] == payload.val){
+                if (payload.obj.match(/^selected/) && this.state.view[payload.obj] === payload.val){
                     payload.val = false
                 }
 
