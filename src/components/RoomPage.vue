@@ -1,7 +1,7 @@
 <template>
     <div>
 
-        <div class="p-4 text-left" v-if="view.selected_group == 'new'">
+        <div class="text-left" v-if="view.selected_group == 'new'">
             <div class="row">
                 <div class="block-50">
                     <h1 class=""><input type="text" class="no-style" v-model="new_group_name" placeholder="New Group Name..."></h1>
@@ -14,7 +14,7 @@
 
         </div>
 
-        <div class="p-4 text-left" v-if="view.selected_group != 'new'">
+        <div class="text-left" v-if="view.selected_group != 'new'">
 
             <h1 class="" v-text="groups[view.selected_group].name"></h1>
             <h4>This group contains <span v-show="groups[view.selected_group].scenes.length>0">{{ groups[view.selected_group].scenes.length }} scenes and </span>{{ groups[view.selected_group].lights.length }} lights</h4>

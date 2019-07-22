@@ -1,7 +1,7 @@
 <template>
     <div v-if="sensors[this.view.selected_sensor]">
 
-        <div class="p-4 text-left">
+        <div class="text-left">
             <h1 class="" v-text="sensors[this.view.selected_sensor].name"></h1>
             <h4></h4>
 

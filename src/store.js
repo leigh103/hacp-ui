@@ -131,6 +131,10 @@ export default new Vuex.Store({
         updateView ({ commit }, payload) {
             if (payload.obj){
 
+                if (payload.obj.match(/^selected/) && this.state.view[payload.obj] == payload.val){
+                    payload.val = false
+                }
+
                 commit('SET_VIEW', {obj:payload.obj, val:payload.val})
 
                 if (payload.obj == 'popup' && payload.val != false){
@@ -138,6 +142,8 @@ export default new Vuex.Store({
                 } else {
                     document.getElementsByTagName('body')[0].classList.remove("overflow-hidden");
                 }
+
+
 
             } else {
                 commit('SET_VIEW', payload)
@@ -194,7 +200,6 @@ export default new Vuex.Store({
         },
 
         playAudio ({commit}, payload){
-            console.log(payload)
             if (payload.file) {
                 var audio = new Audio(require('./assets/audio/'+payload.file));
                 audio.play();

@@ -1,7 +1,7 @@
 <template>
     <div id="app" class="vh100">
 
-        <div class="view-menu main-menu">
+        <div class="view-menu main-menu" :class="{'collapse':view.selected_room || view.selected_device || view.selected_group || view.selected_alarm || view.selected_sensor}">
             <router-link to="/" :class="{'selected': !$route.name}"><i class="fas fa-home"></i></router-link>
             <router-link to="/rooms" :class="{'selected': $route.name == 'rooms'}"><i class="fas fa-vector-square"></i></router-link>
             <router-link to="/groups" :class="{'selected': $route.name == 'groups'}"><i class="fas fa-layer-group"></i></router-link>
@@ -12,7 +12,7 @@
             <router-link to="/alarms" :class="{'selected': $route.name == 'alarms'}"><i class="fas fa-bell"></i></router-link>
         </div>
 
-        <div class="view-viewport">
+        <div class="view-viewport" :class="{'expand':view.selected_room || view.selected_device || view.selected_group || view.selected_alarm || view.selected_sensor}">
             <router-view/>
             <ws />
         </div>
