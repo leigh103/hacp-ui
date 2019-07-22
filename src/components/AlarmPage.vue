@@ -16,16 +16,32 @@
 
         <div class="text-left" v-if="view.selected_alarm != 'new' && alarm.alarms && alarm.alarms.length>0 && alarm.alarms[view.selected_alarm]">
 
-            <h1 class="" v-text="alarm.alarms[view.selected_alarm].name"></h1>
-            <h4 v-text="alarm.alarms[view.selected_alarm].description"></h4>
-            <p>This alarm contains <span v-show="alarm.alarms[view.selected_alarm].sensors.length>0">{{ alarm.alarms[view.selected_alarm].sensors.length }} sensors and </span>{{ alarm.alarms[view.selected_alarm].cameras.length }} cameras</p>
+
+            <div class="row">
+                <div class="block-50">
+                    <h1 class="" v-text="alarm.alarms[view.selected_alarm].name"></h1>
+                    <h4 v-text="alarm.alarms[view.selected_alarm].description"></h4>
+
+                </div>
+                <div class="block-50 text-right">
+                    <button @click.prevent="setAlarm()" class="bg-red"><span v-if="alarm.key === view.selected_alarm">Disarm</span><span v-else>Set Alarm</span></button>
+                </div>
+            </div>
 
             <div class="mt-2">
 
-                <div class="row">
-                    <div class="block-50 block-s-100">
-                        <div class="row mb-1">
-                            <div class="block-50 align-middle">
+                <div class="row text-center">
+                    <div class="block-100 text-center">
+                        <div class="row mt-1 text-center border-bottom">
+                            <div class="block-50 text-left align-middle pb-1 text-blue">
+                                <h4>Settings</h4>
+                            </div>
+                            <div class="block-50 text-right align-middle">
+
+                            </div>
+                        </div>
+                        <div class="row mt-1 mb-1 text-center">
+                            <div class="block-50 text-left align-middle">
                                 Code
                             </div>
                             <div class="block-50 text-right align-middle">
@@ -33,7 +49,7 @@
                             </div>
                         </div>
                         <div class="row mb-1">
-                            <div class="block-50 align-middle">
+                            <div class="block-50 text-left align-middle">
                                 Email Alert
                             </div>
                             <div class="block-50 text-right align-middle">
@@ -41,7 +57,7 @@
                             </div>
                         </div>
                         <div class="row mb-1">
-                            <div class="block-50 align-middle">
+                            <div class="block-50 text-left align-middle">
                                 Audible Alert
                             </div>
                             <div class="block-50 text-right align-middle">
@@ -49,9 +65,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="block-50 block-s-100 text-right">
-                        <button @click.prevent="setAlarm()" class="bg-red"><span v-if="alarm.key === view.selected_alarm">Disarm</span><span v-else>Set Alarm</span></button>
-                    </div>
+
                 </div>
 
             </div>
