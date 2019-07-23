@@ -25,7 +25,9 @@
                 </div>
                 <div class="block-50 text-right">
                     <a class="btn save mr-1" v-if="show_save === true" @click.prevent="saveAlarm()"><i class="fas fa-save"></i></a>
-                    <a @click.prevent="setAlarm()" v-if="alarm.alarms[view.selected_alarm].code != '****' && alarm.alarms[view.selected_alarm].sensors.length>0" class="btn delete"><span v-if="alarm.key === view.selected_alarm">Disarm</span><span v-else>Set Alarm</span></a>
+                    <span v-if="alarm.alarms[view.selected_alarm].code != '****' && alarm.alarms[view.selected_alarm].sensors.length>0">
+                        <a @click.prevent="setAlarm()" v-if="alarm.armed === true && alarm.key == view.selected_alarm || alarm.armed === false" class="btn delete"><span v-if="alarm.armed === true || alarm.setting !== false">Disarm</span><span v-else>Set Alarm</span></a>
+                    </span>
                 </div>
             </div>
 
@@ -63,6 +65,14 @@
                             </div>
                             <div class="block-50 text-right align-middle">
                                 <input type="checkbox" class="toggle" v-model="alarm.alarms[view.selected_alarm].alert" id="audible"><label for="audible"></label>
+                            </div>
+                        </div>
+                        <div class="row mb-1">
+                            <div class="block-50 text-left align-middle">
+                                Arming Countdown
+                            </div>
+                            <div class="block-50 text-right align-middle">
+                                <input type="checkbox" class="toggle" v-model="alarm.alarms[view.selected_alarm].countdown" id="countdown"><label for="countdown"></label>
                             </div>
                         </div>
                     </div>
@@ -151,6 +161,7 @@
                 		email: this.alarm.alarms[this.view.selected_alarm].email,
                 		alert: this.alarm.alarms[this.view.selected_alarm].alert,
                 		sensors: this.alarm.alarms[this.view.selected_alarm].sensors,
+                        countdown: this.alarm.alarms[this.view.selected_alarm].countdown,
                 		cameras: [{
                 			name: "Driveway",
                 			image_url: "http://10.0.1.39/tmpfs/auto.jpg",

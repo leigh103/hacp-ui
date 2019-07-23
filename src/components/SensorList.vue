@@ -67,9 +67,9 @@
             }
         },
         mounted () {
-            if (Object.keys(this.sensors).length == 0){
+        //    if (Object.keys(this.sensors).length == 0){
                 this.$store.dispatch('getEntities','sensors')
-            }
+        //    }
         },
     }
 
