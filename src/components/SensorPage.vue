@@ -6,12 +6,12 @@
             <h4></h4>
 
             <div class="mt-2">
-                <h3>Sensor Values</h3>
+                <h3 class="mb-1">Sensor Values</h3>
                 <div class="underline"></div>
                 <sensor-info v-for="(stat, key) in sensors[this.view.selected_sensor].state" :id="view.selected_sensor" :name="key" :val="stat"></sensor-info>
             </div>
             <div class="mt-2">
-                <h3>Sensor Config</h3>
+                <h3 class="mb-1">Sensor Config</h3>
                 <div class="underline"></div>
                 <sensor-info v-for="(stat, key) in sensors[this.view.selected_sensor].config" :id="view.selected_sensor" :name="key" :val="stat"></sensor-info>
             </div>
