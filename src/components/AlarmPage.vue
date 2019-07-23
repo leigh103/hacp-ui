@@ -8,7 +8,7 @@
                     <p>Type a new name for the alarm above and click save</p>
                 </div>
                 <div class="block-50 text-right">
-                    <a class="btn save"@click.prevent="saveNewGroup()"><i class="fas fa-save"></i></a>
+                    <a class="btn save"@click.prevent="saveNewAlarm()"><i class="fas fa-save"></i></a>
                 </div>
             </div>
 
@@ -19,12 +19,13 @@
 
             <div class="row">
                 <div class="block-50">
-                    <h1 class="" v-text="alarm.alarms[view.selected_alarm].name"></h1>
-                    <h4 v-text="alarm.alarms[view.selected_alarm].description"></h4>
+                    <h1 class=""><input type="text" class="no-style" v-model="alarm.alarms[view.selected_alarm].name"></h1>
+                    <h4><textarea class="no-style" v-model="alarm.alarms[view.selected_alarm].description"></textarea></h4>
 
                 </div>
                 <div class="block-50 text-right">
-                    <button @click.prevent="setAlarm()" class="bg-red"><span v-if="alarm.key === view.selected_alarm">Disarm</span><span v-else>Set Alarm</span></button>
+                    <a class="btn save mr-1" v-if="show_save === true" @click.prevent="saveAlarm()"><i class="fas fa-save"></i></a>
+                    <a @click.prevent="setAlarm()" v-if="alarm.alarms[view.selected_alarm].code != '****' && alarm.alarms[view.selected_alarm].sensors.length>0" class="btn delete"><span v-if="alarm.key === view.selected_alarm">Disarm</span><span v-else>Set Alarm</span></a>
                 </div>
             </div>
 
@@ -45,7 +46,7 @@
                                 Code
                             </div>
                             <div class="block-50 text-right align-middle">
-                                <p class="text-bold" v-text="alarm.alarms[view.selected_alarm].code"></p>
+                                <p class="text-bold"><input type="text" class="no-style text-right" v-model="alarm.alarms[view.selected_alarm].code"></p>
                             </div>
                         </div>
                         <div class="row mb-1">
@@ -67,6 +68,36 @@
                     </div>
 
                 </div>
+
+            </div>
+
+            <div class="mt-2">
+
+                <div class="row mb-2">
+                    <div class="block-50">
+                        <h3 class="inline">Sensors</h3>
+                    </div>
+                    <div class="block-50 text-right">
+                        <a class="btn add" @click.prevent="setSensors()"><i class="fas fa-plus"></i></a>
+                    </div>
+                </div>
+
+                <sensor-info v-for="sensor in alarm.alarms[view.selected_alarm].sensors" :id="sensor"></sensor-info>
+
+            </div>
+
+            <div class="mt-2">
+
+                <div class="row mb-2">
+                    <div class="block-50">
+                        <h3 class="inline">Cameras</h3>
+                    </div>
+                    <div class="block-50 text-right">
+                        <a class="btn add" @click.prevent="addCamera()"><i class="fas fa-plus"></i></a>
+                    </div>
+                </div>
+
+
 
             </div>
 
@@ -93,7 +124,8 @@
         name: 'alarm_page',
         data(){
             return {
-                new_alarm_name:''
+                new_alarm_name:'',
+                show_save: false
             }
         },
         computed: mapState([
@@ -103,8 +135,104 @@
         methods: {
             setAlarm(){
                 this.$store.dispatch('updateView',{obj:'popup', val:'set_alarm'})
+            },
+            setSensors(){
+                this.$store.dispatch('updateView',{obj:'popup', val:'manage_sensors'})
+            },
+            saveAlarm(){
+
+                let payload = {
+                    method:'PUT',
+                    url: 'alarm',
+                    data:{
+                		name: this.alarm.alarms[this.view.selected_alarm].name,
+                		code: this.alarm.alarms[this.view.selected_alarm].code,
+                		description: this.alarm.alarms[this.view.selected_alarm].description,
+                		email: this.alarm.alarms[this.view.selected_alarm].email,
+                		alert: this.alarm.alarms[this.view.selected_alarm].alert,
+                		sensors: this.alarm.alarms[this.view.selected_alarm].sensors,
+                		cameras: [{
+                			name: "Driveway",
+                			image_url: "http://10.0.1.39/tmpfs/auto.jpg",
+                			username: "admin",
+                			password: "C$Lli303",
+                			view_url: "http://3o3mtdevlpmrplgc.myfritz.net:9001/web/mobile.html"
+                		}]
+                	}
+                }
+
+                if (this.view.selected_alarm != "new"){
+                    payload.data.key = this.view.selected_alarm
+                }
+
+                this.$store.dispatch('hacpCall',payload)
+                    .then(res => {
+                        this.show_save = false
+                    })
+            },
+
+            saveNewAlarm(){
+
+                let payload = {
+                    method:'PUT',
+                    url: 'alarm',
+                    data:{
+                		name: this.new_alarm_name,
+                		code: "****",
+                		description: "Tap here to edit the description...",
+                		email: false,
+                		alert: false,
+                		sensors: [],
+                		cameras: []
+                	}
+                }
+
+                this.$store.dispatch('hacpCall',payload)
+                    .then(res => {
+                        this.$store.dispatch('getEntities','alarm')
+                            .then(res2 => {
+                                this.$store.dispatch('updateView',{obj:'selected_alarm', val:this.alarm.alarms.length-1})
+                            })
+                    })
+            },
+
+            deleteAlarm(){
+
+                let prompt = confirm('Are you sure you want to delete this alarm?')
+
+                if (prompt){
+                    let payload = {
+                        method:'POST',
+                        url: 'alarm',
+                        data:{
+                            type:'delete',
+                            key: this.view.selected_alarm
+                        }
+                    }
+
+                    this.$store.dispatch('hacpCall',payload)
+                        .then(res => {
+                            this.$store.dispatch('getEntities','alarm')
+                                .then(res2 => {
+                                    this.$store.dispatch('updateView',{obj:'selected_alarm', val:false})
+                                })
+                        })
+                }
+
             }
 
+        },
+        watch: {
+            alarm:{
+                 handler(val, new_val){
+
+                     if (Object.keys(new_val).length>0){
+                         this.show_save = true
+                     }
+
+                 },
+                 deep: true
+              }
         },
         mounted () {
 

@@ -20,6 +20,7 @@
         <detect-automation v-if="view.popup == 'add_automation'"></detect-automation>
         <set-automation v-if="view.popup == 'set_automation'"></set-automation>
         <manage-lights v-if="view.popup == 'manage_lights'"></manage-lights>
+        <manage-sensors v-if="view.popup == 'manage_sensors'"></manage-sensors>
         <set-alarm v-if="view.popup == 'set_alarm'"></set-alarm>
 
     </div>

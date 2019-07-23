@@ -5,7 +5,8 @@
             </div>
         </div>
         <div class="name">
-            {{ name }}
+            <span v-if="name">{{ name }}</span>
+            <span v-else-if="sensors[id]">{{ sensors[id].name }}</span>
         </div>
     </div>
 </template>

@@ -150,7 +150,7 @@ export default new Vuex.Store({
             }
         },
 
-        call ({ commit }, payload) {
+        call ({ commit }, payload) { // call the Zigbee gateway API
 
             return new Promise((resolve, reject) => {
 
@@ -170,7 +170,7 @@ export default new Vuex.Store({
 
         },
 
-        hacpCall ({ commit }, payload) {
+        hacpCall ({ commit }, payload) { // call the HACP API
 
             return new Promise((resolve, reject) => {
 
