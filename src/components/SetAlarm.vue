@@ -12,25 +12,17 @@
                 </div>
             </div>
             <div class="py-3 text-center">
-                <div class="grid col-3 m-1" v-show="success === false">
+                <div class="grid col-3 m-1" v-show="countdown_val == 0">
                     <div class="number" @click.prevent="press($event, num)" v-for="num in [1,2,3,4,5,6,7,8,9]">{{num}}</div>
                     <div class="number" @click.prevent="press($event, 'cancel')">Cancel</div>
                     <div class="number" @click.prevent="press($event, 0)">0</div>
                     <div class="number" @click.prevent="press($event, 'set')">Set</div>
                 </div>
-                <div class="row">
-                    <div v-show="success === true" style="width: 10em" class="block-10 text-center">
-                        <div id="trigger" class="trigger"></div>
-                        <svg version="1.1" id="tick" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                        	 viewBox="0 0 37 37" style="enable-background:new 0 0 37 37;" xml:space="preserve">
-                        <path class="circ path" style="fill:none;stroke:rgb(108, 213, 99);stroke-width:3;stroke-linejoin:round;stroke-miterlimit:10;" d="
-                        	M30.5,6.5L30.5,6.5c6.6,6.6,6.6,17.4,0,24l0,0c-6.6,6.6-17.4,6.6-24,0l0,0c-6.6-6.6-6.6-17.4,0-24l0,0C13.1-0.2,23.9-0.2,30.5,6.5z"
-                        	/>
-                        <polyline class="tick path" style="fill:none;stroke:rgb(108, 213, 99);stroke-width:3;stroke-linejoin:round;stroke-miterlimit:10;" points="
-                        	11.6,20 15.9,24.2 26.4,13.8 "/>
-                        </svg>
+
+                    <div v-show="countdown_val > 0" class="p-1 text-center">
+                        <div class="countdown" v-text="countdown_val"></div>
                     </div>
-                </div>
+
             </div>
         </div>
 
@@ -49,7 +41,8 @@
             return {
                 alarm_code: '',
                 success:false,
-                failure:false
+                failure:false,
+                countdown_val: 0
             }
         },
         computed: mapState([
@@ -60,14 +53,24 @@
             closePopup(){
                 this.$store.dispatch('updateView',{obj:'popup'})
             },
+            countDown(){
+                this.countdown_val--
+                if (this.countdown_val > 0){
+                    setTimeout(()=>{
+                        this.countDown()
+                    },1000)
+                } else {
+                    this.$store.dispatch('updateView',{obj:'popup'})
+                }
+            },
             press(event, num){
 
                 if (parseInt(num)){
 
-                    let payload = {
-                        file:'Button-beep-tone.mp3'
-                    }
-                    this.$store.dispatch('playAudio',payload)
+                    // let payload = {
+                    //     file:'Button-beep-tone.mp3'
+                    // }
+                    // this.$store.dispatch('playAudio',payload)
 
                     this.alarm_code += num
                     event.target.classList.add('pressed')
@@ -88,20 +91,16 @@
                     .then(res => {
 
                         this.alarm_code = ''
+
                         this.$store.dispatch('getEntities','alarm')
-
-                        if (res.status == 200){
-                            this.success = true
-                            setTimeout(()=>{
-                                document.getElementById('trigger').classList.add('drawn');
-                            },500)
-                        }
-
-                        setTimeout(()=>{
-                            this.$store.dispatch('updateView',{obj:'popup'})
-                            this.failure = false
-                            this.success = false
-                        },2500)
+                            .then(res2 => {
+                                if (res.status == 200){
+                                    this.countdown_val = 30
+                                    this.countDown()
+                                } else {
+                                    this.$store.dispatch('updateView',{obj:'popup'})
+                                }
+                            })
 
                     }).catch(res => {
 
@@ -119,7 +118,7 @@
             }
         },
         mounted () {
-
+            this.$store.dispatch('getEntities','alarm')
         }
 
     }
