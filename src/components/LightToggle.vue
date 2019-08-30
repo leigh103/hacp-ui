@@ -31,6 +31,7 @@
                 }
 
                 let payload = {
+                    effect:'lightning',
                     url:'lights/'+this.id+'/state',
                     data:{
                         on:action

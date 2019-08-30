@@ -158,13 +158,61 @@ export default new Vuex.Store({
                     payload.method = 'PUT'
                 }
 
-                axios({
-                    method:payload.method,
-                    url:'http://10.0.1.100/api/988112a4e198cc1211/'+payload.url,
-                    data:payload.data
-                }).then(res => {
-                    resolve(res);
-                })
+                if (payload.effect && payload.effect == 'lightning'){
+
+                    var state,
+                        its = 9,
+                        last = its-1,
+                        ttime = 0;
+
+                    var i = 0;
+
+                    function myLoop () {
+
+                        if (i%2==0){
+                            state = 0
+                        } else {
+                            state = 255
+                        }
+
+                       setTimeout(function () {
+
+                           if (i == last){
+                               ttime =15
+                           }
+
+                           axios({
+                               method:payload.method,
+                               url:'http://10.0.1.100/api/988112a4e198cc1211/'+payload.url,
+                               data:{on: true, bri: state, transitiontime:ttime}
+                           }).then(res => {
+                               if (i == its){
+                                   resolve(res);
+                               }
+
+                           })
+                          i++;
+                          if (i < its) {
+                             myLoop();
+                          }
+                      }, 100)
+                    }
+
+                    myLoop();
+
+                } else {
+
+                    axios({
+                        method:payload.method,
+                        url:'http://10.0.1.100/api/988112a4e198cc1211/'+payload.url,
+                        data:payload.data
+                    }).then(res => {
+                        resolve(res);
+                    })
+
+                }
+
+
 
             })
 
