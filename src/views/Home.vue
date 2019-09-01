@@ -3,7 +3,7 @@
     <h1 class="text-blue" v-if="weather">Good {{time.time_of_day}}, it's {{weather.currently.apparentTemperature | temp}}&deg;</h1>
     <h2>{{weather.daily.summary}}</h2>
 
-    <h2 class="mt-2 mb-1">Alarms</h2>
+    <h2 class="mt-2 mb-1 text-blue">Alarms</h2>
     <div class="scroll-horizontal">
         <div class="list-item selected" @click.prevent="setAlarm(key)" v-for="(alrm, key) in alarm.alarms">
             <div class="indicator"><div class="led" :class="{'on':alarm.armed === true && alarm.key === key,'off': alarm.key != key || alarm.key === false}"></div></div>
@@ -13,7 +13,7 @@
 
 
     <div v-if="fav_groups.length > 0">
-        <h2 class="mt-2 mb-1">Groups</h2>
+        <h2 class="mt-2 mb-1 text-blue">Groups</h2>
         <div class="scroll-horizontal">
             <group-toggle v-for="(val,gid) in fav_groups" :id="val.gid"></group-toggle>
         </div>
