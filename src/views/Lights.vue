@@ -1,6 +1,6 @@
 <template>
 
-    <div class="text-left p-2">
+    <div class="text-left p-2 overflow-y">
         <light-toggle :light="light" :key="key" :id="key" v-for="(light,key) in lights"></light-toggle>
     </div>
 
