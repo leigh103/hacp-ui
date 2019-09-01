@@ -65,12 +65,14 @@
                             <option value="Doorbell-ringtone.mp3">Large Doorbell</option>
                             <option value="House-bell.mp3">House Doorbell</option>
                             <option value="Christmas-doorbell.mp3">Christmas Doorbell</option>
-                            <option value="Soft-chime.mp3">Soft Chime</option>
-                            <option value="nice_sms_tone.mp3">SMS Tone</option>
+                            <option value="Notification-1.mp3">Notification 1</option>
+                            <option value="Notification-2.mp3">Notification 2</option>
+                            <option value="Notification-3.mp3">Notification 3</option>
                             <option value="haunted_mansion.mp3">Haunted Mansion - Welcome</option>
                             <option value="laughing.mp3">Haunted Mansion - Laugh</option>
                             <option value="organ.mp3">Haunted Mansion - Organ</option>
                             <option value="look_alive.mp3">Haunted Mansion - Look Alive</option>
+                            <option value="Door-creak.mp3">Door Creak</option>
                         </select>
 
                     </div>
