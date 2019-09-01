@@ -65,6 +65,7 @@
                             <option value="Doorbell-ringtone.mp3">Large Doorbell</option>
                             <option value="House-bell.mp3">House Doorbell</option>
                             <option value="Christmas-doorbell.mp3">Christmas Doorbell</option>
+                            <option value="Soft-chime.mp3">Soft Chime</option>
                             <option value="nice_sms_tone.mp3">SMS Tone</option>
                             <option value="haunted_mansion.mp3">Haunted Mansion - Welcome</option>
                             <option value="laughing.mp3">Haunted Mansion - Laugh</option>
