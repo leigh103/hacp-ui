@@ -43,7 +43,7 @@
             </div>
 
             <div class="user-action">
-                <div class="btn delete"><i class="fas fa-times"></i></div>
+                <div class="btn delete" @click.prevent="deleteAutomation(automation, index)"><i class="fas fa-times"></i></div>
             </div>
 
         </div>
@@ -144,6 +144,47 @@
                         this.automations_arr.push(this.automations[i])
                     }
                 }
+
+            },
+            deleteAutomation(automation, index){
+
+                var conf = confirm('Delete this automation?')
+
+                if (conf){
+                    var data = {
+                        event:automation.orig_value,
+                        key:index
+                    }
+
+                    if (!automation.orig_sensor.match(/^d|[0-9]{4}|sunset|sunrise|dusk|dawn|daylight/)){
+                        data.sensor = 's'+automation.orig_sensor
+                    }
+
+                    if (automation.time){
+                        data.sensor = automation.time
+                        data.event = index
+                        delete(data.key)
+                    }
+
+                    let payload = {
+                        method:'POST',
+                        url:'automations',
+                        data: data
+                    }
+console.log(payload)
+                    this.$store.dispatch('hacpCall',payload)
+                        .then(res => {
+                            console.log(res)
+                            this.$store.dispatch('getEntities','automations')
+                                .then(res => {
+                                    console.log(res)
+                                    //TODO Need to reparse the automations_arr arr here
+                                })
+
+
+                        })
+                }
+
 
             },
             hidePrev(trigger, prev){
