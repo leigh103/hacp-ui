@@ -3,6 +3,15 @@
     <h1 v-if="weather">Good {{time.time_of_day}}, it's {{weather.currently.apparentTemperature | temp}}&deg;</h1>
     <h2>{{weather.daily.summary}}</h2>
 
+    <h2 class="mt-2 mb-1">Alarms</h2>
+    <div class="scroll-horizontal">
+        <div class="list-item selected" @click.prevent="setAlarm(key)" v-for="(alrm, key) in alarm.alarms">
+            <div class="indicator"><div class="led" :class="{'on':alarm.armed === true && alarm.key === key,'off': alarm.key != key || alarm.key === false}"></div></div>
+            <div class="name">{{ alrm.name }}</div>
+        </div>
+    </div>
+
+
     <div v-if="fav_groups.length > 0">
         <h2 class="mt-2 mb-1">Groups</h2>
         <div class="scroll-horizontal">
@@ -16,6 +25,7 @@
 // @ is an alias to /src
 
 import { mapState } from 'vuex'
+import alarm from './alarm.js'
 
 export default {
     name: 'home',
@@ -28,12 +38,15 @@ export default {
     computed: mapState([
         'weather',
         'time',
-        'groups'
+        'alarm'
     ]),
     filters: {
         temp (value) {
           return parseInt(value.toFixed(0))
         }
+    },
+    created() {
+        this.setAlarm = alarm.setAlarm // now you can call this.foo() (in your functions/template)
     },
     mounted () {
         this.$store.dispatch('all')
