@@ -52,20 +52,5 @@
 
 <style lang="stylus">
 
-    .main-menu {
-
-        text-align: center;
-
-        a {
-            color: white;
-            display: block;
-            text-align: center;
-            padding-bottom: 1.5em;
-        }
-
-        a.router-link-exact-active {
-            font-weight: bold;
-        }
-    }
 
 </style>

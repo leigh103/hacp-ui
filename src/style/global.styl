@@ -78,12 +78,21 @@ h4 {
         }
 
         a {
+            color: white;
+            display: block;
+            text-align: center;
+            padding-bottom: 1.5em;
             opacity: 0.3;
 
             &.selected {
                 font-weight: 300;
                 opacity: 1;
+                color: $color-blue;
             }
+        }
+
+        a.router-link-exact-active {
+            font-weight: bold;
         }
     }
 
