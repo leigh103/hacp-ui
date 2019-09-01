@@ -16,14 +16,14 @@
 
         <div class="text-left" v-if="view.selected_group != 'new'">
 
-            <h1 class="" v-text="groups[view.selected_group].name"></h1>
+            <h1 class="text-blue" v-text="groups[view.selected_group].name"></h1>
             <h4 class="">This group contains <span v-show="groups[view.selected_group].scenes.length>0">{{ groups[view.selected_group].scenes.length }} scenes and </span>{{ groups[view.selected_group].lights.length }} lights</h4>
 
             <div class="mt-2">
 
                 <div class="row">
                     <div class="block-50">
-                        <h3 class="inline">Lights</h3>
+                        <h3 class="text-blue inline">Lights</h3>
                     </div>
                     <div class="block-50 text-right">
 
@@ -42,7 +42,7 @@
             <div class="mt-2">
                 <div class="row">
                     <div class="block-50">
-                        <h3 class="inline">Scenes</h3>
+                        <h3 class="text-blue inline">Scenes</h3>
                     </div>
                     <div class="block-50 text-right">
 
@@ -78,7 +78,7 @@
             <div class="mt-2">
                 <div class="row">
                     <div class="block-50">
-                        <h3 class="inline">Automations</h3>
+                        <h3 class="text-blue inline">Automations</h3>
                     </div>
                     <div class="block-50 text-right">
                         <a class="btn add" v-show="automations_edit || view.found_automations == 0" @click.prevent="openAddAutomation()"><i class="fas fa-plus"></i></a>

@@ -2,7 +2,7 @@
     <div id="app" class="vh100">
 
         <div class="view-menu main-menu">
-            <router-link to="/" :class="{'selected': !$route.name}"><i class="fas fa-home"></i></router-link>
+            <router-link to="/" :class="{'selected': $route.name == 'home'}"><i class="fas fa-home"></i></router-link>
             <router-link to="/rooms" :class="{'selected': $route.name == 'rooms'}"><i class="fas fa-vector-square"></i></router-link>
             <router-link to="/groups" :class="{'selected': $route.name == 'groups'}"><i class="fas fa-layer-group"></i></router-link>
             <router-link to="/lights" :class="{'selected': $route.name == 'lights'}"><i class="fas fa-lightbulb"></i></router-link>

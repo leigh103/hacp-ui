@@ -2,16 +2,16 @@
     <div v-if="sensors[this.view.selected_sensor]">
 
         <div class="text-left">
-            <h1 class="" v-text="sensors[this.view.selected_sensor].name"></h1>
-            <h4></h4>
+            <h1 class="text-blue" v-text="sensors[this.view.selected_sensor].name"></h1>
+            <h4 class="">This {{sensors[this.view.selected_sensor].type}} provides {{Object.keys(sensors[this.view.selected_sensor].state).length}} points of data. It is <span v-if="sensors[this.view.selected_sensor].config.reachable === true">online, and has {{sensors[this.view.selected_sensor].config.battery}}% battery.</span><span v-else>currently not reachable.</span></h4>
 
             <div class="mt-2">
-                <h3 class="mb-1">Sensor Values</h3>
+                <h3 class="mb-1 text-blue">Sensor Values</h3>
                 <div class="underline"></div>
                 <sensor-info v-for="(stat, key) in sensors[this.view.selected_sensor].state" :id="view.selected_sensor" :name="key" :val="stat"></sensor-info>
             </div>
             <div class="mt-2">
-                <h3 class="mb-1">Sensor Config</h3>
+                <h3 class="mb-1 text-blue">Sensor Config</h3>
                 <div class="underline"></div>
                 <sensor-info v-for="(stat, key) in sensors[this.view.selected_sensor].config" :id="view.selected_sensor" :name="key" :val="stat"></sensor-info>
             </div>
@@ -19,7 +19,7 @@
             <div class="mt-2">
                 <div class="row">
                     <div class="block-50">
-                        <h3 class="inline">Automations</h3>
+                        <h3 class="text-blue inline">Automations</h3>
                     </div>
                     <div class="block-50 text-right">
                         <a class="btn add" @click.prevent="openAddAutomation()"><i class="fas fa-plus"></i></a>

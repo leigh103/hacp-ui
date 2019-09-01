@@ -13,7 +13,7 @@
                 <div class="capitalize text-bold" v-else v-text="parseStr(automation.orig_sensor)"></div>
             </div>
             <div class="name">
-                {{ parseStr(automation.action) }}
+                <div class="text-grey">{{ parseStr(automation.action) }}</div>
                 <div v-if="automation.value" class="text-bold">
                     <span v-if="automation.action == 'activate_scene' && type == 'groups'">{{groups[view.selected_group].scenes[automation.value-1].name}}</span>
                     <span v-if="automation.action == 'play_audio'">{{parseStr(automation.value)}}</span>

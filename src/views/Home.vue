@@ -1,6 +1,6 @@
 <template>
   <div class="about p-2 text-left overflow-y">
-    <h1 v-if="weather">Good {{time.time_of_day}}, it's {{weather.currently.apparentTemperature | temp}}&deg;</h1>
+    <h1 class="text-blue" v-if="weather">Good {{time.time_of_day}}, it's {{weather.currently.apparentTemperature | temp}}&deg;</h1>
     <h2>{{weather.daily.summary}}</h2>
 
     <h2 class="mt-2 mb-1">Alarms</h2>

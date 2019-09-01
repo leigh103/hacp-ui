@@ -19,7 +19,7 @@
 
             <div class="row">
                 <div class="block-50">
-                    <h1 class=""><input type="text" class="no-style" v-model="alarm.alarms[view.selected_alarm].name"></h1>
+                    <h1 class="text-blue"><input type="text" class="no-style" v-model="alarm.alarms[view.selected_alarm].name"></h1>
                     <h4><textarea class="no-style" v-model="alarm.alarms[view.selected_alarm].description"></textarea></h4>
 
                 </div>
