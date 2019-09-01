@@ -29,7 +29,7 @@ html, body {
 }
 
 #app * {
-    white-space: normal;
+    // white-space: normal;
 }
 
 h1 {
@@ -597,4 +597,13 @@ i.fas {
 
 .countdown {
     font-size: 10em;
+}
+
+.scroll {
+    &-horizontal {
+        width: 100%;
+        overflow-y: hidden;
+        overflow-x: scroll;
+        white-space: nowrap;
+    }
 }
