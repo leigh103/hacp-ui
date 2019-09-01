@@ -54,7 +54,8 @@
 
                 if (!automation.delete){
                     localStorage.setItem('automation_sid','s'+this.view.selected_sensor);
-                    localStorage.setItem('automation_key',key);
+                    localStorage.setItem('automation_key',automation.trigger);
+                    localStorage.setItem('automation_update',true)
                     localStorage.setItem('automation_data',JSON.stringify(automation));
                     this.$store.dispatch('updateView',{obj:'popup', val:'set_automation'})
                 } else {

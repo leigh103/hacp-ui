@@ -9,7 +9,7 @@
                     </p>
                 </div>
                 <div class="block-50 text-right">
-                    <a class="btn" @click.prevent="closePopup()">&times; Cancel</a>
+                    <a class="btn" v-if="!saved" @click.prevent="closePopup()">&times; Cancel</a>
                 </div>
             </div>
 
@@ -58,9 +58,9 @@
 
                     <div class="mb-1" v-if="automation_data.action == 'play_audio' && automation_data.entity_id">
 
-                        <input type="text" v-model="automation_data.value" v-if="automation_data.entity_id == 'sayall'" placeholder="Type a phrase...">
+                        <input type="text" v-model="automation_data.value" v-if="automation_data.entity_id == 'sayall'" placeholder="Type a phrase..." @change="updateAutomation()">
 
-                        <select v-model="automation_data.value" v-if="automation_data.entity_id == 'clipall' || automation_data.entity_id == 'playaudio'">
+                        <select v-model="automation_data.value" v-if="automation_data.entity_id == 'clipall' || automation_data.entity_id == 'playaudio'" @change="updateAutomation()">
                             <option value="" disabled selected>Select an audio file...</option>
                             <option value="Doorbell-ringtone.mp3">Large Doorbell</option>
                             <option value="House-bell.mp3">House Doorbell</option>
@@ -79,7 +79,7 @@
 
                     <div class="mb-1" v-if="match(automation_data.action,'scene') && automation_data.entity_id">
 
-                        <select v-model="automation_data.value">
+                        <select v-model="automation_data.value" @change="updateAutomation()">
                             <option value="" disabled selected>Select a scene...</option>
                             <option v-for="scene in groups[automation_data.entity_id].scenes" :value="scene.id" v-text="scene.name"></option>
                         </select>
@@ -88,14 +88,14 @@
 
                     <div class="mb-1" v-if="match(automation_data.action,'scene') && automation_data.entity_id">
 
-                        <select v-model="groups[automation_data.entity_id].scenes[automation_data.value-1].transitiontime">
+                        <select v-model="groups[automation_data.entity_id].scenes[automation_data.value-1].transitiontime" @change="updateAutomation()">
                             <option value="" disabled>Scene transition time... (optional)</option>
                             <option v-for="transition in transitions" :value="transition.val" :bind="transition.name"></option>
                         </select>
 
                     </div>
 
-                    <div class="mb-1" v-if="match(automation_data.action,'turn_on') && automation_data.entity_id">
+                    <div class="mb-1" v-if="match(automation_data.action,'turn_on') && automation_data.entity_id" @change="updateAutomation()">
 
                         <select v-model="automation_data.duration">
                             <option value="" disabled>Turn off after... (optional)</option>
@@ -117,8 +117,9 @@
 
                     </div>
 
-                    <div class="mb-1" v-if="checkAutomation()">
-                        <a class="btn bg-green text-white" @click.prevent="saveAutomation()">Save Automation</a>
+                    <div class="mb-1">
+                        <a class="btn bg-green text-white" v-if="!saved" @click.prevent="saveAutomation()">Save Automation</a>
+                        <a class="btn text-white" v-else @click.prevent="closePopup()">Close</a>
                     </div>
 
                 </div>
@@ -142,6 +143,7 @@
             return {
                 msgs:[],
                 set_val: false,
+                saved: false,
                 automation_data:{
                     action:"",
                     entity_id:"",
@@ -242,13 +244,14 @@
 
                 let new_automation_key = localStorage.getItem('automation_key')
                 let new_automation_sid = localStorage.getItem('automation_sid')
+                let new_automation_update = localStorage.getItem('automation_update')
 
                 this.automation_data.orig_sensor = new_automation_sid.replace(/^s/,'')
                 this.automation_data.orig_value = new_automation_key.replace(/^[svdltp]/,'')
 
                 let new_automation = {}
 
-                if (this.automations[new_automation_sid] && this.automations[new_automation_sid][new_automation_key]){
+                if (this.automations[new_automation_sid] && this.automations[new_automation_sid][new_automation_key] && !new_automation_update){
 
                     this.automations[new_automation_sid][new_automation_key].push(this.automation_data)
                     new_automation[new_automation_sid] = this.automations[new_automation_sid]
@@ -261,7 +264,13 @@
 
                 }
 
+                localStorage.setItem('automation_update',false)
+
                 this.$store.dispatch('hacpCall',{method:'put', url:'automations',data: new_automation})
+                    .then(res => {
+                        this.$store.dispatch('getEntities','automations')
+                        this.saved = true
+                    })
 
             }
         },
