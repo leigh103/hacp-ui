@@ -41,11 +41,37 @@
                 } else if (this.name == 'lastupdated'){
                     return moment(this.val).format('MMM Do[<br>]h:mma')
                 } else if (this.val === true || this.val == 'open'){
-                    return '<div class="led on"></div>'
+                    return '<i class="fas fa-door-open on"></i>'
                 } else if (this.val === false || this.val == 'closed'){
-                    return '<div class="led off"></div>'
+                    return '<i class="fas fa-door-closed on"></i>'
                 } else {
-                    return this.val
+
+                    if (this.sensors[this.id]){
+
+                        if (this.sensors[this.id].type == 'ZHATemperature'){
+                            return (this.sensors[this.id].state.temperature/100).toFixed(0)+"&deg;"
+                        }
+
+                        if (this.sensors[this.id].type == 'ZHAPresence'){
+
+                            if (this.sensors[this.id].state.presence === true){
+                                return '<i class="fas fa-eye on"></i>'
+                            } else {
+                                return '<i class="fas fa-eye-slash off"></i>'
+                            }
+                        }
+
+                        if (this.sensors[this.id].type == 'ZHAOpenClose'){
+
+                            if (this.sensors[this.id].state.open === true){
+                                return '<i class="fas fa-door-open on"></i>'
+                            } else {
+                                return '<i class="fas fa-door-closed on"></i>'
+                            }
+                        }
+
+                    }
+
                 }
             }
         },
