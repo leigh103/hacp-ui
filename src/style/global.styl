@@ -210,9 +210,13 @@ div.toggle {
     background: linear-gradient(135deg, rgba(43,46,48,1) 0%, rgba(57,60,66,1) 100%);
     border-radius: $border-radius;
     padding: 1.5em;
-    width: 9em;
+    width: 9.35em;
     height: 13em;
     color: #fff;
+
+    &:nth-child(5n){
+        margin-right:0;
+    }
 
     .name {
         position: absolute;
@@ -620,6 +624,12 @@ i.fas {
         overflow-y: hidden;
         overflow-x: scroll;
         white-space: nowrap !important;
+
+        div.toggle {
+            &:nth-child(5n){
+                margin-right:1em;
+            }
+        }
 
         .list-item {
             display: inline-flex;
