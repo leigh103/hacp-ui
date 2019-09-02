@@ -35,8 +35,10 @@
                 </div>
 
                 <div class="underline"></div>
-                <light-table :key="light" :id="light" v-for="light in groups[view.selected_group].lights" v-if="light_edit"></light-table>
-                <light-toggle :key="light" :id="light" v-for="light in groups[view.selected_group].lights" v-if="!light_edit"></light-toggle>
+                <div class="toggle-wrap">
+                    <light-table :key="light" :id="light" v-for="light in groups[view.selected_group].lights" v-if="light_edit"></light-table>
+                    <light-toggle :key="light" :id="light" v-for="light in groups[view.selected_group].lights" v-if="!light_edit"></light-toggle>
+                </div>
             </div>
 
             <div class="mt-2">
@@ -72,7 +74,9 @@
                     </div>
                 </div>
                 <div class="underline"></div>
-                <scene-toggle :scene="scene" :id="scene.id" :gid="view.selected_group" :del="scene_edit" v-for="scene in groups[view.selected_group].scenes"></scene-toggle>
+                <div class="toggle-wrap">
+                    <scene-toggle :scene="scene" :id="scene.id" :gid="view.selected_group" :del="scene_edit" v-for="scene in groups[view.selected_group].scenes"></scene-toggle>
+                </div>
             </div>
 
             <div class="mt-2">
@@ -86,8 +90,10 @@
                     </div>
                 </div>
                 <div class="underline"></div>
-                <automations-toggle v-if="!automations_edit" :id="view.selected_group" :type="'groups'"></automations-toggle>
-                <automations-table v-if="automations_edit" :id="view.selected_group" :type="'groups'"></automations-table>
+                <div class="toggle-wrap">
+                    <automations-toggle v-if="!automations_edit" :id="view.selected_group" :type="'groups'"></automations-toggle>
+                    <automations-table v-if="automations_edit" :id="view.selected_group" :type="'groups'"></automations-table>
+                </div>
             </div>
 
             <div class="mt-2">

@@ -8,12 +8,16 @@
             <div class="mt-2">
                 <h3 class="mb-1 text-blue">Sensor Values</h3>
                 <div class="underline"></div>
-                <sensor-info v-for="(stat, key) in sensors[this.view.selected_sensor].state" :id="view.selected_sensor" :name="key" :val="stat"></sensor-info>
+                <div class="toggle-wrap">
+                    <sensor-info v-for="(stat, key) in sensors[this.view.selected_sensor].state" :id="view.selected_sensor" :name="key" :val="stat"></sensor-info>
+                </div>
             </div>
             <div class="mt-2">
                 <h3 class="mb-1 text-blue">Sensor Config</h3>
                 <div class="underline"></div>
-                <sensor-info v-for="(stat, key) in sensors[this.view.selected_sensor].config" :id="view.selected_sensor" :name="key" :val="stat"></sensor-info>
+                <div class="toggle-wrap">
+                    <sensor-info v-for="(stat, key) in sensors[this.view.selected_sensor].config" :id="view.selected_sensor" :name="key" :val="stat"></sensor-info>
+                </div>
             </div>
 
             <div class="mt-2">
@@ -27,8 +31,10 @@
                     </div>
                 </div>
                 <div class="underline"></div>
-                <automations-toggle v-if="!automations_edit" :id="view.selected_sensor" :type="'sensors'"></automations-toggle>
-                <automations-table v-if="automations_edit" :id="view.selected_sensor" :type="'sensors'"></automations-table>
+                <div class="toggle-wrap">
+                    <automations-toggle v-if="!automations_edit" :id="view.selected_sensor" :type="'sensors'"></automations-toggle>
+                    <automations-table v-if="automations_edit" :id="view.selected_sensor" :type="'sensors'"></automations-table>
+                </div>
             </div>
 
             <div class="mt-2">
