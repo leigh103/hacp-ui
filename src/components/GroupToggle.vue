@@ -8,7 +8,7 @@
         <div class="name text-bold">{{ group.name }}</div>
     </div>
 
-    <div class="toggle" @click.prevent="toggle()" v-else-if="id" :class="{'on':groups[id].state.any_on === true,'off':groups[id].state.any_on === false,'unavailable':groups[id].state.reachable === false}">
+    <div class="toggle" @click.prevent="toggle()" v-else-if="id && groups[id]" :class="{'on':groups[id].state.any_on === true,'off':groups[id].state.any_on === false,'unavailable':groups[id].state.reachable === false}">
         <div class="indicator">
             <div class="led"></div>
         </div>
@@ -62,7 +62,7 @@
         },
         mounted(){
 
-            if (Object.keys(this.groups).length == 0 && Object.keys(this.group).length == 0){
+            if (Object.keys(this.groups).length == 0 && this.group && Object.keys(this.group).length == 0){
                 this.$store.dispatch('getEntities','groups')
             }
 
