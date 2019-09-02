@@ -66,7 +66,10 @@ h4 {
 .view {
 
     &-menu {
-        display: inline-block;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
         position: relative;
         width: 4em;
         text-align: left;
@@ -75,8 +78,7 @@ h4 {
         vertical-align: top;
         padding: 2em 1em 2em 1em;
         transition: all 1s cubic-bezier(0.600, 0.040, 0.980, 0.335);
-            background: rgba(43,46,48,0.5);
-
+        background: rgba(43,46,48,0.5);
         opacity: 1;
 
         &.collapse {
