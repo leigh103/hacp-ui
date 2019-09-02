@@ -90,11 +90,32 @@
                 <automations-table v-if="automations_edit" :id="view.selected_group" :type="'groups'"></automations-table>
             </div>
 
-            <div class="p-5">
-            </div>
+            <div class="mt-2">
+                <div class="row mt-1 text-center border-bottom">
+                    <div class="block-50 text-left align-middle pb-1 text-blue">
+                        <h4>Settings</h4>
+                    </div>
+                    <div class="block-50 text-right align-middle">
 
-            <div class="mt-2 text-right">
-                <a class="btn delete" @click.prevent="deleteGroup()"><i class="fas fa-times mr-1"></i> Delete Group</a>
+                    </div>
+                </div>
+                <div class="row mt-1 mb-1 text-center">
+                    <div class="block-50 text-left align-middle">
+                        Add to home screen
+                    </div>
+                    <div class="block-50 text-right align-middle">
+                        <input type="checkbox" class="toggle" id="fav"><label @click.prevent="addToHomeScreen('groups',view.selected_group)" for="fav"></label>
+                    </div>
+                </div>
+                <div class="row mt-3 mb-1 text-center">
+                    <div class="block-50 text-left align-middle">
+
+                    </div>
+                    <div class="block-50 align-middle text-right">
+                        <a class="btn delete" @click.prevent="deleteGroup()"><i class="fas fa-times mr-1"></i> Delete Group</a>
+                    </div>
+                </div>
+
             </div>
 
             <div class="p-5">
@@ -106,7 +127,9 @@
 
 <script>
 
+
     import { mapState } from 'vuex'
+    import favorites from '../views/favorite.js'
 
     export default {
 
@@ -246,7 +269,18 @@
             }
 
         },
+        created() {
+            this.addToHomeScreen = favorites.addToHomeScreen
+        },
         mounted () {
+
+            if (localStorage.getItem('favorites')){
+                var count_data = JSON.parse(localStorage.getItem('favorites'))
+
+                if (count_data.groups && count_data.groups.indexOf(this.view.selected_group) >= 0){
+                    document.getElementById('fav').checked = true
+                }
+            }
 
         }
 
