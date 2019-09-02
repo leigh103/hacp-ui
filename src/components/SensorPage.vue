@@ -77,9 +77,28 @@
                 'sensors',
                 'view'
             ]),
+        watch: {
+            view: {
+                handler: function(newValue,oldValue) {
+                    this.chkFavorites()
+                },
+                deep: true
+            }
+        },
         methods: {
             openAddAutomation(){
                 this.$store.dispatch('updateView',{obj:'popup', val:'add_automation'})
+            },
+            chkFavorites(){
+                if (localStorage.getItem('favorites')){
+                    var count_data = JSON.parse(localStorage.getItem('favorites'))
+
+                    if (count_data.sensors && count_data.sensors.indexOf(this.view.selected_sensor) >= 0){
+                        document.getElementById('fav').checked = true
+                    } else {
+                        document.getElementById('fav').checked = false
+                    }
+                }
             }
         },
         created() {
@@ -90,6 +109,9 @@
                 console.log('getting sensor '+this.sensors[this.view.selected_sensor].name)
                 this.$store.dispatch('getEntity',{type:'sensors', id:this.view.selected_sensor})
             }
+
+            this.chkFavorites()
+
         },
 
     }
