@@ -3,7 +3,7 @@
         <div class="indicator">
             <div class="led" :class="{'delete':del}"></div>
         </div>
-        <div class="name text-bold">{{ scene.name }}</div>
+        <div class="name">{{ scene.name }}</div>
     </div>
 </template>
 

@@ -4,21 +4,21 @@
         <div class="toggle" v-for="(automation, index) in automations_arr" :class="hidePrev(automation.trigger, automations_arr[index-1])" @click.prevent="showAutomation(automation, index)">
 
             <div class="indicator">
-                <div class="capitalize text-bold" v-if="automation.delete === true" v-text="parseStr(automation.time)"></div>
+                <div class="capitalize" v-if="automation.delete === true" v-text="parseStr(automation.time)"></div>
 
                 <div class="capitalize" v-else-if="sensors[automation.orig_sensor]" :class="hidePrev(automation.trigger, automations_arr[index-1])">
-                    <div v-show="automation.trigger" v-html="parseVal(automation.trigger)" class="text-bold"></div>
+                    <div v-show="automation.trigger" v-html="parseVal(automation.trigger)" class=""></div>
                 </div>
 
-                <div class="capitalize text-bold" v-else v-text="parseStr(automation.orig_sensor)"></div>
+                <div class="capitalize" v-else v-text="parseStr(automation.orig_sensor)"></div>
             </div>
             <div class="name">
                 <div class="text-grey">{{ parseStr(automation.action) }}</div>
-                <div v-if="automation.value" class="text-bold">
+                <div v-if="automation.value" class="">
                     <span v-if="automation.action == 'activate_scene' && type == 'groups'">{{groups[view.selected_group].scenes[automation.value-1].name}}</span>
                     <span v-if="automation.action == 'play_audio'">{{parseStr(automation.value)}}</span>
                 </div>
-                <div v-if="automation.entity_id" class="text-bold">
+                <div v-if="automation.entity_id" class="">
                     <span v-if="match(automation.action,'groups')">{{groups[automation.entity_id].name}}</span>
                     <span v-if="match(automation.action,'lights')">{{lights[automation.entity_id].name}}</span>
                 </div>

@@ -5,14 +5,14 @@
         <div class="indicator">
             <div class="led"></div>
         </div>
-        <div class="name text-bold">{{ group.name }}</div>
+        <div class="name">{{ group.name }}</div>
     </div>
 
     <div class="toggle" @click.prevent="toggle()" v-else-if="id && groups[id]" :class="{'on':groups[id].state.any_on === true,'off':groups[id].state.any_on === false,'unavailable':groups[id].state.reachable === false}">
         <div class="indicator">
             <div class="led"></div>
         </div>
-        <div class="name text-bold">{{ groups[id].name }}</div>
+        <div class="name">{{ groups[id].name }}</div>
     </div>
 
 
