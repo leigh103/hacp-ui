@@ -168,7 +168,7 @@
                 } else if (str == 'dtrue') {
                     return '<i class="fas fa-door-open on"></i>'
                 } else if (str == 'dfalse') {
-                    return '<i class="fas fa-door-close off"></i>'
+                    return '<i class="fas fa-door-closed on"></i>'
                 } else if (str) {
                     return str
                 }
