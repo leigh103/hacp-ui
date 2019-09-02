@@ -151,6 +151,14 @@
             'lights',
             'view'
         ]),
+        watch: {
+            view: {
+                handler: function(newValue,oldValue) {
+                    this.chkFavorites()
+                },
+                deep: true
+            }
+        },
         methods: {
             showPopup(){
                 this.$store.dispatch('updateView',{obj:'popup', val:'manage_lights'})
@@ -266,6 +274,18 @@
                     })
 
                 }
+            },
+
+            chkFavorites(){
+                if (localStorage.getItem('favorites')){
+                    var count_data = JSON.parse(localStorage.getItem('favorites'))
+
+                    if (count_data.groups && count_data.groups.indexOf(this.view.selected_group) >= 0){
+                        document.getElementById('fav').checked = true
+                    } else {
+                        document.getElementById('fav').checked = false
+                    }
+                }
             }
 
         },
@@ -274,13 +294,7 @@
         },
         mounted () {
 
-            if (localStorage.getItem('favorites')){
-                var count_data = JSON.parse(localStorage.getItem('favorites'))
-
-                if (count_data.groups && count_data.groups.indexOf(this.view.selected_group) >= 0){
-                    document.getElementById('fav').checked = true
-                }
-            }
+            this.chkFavorites()
 
         }
 

@@ -31,7 +31,24 @@
                 <automations-table v-if="automations_edit" :id="view.selected_sensor" :type="'sensors'"></automations-table>
             </div>
 
-            <div class="p-5">
+            <div class="mt-2">
+                <div class="row mt-1 text-center border-bottom">
+                    <div class="block-50 text-left align-middle pb-1 text-blue">
+                        <h4>Settings</h4>
+                    </div>
+                    <div class="block-50 text-right align-middle">
+
+                    </div>
+                </div>
+                <div class="row mt-1 mb-1 text-center">
+                    <div class="block-50 text-left align-middle">
+                        Add to home screen
+                    </div>
+                    <div class="block-50 text-right align-middle">
+                        <input type="checkbox" class="toggle" id="fav"><label @click.prevent="addToHomeScreen('sensors',view.selected_sensor)" for="fav"></label>
+                    </div>
+                </div>
+
             </div>
 
 
@@ -44,6 +61,7 @@
 <script>
 
     import { mapState } from 'vuex'
+    import favorites from '../views/favorite.js'
 
     export default {
 
@@ -63,6 +81,9 @@
             openAddAutomation(){
                 this.$store.dispatch('updateView',{obj:'popup', val:'add_automation'})
             }
+        },
+        created() {
+            this.addToHomeScreen = favorites.addToHomeScreen
         },
         mounted () {
             if (!this.sensors || !this.sensors[this.view.selected_sensor]){
