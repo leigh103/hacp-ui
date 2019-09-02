@@ -143,32 +143,6 @@ export default new Vuex.Store({
                     document.getElementsByTagName('body')[0].classList.remove("overflow-hidden");
                 }
 
-                if (payload.val){
-
-                    if (localStorage.getItem('favorites')){
-
-                        var count_data = JSON.parse(localStorage.getItem('favorites'))
-                        if (!count_data[payload.obj]){
-                            count_data[payload.obj] = {}
-                        }
-                        if (count_data[payload.obj] && !count_data[payload.obj][payload.val]){
-                            count_data[payload.obj][payload.val] = 1
-                        } else {
-                            count_data[payload.obj][payload.val]++
-                        }
-
-                    } else {
-
-                        var count_data = {}
-                        count_data[payload.obj] = {}
-                        count_data[payload.obj][payload.val] = 1
-
-                    }
-
-                    localStorage.setItem('favorites', JSON.stringify(count_data))
-
-                }
-
 
             } else {
                 commit('SET_VIEW', payload)
