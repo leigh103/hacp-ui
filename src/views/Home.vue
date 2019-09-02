@@ -12,17 +12,17 @@
     </div>
 
 
-    <div v-if="fav_groups.length > 0">
+    <div v-if="favorites.groups">
         <h2 class="mt-2 mb-1 text-blue">Groups</h2>
         <div class="scroll-horizontal">
-            <group-toggle v-for="(val,gid) in fav_groups" :id="val.gid"></group-toggle>
+            <group-toggle v-for="gid in favorites.groups" :id="gid"></group-toggle>
         </div>
     </div>
 
-    <div v-if="fav_sensors.length > 0">
+    <div v-if="favorites.sensors">
         <h2 class="mt-2 mb-1 text-blue">Sensors</h2>
         <div class="scroll-horizontal">
-            <sensor-info v-for="(val,sid) in fav_sensors" :id="val.sid"></sensor-info>
+            <sensor-info v-for="sid in favorites.sensors" :id="sid"></sensor-info>
         </div>
     </div>
 
@@ -39,9 +39,7 @@ export default {
     name: 'home',
     data () {
         return {
-            favorites: {},
-            fav_groups: [],
-            fav_sensors:[]
+            favorites: {}
         }
     },
     computed: mapState([
@@ -64,25 +62,6 @@ export default {
 
         if (this.favorites.length > 0){
             this.favorites = JSON.parse(this.favorites)
-
-            if (this.favorites.selected_group){
-                for (let i in this.favorites.selected_group){
-                    this.fav_groups.push({gid:i,count:this.favorites.selected_group[i]})
-                    this.fav_groups.sort(function(a, b){
-                      return a.count < b.count;
-                    })
-                }
-            }
-
-            if (this.favorites.selected_sensor){
-                for (let i in this.favorites.selected_sensor){
-                    this.fav_sensors.push({sid:i,count:this.favorites.selected_sensor[i]})
-                    this.fav_sensors.sort(function(a, b){
-                      return a.count < b.count;
-                    })
-                }
-            }
-
         }
 
     },
