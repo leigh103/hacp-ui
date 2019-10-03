@@ -12,7 +12,8 @@
         data(){
             return {
                 messages: [],
-                error: ''
+                error: '',
+                timer:''
             }
         },
         computed: mapState([
@@ -40,13 +41,28 @@
 
                 }
 
+            },
+            updateTime (){
+
+                var d = new Date();
+
+                if (d.getMinutes() == 0){
+                    if (d.getHours() == 7 || d.getHours() == 16){
+                        location.reload()
+                    }
+                }
+
+
             }
+
         },
         created(){
             Socket.$on("message", this.handleMessage)
+            this.timerID = setInterval(this.updateTime, 60000);
         },
         beforeDestroy(){
             Socket.$off("message", this.handleMessage)
+            clearInterval(this.timerID)
         }
     }
 
