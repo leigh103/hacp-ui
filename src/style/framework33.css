@@ -682,7 +682,7 @@ a.mobile-hide, span.mobile-hide {
   .mobile-show {
     display: block !important; }
   .hidden-s {
-    display: none; }
+    display: none !important; }
   *[class^='w'].mobile-show, button.mobile-show {
     display: inline-block !important; }
   a.mobile-show, span.mobile-show, svg.mobile-show {
