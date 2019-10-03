@@ -1,9 +1,16 @@
 <template>
     <div class="px-1">
 
-        <input type="range" name="brightness" step="10" v-model="lights[light].state.bri" min="0" max="255" v-if="type == 'bri'" @change="changeLight()">
+        <input type="range" name="brightness" step="10" v-model="lights[light].state.bri" min="0" max="255" v-if="type == 'bri'" @mouseup="changeLight()">
 
-        <input type="range" name="color-temp" step="10" v-model="lights[light].state.ct" :min="lights[light].ctmin" :max="lights[light].ctmax" v-else @change="changeLight()">
+        <div v-else class="btn-color-wrap">
+            <!-- <input type="range" name="color-temp" step="10" v-model="lights[light].state.ct" :min="lights[light].ctmin" :max="lights[light].ctmax"  @change="changeLight()"> -->
+            <div class="btn-color" :class="{'selected':lights[light].state.ct >= 347 && lights[light].state.ct <= 353}" style="background-color:rgb(243, 210, 183)" @click.prevent="changeLight(350)"></div>
+            <div class="btn-color" :class="{'selected':lights[light].state.ct >= 317 && lights[light].state.ct <= 323}" style="background-color:rgb(252, 232, 220)" @click.prevent="changeLight(320)"></div>
+            <div class="btn-color" :class="{'selected':lights[light].state.ct >= 295 && lights[light].state.ct <= 301}" style="background-color:rgb(255, 246, 235)" @click.prevent="changeLight(298)"></div>
+            <div class="btn-color" :class="{'selected':lights[light].state.ct >= 277 && lights[light].state.ct <= 283}" style="background-color:rgb(250, 250, 252)" @click.prevent="changeLight(280)"></div>
+            <div class="btn-color" :class="{'selected':lights[light].state.ct >= 267 && lights[light].state.ct <= 273}" style="background-color:rgb(235, 254, 252)" @click.prevent="changeLight(270)"></div>
+        </div>
 
     </div>
 </template>
@@ -28,7 +35,7 @@
             'lights'
         ]),
         methods: {
-            changeLight(){
+            changeLight(val){
 
                 if (this.type == 'bri'){
 
@@ -45,16 +52,17 @@
                             console.log(res)
                         })
 
-                } else {
+                } else if (val) {
 
                     let payload = {
                         method:'put',
                         url:'lights/'+this.light+'/state',
                         data:{
-                            ct:parseInt(this.lights[this.light].state.ct)
+                            ct:val
                         }
                     }
-
+// console.log(payload)
+// return false
                     this.$store.dispatch('call',payload)
                         .then(res => {
                             console.log(res)
@@ -85,7 +93,8 @@ input[type="range"]:not(.circular) {
     -webkit-appearance: none;
     position: relative;
     overflow: hidden;
-    height: 0.4em;
+    height: 0.5em;
+    top: -2px;
     padding:0;
     width: 100%;
     cursor: pointer;
