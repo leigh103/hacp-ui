@@ -1,5 +1,5 @@
 <template>
-  <div class="about p-2 text-left overflow-y">
+  <div class="view-page home text-left overflow-y">
     <h1 class="text-blue" v-if="weather && weather.currently">Good {{time.time_of_day}}, it's {{weather.currently.apparentTemperature | temp}}&deg;</h1>
     <h2 v-if="weather && weather.daily">{{weather.daily.summary}}</h2>
 

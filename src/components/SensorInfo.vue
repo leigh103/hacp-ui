@@ -40,9 +40,9 @@
                     return (this.val/100).toFixed(0)+'&deg;C'
                 } else if (this.name == 'lastupdated'){
                     return moment(this.val).format('MMM Do[<br>]h:mma')
-                } else if (this.sensors[this.id].type == 'ZHAOpenClose' && this.val == true){
+                } else if (this.sensors[this.id] && this.sensors[this.id].type == 'ZHAOpenClose' && this.val == true){
                     return '<i class="fas fa-door-open on"></i>'
-                } else if (this.sensors[this.id].type == 'ZHAOpenClose' && this.val == false){
+                } else if (this.sensors[this.id] && this.sensors[this.id].type == 'ZHAOpenClose' && this.val == false){
                     return '<i class="fas fa-door-closed off"></i>'
                 } else if (this.val === true){
                     return '<div class="led on"></div>'

@@ -35,7 +35,7 @@
                 </div>
 
                 <div class="underline"></div>
-                <div class="toggle-wrap">
+                <div class="toggle-wrap" :class="{'scroll-horizontal-s':!light_edit}">
                     <light-table :key="light" :id="light" v-for="light in groups[view.selected_group].lights" v-if="light_edit"></light-table>
                     <light-toggle :key="light" :id="light" v-for="light in groups[view.selected_group].lights" v-if="!light_edit"></light-toggle>
                 </div>
@@ -74,7 +74,7 @@
                     </div>
                 </div>
                 <div class="underline"></div>
-                <div class="toggle-wrap">
+                <div class="toggle-wrap scroll-horizontal-s">
                     <scene-toggle :scene="scene" :id="scene.id" :gid="view.selected_group" :del="scene_edit" v-for="scene in groups[view.selected_group].scenes"></scene-toggle>
                 </div>
             </div>
@@ -90,7 +90,7 @@
                     </div>
                 </div>
                 <div class="underline"></div>
-                <div class="toggle-wrap">
+                <div class="toggle-wrap" :class="{'scroll-horizontal-s':!automations_edit}">
                     <automations-toggle v-if="!automations_edit" :id="view.selected_group" :type="'groups'"></automations-toggle>
                     <automations-table v-if="automations_edit" :id="view.selected_group" :type="'groups'"></automations-table>
                 </div>

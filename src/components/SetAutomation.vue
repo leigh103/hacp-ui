@@ -72,7 +72,7 @@
                             <option value="laughing.mp3">Haunted Mansion - Laugh</option>
                             <option value="organ.mp3">Haunted Mansion - Organ</option>
                             <option value="look_alive.mp3">Haunted Mansion - Look Alive</option>
-                            <option value="Door-creak.mp3">Door Creak</option>
+                            <option value="Creaky-door.mp3">Door Creak</option>
                         </select>
 
                     </div>

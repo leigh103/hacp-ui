@@ -4,12 +4,12 @@
         <div class="view-menu main-menu">
             <router-link to="/" :class="{'selected': $route.name == 'home'}"><i class="fas fa-home"></i></router-link>
             <router-link to="/rooms" :class="{'selected': $route.name == 'rooms'}"><i class="fas fa-vector-square"></i></router-link>
-            <router-link to="/groups" :class="{'selected': $route.name == 'groups'}"><i class="fas fa-layer-group"></i></router-link>
+            <router-link to="/groups" :class="{'selected': $route.name == 'groups'}" @click.native="resetView('group')"><i class="fas fa-layer-group"></i></router-link>
             <router-link to="/lights" :class="{'selected': $route.name == 'lights'}"><i class="fas fa-lightbulb"></i></router-link>
-            <router-link to="/sensors" :class="{'selected': $route.name == 'sensors'}"><i class="fas fa-eye"></i></router-link>
-            <router-link to="/switches" :class="{'selected': $route.name == 'switches'}"><i class="fas fa-toggle-on"></i></router-link>
-            <router-link to="/devices" :class="{'selected': $route.name == 'devices'}"><i class="fas fa-mobile"></i></router-link>
-            <router-link to="/alarms" :class="{'selected': $route.name == 'alarms'}"><i class="fas fa-bell"></i></router-link>
+            <router-link to="/sensors" :class="{'selected': $route.name == 'sensors'}" @click.prevent="resetView('sensor')"><i class="fas fa-eye"></i></router-link>
+            <router-link to="/switches" :class="{'selected': $route.name == 'switches'}" @click.prevent="resetView('sensor')"><i class="fas fa-toggle-on"></i></router-link>
+            <router-link to="/devices" :class="{'selected': $route.name == 'devices'}" @click.prevent="resetView('device')"><i class="fas fa-mobile"></i></router-link>
+            <router-link to="/alarms" :class="{'selected': $route.name == 'alarms'}" @click.prevent="resetView('alarm')"><i class="fas fa-bell"></i></router-link>
         </div>
 
         <div class="view-viewport">
@@ -41,7 +41,10 @@
                 'view'
             ]),
         methods: {
-
+            resetView(type){
+                console.log(type)
+                this.$store.dispatch('updateView',{obj:'selected_'+type, val:false})
+            }
         },
         mounted () {
 
