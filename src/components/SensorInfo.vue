@@ -56,6 +56,15 @@
                             return (this.sensors[this.id].state.temperature/100).toFixed(0)+"&deg;"
                         }
 
+                        if (this.sensors[this.id].type == 'ZHALightLevel'){
+
+                            if (this.name == 'lightlevel'){
+                                return this.sensors[this.id].state.lightlevel;
+                            } else if (this.name == 'lux'){
+                                return this.sensors[this.id].state.lux;
+                            }
+                        }
+
                         if (this.sensors[this.id].type == 'ZHAPresence'){
 
                             if (this.sensors[this.id].state.presence === true){
