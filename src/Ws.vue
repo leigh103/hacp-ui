@@ -21,7 +21,7 @@
         ]),
         methods:{
             handleMessage(msg){
-                console.log(msg)
+            //    console.log(msg)
                 if (msg.r == 'lights'){
                     this.$store.dispatch('getEntities','lights')
                 } else if (msg.r == 'groups'){
@@ -48,7 +48,7 @@
 
                 if (d.getMinutes() == 0){
                     if (d.getHours() == 7 || d.getHours() == 16){
-                        location.reload()
+                        window.location.href = "/"
                     }
                 }
 
