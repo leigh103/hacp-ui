@@ -30,40 +30,41 @@
 </template>
 
 <script>
-// @ is an alias to /src
 
-import { mapState } from 'vuex'
-import alarm from './alarm.js'
+    import { mapState } from 'vuex'
+    import alarm from './alarm.js'
 
-export default {
-    name: 'home',
-    data () {
-        return {
-            favorites: {}
-        }
-    },
-    computed: mapState([
-        'weather',
-        'time',
-        'alarm'
-    ]),
-    filters: {
-        temp (value) {
-          return parseInt(value.toFixed(0))
-        }
-    },
-    created() {
-        this.setAlarm = alarm.setAlarm // now you can call this.foo() (in your functions/template)
-    },
-    mounted () {
-        this.$store.dispatch('all')
+    export default {
+        name: 'home',
+        data () {
+            return {
+                favorites: {}
+            }
+        },
+        computed: mapState([
+            'weather',
+            'time',
+            'alarm'
+        ]),
+        filters: {
+            temp (value) {
+              return parseInt(value.toFixed(0))
+            }
+        },
+        created() {
+            this.setAlarm = alarm.setAlarm // now you can call this.foo() (in your functions/template)
+        },
+        mounted () {
+            
+            this.$store.dispatch('all')
 
-        this.favorites = localStorage.getItem('favorites')
+            this.favorites = localStorage.getItem('favorites')
 
-        if (this.favorites.length > 0){
-            this.favorites = JSON.parse(this.favorites)
-        }
+            if (this.favorites){
+                this.favorites = JSON.parse(this.favorites)
+            }
 
-    },
-}
+        },
+    }
+
 </script>
