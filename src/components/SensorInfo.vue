@@ -36,6 +36,7 @@
                 }
             },
             parseStat(){
+
                 if (this.name == 'temperature'){
                     return (this.val/100).toFixed(0)+'&deg;C'
                 } else if (this.name == 'lastupdated'){
@@ -48,6 +49,8 @@
                     return '<div class="led on"></div>'
                 } else if (this.val === false ){
                     return '<div class="led off"></div>'
+                } else if (this.name == 'battery' && this.sensors[this.id] && this.sensors[this.id].config.battery){
+                    return this.sensors[this.id].config.battery+'%'
                 } else {
 
                     if (this.sensors[this.id]){
