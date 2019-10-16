@@ -1,15 +1,42 @@
 <template>
     <div class="px-1">
 
-        <input type="range" name="brightness" step="10" v-model="lights[light].state.bri" min="0" max="255" v-if="type == 'bri'" @mouseup="changeLight()">
+        <div v-if="type == 'bri'" class="btn-color-wrap">
+            <div class="btn-color" :class="{'selected':lights[light].state.bri >= 0 && lights[light].state.bri < 75}" style="background-color:rgba(0, 221, 235,0.2)" @click.prevent="changeLight('bri',50)"></div>
+            <div class="btn-color" :class="{'selected':lights[light].state.bri >= 75 && lights[light].state.bri < 125}" style="background-color:rgba(0, 221, 235,0.4)" @click.prevent="changeLight('bri',100)"></div>
+            <div class="btn-color" :class="{'selected':lights[light].state.bri >= 125 && lights[light].state.bri < 175}" style="background-color:rgba(0, 221, 235,0.6)" @click.prevent="changeLight('bri',150)"></div>
+            <div class="btn-color" :class="{'selected':lights[light].state.bri >= 175 && lights[light].state.bri < 225}" style="background-color:rgba(0, 221, 235,0.8)" @click.prevent="changeLight('bri',200)"></div>
+            <div class="btn-color" :class="{'selected':lights[light].state.bri >= 225 && lights[light].state.bri <= 255}" style="background-color:rgba(0, 221, 235,1)" @click.prevent="changeLight('bri',255)"></div>
+        </div>
 
-        <div v-else class="btn-color-wrap">
+        <div v-else-if="lights[light].state.ct" class="btn-color-wrap">
             <!-- <input type="range" name="color-temp" step="10" v-model="lights[light].state.ct" :min="lights[light].ctmin" :max="lights[light].ctmax"  @change="changeLight()"> -->
-            <div class="btn-color" :class="{'selected':lights[light].state.ct >= 347 && lights[light].state.ct <= 353}" style="background-color:rgb(243, 210, 183)" @click.prevent="changeLight(350)"></div>
-            <div class="btn-color" :class="{'selected':lights[light].state.ct >= 317 && lights[light].state.ct <= 323}" style="background-color:rgb(252, 232, 220)" @click.prevent="changeLight(320)"></div>
-            <div class="btn-color" :class="{'selected':lights[light].state.ct >= 295 && lights[light].state.ct <= 301}" style="background-color:rgb(255, 246, 235)" @click.prevent="changeLight(298)"></div>
-            <div class="btn-color" :class="{'selected':lights[light].state.ct >= 277 && lights[light].state.ct <= 283}" style="background-color:rgb(250, 250, 252)" @click.prevent="changeLight(280)"></div>
-            <div class="btn-color" :class="{'selected':lights[light].state.ct >= 267 && lights[light].state.ct <= 273}" style="background-color:rgb(235, 254, 252)" @click.prevent="changeLight(270)"></div>
+            <div class="btn-color" :class="{'selected':lights[light].state.ct >= 347 && lights[light].state.ct <= 353}" style="background-color:rgb(243, 210, 183)" @click.prevent="changeLight('ct',350)"></div>
+            <div class="btn-color" :class="{'selected':lights[light].state.ct >= 317 && lights[light].state.ct <= 323}" style="background-color:rgb(252, 232, 220)" @click.prevent="changeLight('ct',320)"></div>
+            <div class="btn-color" :class="{'selected':lights[light].state.ct >= 295 && lights[light].state.ct <= 301}" style="background-color:rgb(255, 246, 235)" @click.prevent="changeLight('ct',298)"></div>
+            <div class="btn-color" :class="{'selected':lights[light].state.ct >= 277 && lights[light].state.ct <= 283}" style="background-color:rgb(250, 250, 252)" @click.prevent="changeLight('ct',280)"></div>
+            <div class="btn-color" :class="{'selected':lights[light].state.ct >= 267 && lights[light].state.ct <= 273}" style="background-color:rgb(235, 254, 252)" @click.prevent="changeLight('ct',270)"></div>
+        </div>
+
+        <div v-else-if="lights[light].state.colormode">
+
+            <div class="btn-color-wrap mb-1">
+                <!-- <input type="range" name="color-temp" step="10" v-model="lights[light].state.ct" :min="lights[light].ctmin" :max="lights[light].ctmax"  @change="changeLight()"> -->
+                <div class="btn-color" :class="{'selected':lights[light].state.ct >= 347 && lights[light].state.ct <= 353}" style="background-color:rgb(243, 210, 183)" @click.prevent="changeLight('ct',350)"></div>
+                <div class="btn-color" :class="{'selected':lights[light].state.ct >= 317 && lights[light].state.ct <= 323}" style="background-color:rgb(252, 232, 220)" @click.prevent="changeLight('ct',320)"></div>
+                <div class="btn-color" :class="{'selected':lights[light].state.ct >= 295 && lights[light].state.ct <= 301}" style="background-color:rgb(255, 246, 235)" @click.prevent="changeLight('ct',298)"></div>
+                <div class="btn-color" :class="{'selected':lights[light].state.ct >= 277 && lights[light].state.ct <= 283}" style="background-color:rgb(250, 250, 252)" @click.prevent="changeLight('ct',280)"></div>
+                <div class="btn-color" :class="{'selected':lights[light].state.ct >= 267 && lights[light].state.ct <= 273}" style="background-color:rgb(235, 254, 252)" @click.prevent="changeLight('ct',270)"></div>
+            </div>
+
+            <div class="btn-color-wrap">
+                <!-- <input type="range" name="color-temp" step="10" v-model="lights[light].state.ct" :min="lights[light].ctmin" :max="lights[light].ctmax"  @change="changeLight()"> -->
+                <div class="btn-color" :class="{'selected':lights[light].state.ct >= 347 && lights[light].state.ct <= 353}" style="background-color:rgb(255,0,84)" @click.prevent="changeLight('xy','255,0,84')"></div>
+                <div class="btn-color" :class="{'selected':lights[light].state.ct >= 317 && lights[light].state.ct <= 323}" style="background-color:rgb(0,255,94)" @click.prevent="changeLight('xy','0,255,94')"></div>
+                <div class="btn-color" :class="{'selected':lights[light].state.ct >= 295 && lights[light].state.ct <= 301}" style="background-color:rgb(0,117,255)" @click.prevent="changeLight('xy','0,117,255')"></div>
+                <div class="btn-color" :class="{'selected':lights[light].state.ct >= 277 && lights[light].state.ct <= 283}" style="background-color:rgb(255,61,247)" @click.prevent="changeLight('xy','255,61,247')"></div>
+                <div class="btn-color" :class="{'selected':lights[light].state.ct >= 267 && lights[light].state.ct <= 273}" style="background-color:rgb(8,255,229)" @click.prevent="changeLight('xy','8,255,229')"></div>
+            </div>
         </div>
 
     </div>
@@ -35,24 +62,9 @@
             'lights'
         ]),
         methods: {
-            changeLight(val){
+            changeLight(type, val){
 
-                if (this.type == 'bri'){
-
-                    let payload = {
-                        method:'put',
-                        url:'lights/'+this.light+'/state',
-                        data:{
-                            bri:parseInt(this.lights[this.light].state.bri)
-                        }
-                    }
-
-                    this.$store.dispatch('call',payload)
-                        .then(res => {
-                            console.log(res)
-                        })
-
-                } else if (val) {
+                if (type == 'ct' && val) {
 
                     let payload = {
                         method:'put',
@@ -65,11 +77,72 @@
 // return false
                     this.$store.dispatch('call',payload)
                         .then(res => {
-                            console.log(res)
+                        //    console.log(res)
+                        })
+
+                } else if (type == 'bri' && val) {
+
+                    let payload = {
+                        method:'put',
+                        url:'lights/'+this.light+'/state',
+                        data:{
+                            bri:val
+                        }
+                    }
+// console.log(payload)
+// return false
+                    this.$store.dispatch('call',payload)
+                        .then(res => {
+                        //    console.log(res)
+                        })
+
+                } else if (type == 'xy' && val) {
+
+                    val = this.rgbToXy(val)
+
+                    let payload = {
+                        method:'put',
+                        url:'lights/'+this.light+'/state',
+                        data:{
+                            xy:val
+                        }
+                    }
+// console.log(payload)
+// return false
+                    this.$store.dispatch('call',payload)
+                        .then(res => {
+                        //    console.log(res)
                         })
 
                 }
 
+            },
+            rgbToXy(val){
+
+                val = val.split(',')
+                var red = val[0]
+                var green = val[1]
+                var blue = val[2]
+
+                //Apply a gamma correction to the RGB values, which makes the color more vivid and more the like the color displayed on the screen of your device
+                red 	= (red > 0.04045) ? Math.pow((red + 0.055) / (1.0 + 0.055), 2.4) : (red / 12.92);
+                green 	= (green > 0.04045) ? Math.pow((green + 0.055) / (1.0 + 0.055), 2.4) : (green / 12.92);
+                blue 	= (blue > 0.04045) ? Math.pow((blue + 0.055) / (1.0 + 0.055), 2.4) : (blue / 12.92);
+
+                //RGB values to XYZ using the Wide RGB D65 conversion formula
+                var X 		= red * 0.664511 + green * 0.154324 + blue * 0.162028;
+                var Y 		= red * 0.283881 + green * 0.668433 + blue * 0.047685;
+                var Z 		= red * 0.000088 + green * 0.072310 + blue * 0.986039;
+
+                //Calculate the xy values from the XYZ values
+                var x 		= (X / (X + Y + Z)).toFixed(4);
+                var y 		= (Y / (X + Y + Z)).toFixed(4);
+
+                if (isNaN(x))
+                    x = 0;
+                if (isNaN(y))
+                    y = 0;
+                return [parseFloat(x), parseFloat(y)];
             }
         },
         mounted(){
