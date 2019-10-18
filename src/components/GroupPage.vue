@@ -82,7 +82,7 @@
             <div class="mt-2">
                 <div class="row">
                     <div class="block-50">
-                        <h3 class="text-blue inline">Automations</h3>
+                        <h3 class="text-blue inline">Timers</h3>
                     </div>
                     <div class="block-50 text-right">
                         <a class="btn add" v-show="automations_edit || view.found_automations == 0" @click.prevent="openAddAutomation()"><i class="fas fa-plus"></i></a>

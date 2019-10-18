@@ -251,19 +251,38 @@
 
                 let new_automation = {}
 
-                if (this.automations[new_automation_sid] && this.automations[new_automation_sid][new_automation_key] && !new_automation_update){
+                if (new_automation_sid == 'sfalse' && this.automations[new_automation_key]){ // timed automation that already exists
+
+                    this.automation_data.orig_sensor = new_automation_key
+                    this.automations[new_automation_key].push(this.automation_data)
+                    new_automation[new_automation_key] = this.automations[new_automation_key]
+
+                } else if (new_automation_sid == 'sfalse' && !this.automations[new_automation_key]){ // timed automation that doesn't exists
+
+                    this.automation_data.orig_sensor = new_automation_key
+                    this.automations[new_automation_key] = []
+                    this.automations[new_automation_key].push(this.automation_data)
+                    new_automation[new_automation_key] = this.automations[new_automation_key]
+
+                } else if (this.automations[new_automation_sid] && this.automations[new_automation_sid][new_automation_key]){ //sensor automation that already exists
 
                     this.automations[new_automation_sid][new_automation_key].push(this.automation_data)
                     new_automation[new_automation_sid] = this.automations[new_automation_sid]
 
-                } else {
+                } else if (this.automations[new_automation_sid] && !this.automations[new_automation_sid][new_automation_key]){ // sensor automation where the sensor exists, but doesn't contain anything
+
+                    this.automations[new_automation_sid][new_automation_key] = []
+                    this.automations[new_automation_sid][new_automation_key].push(this.automation_data)
+                    new_automation[new_automation_sid] = this.automations[new_automation_sid]
+
+                } else { // new sensor automation
 
                     new_automation[new_automation_sid] = {}
                     new_automation[new_automation_sid][new_automation_key] = []
                     new_automation[new_automation_sid][new_automation_key].push(this.automation_data)
 
                 }
-
+                //
                 localStorage.setItem('automation_update',false)
 
                 this.$store.dispatch('hacpCall',{method:'put', url:'automations',data: new_automation})
@@ -275,6 +294,7 @@
             }
         },
         mounted () {
+
             if (!this.sensors){
                 this.$store.dispatch('getEntities','sensors')
             }
@@ -294,6 +314,16 @@
             if (localStorage.getItem('automation_data')){
                 this.automation_data = JSON.parse(localStorage.getItem('automation_data'))
             }
+
+            // if (this.view.selected_group){
+            //     this.automation_data.entity_id = this.view.selected_group
+            // }
+            // if (this.view.selected_sensor){
+            //     this.automation_data.entity_id = this.view.selected_sensor
+            // }
+            // if (this.view.selected_light){
+            //     this.automation_data.entity_id = this.view.selected_light
+            // }
 
         }
     }

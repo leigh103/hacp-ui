@@ -2,8 +2,20 @@
     <div class="popup">
 
         <div class="popup-content">
-            <div class="row">
-                <div class="block-50" v-if="view && view.selected_sensor && sensors && sensors[view.selected_sensor]">
+
+            <div class="row" v-if="view && view.selected_group && groups && groups[view.selected_group]">
+                <div class="block-50">
+                    <h3 class="inline">Add a Timed Automation</h3>
+                    <p>Specify a time to trigger your automation</p>
+                </div>
+                <div class="block-50 text-right">
+                    <a class="btn close" @click.prevent="closePopup()"><i class="fas fa-times"></i></a>
+                </div>
+            </div>
+
+
+            <div class="row" v-else-if="view && view.selected_sensor && sensors && sensors[view.selected_sensor]">
+                <div class="block-50">
                     <h3 class="inline">Add Automation</h3>
                     <p>Activate the <span class="capitalise">{{sensors[view.selected_sensor].name}}</span> sensor by
                         <span v-show="sensors[view.selected_sensor].type == 'ZHASwitch'"> pressing a button</span>
@@ -13,11 +25,14 @@
                         Alternatively, you can specify a value for this sensor to create an automation, by tapping Enter Value
                     </p>
                 </div>
+
                 <div class="block-50 text-right">
                     <a @click.prevent="set_val = !set_val" class="btn bg-light-grey mr-1"><span v-show="!set_val"><i class="fas fa-edit"></i></span><span v-show="set_val"><i class="fas fa-list-alt"></i></span></a>
                     <a class="btn close" @click.prevent="closePopup()"><i class="fas fa-times"></i></a>
                 </div>
+
             </div>
+
             <div v-show="!set_val" class="py-3">
                 <div v-for="msg in msgs">
 
@@ -57,7 +72,49 @@
                 <i class="fas fa-circle-notch spinner" v-show="msgs.length == 0"></i>
             </div>
             <div v-show="set_val" class="py-3">
-                <div class="table-item">
+
+                <div class="table-item" v-if="set_val == 'time'">
+                    <div class="row">
+                        <div class="block-50">
+                            <select v-model="set_hours">
+                                <option value="" disabled selected>Hour...</option>
+                                <option v-for="hour in hours" :value="hour">
+                                {{ hour }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="block-50">
+                            <select v-model="set_mins" placeholder="Mins">
+                                <option value="" disabled selected>Mins...</option>
+                                <option v-for="min in mins" :value="min">
+                                {{ min }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="">
+                        <a class="btn" v-show="set_hours && set_mins" @click.prevent="setAutomation(set_hours+''+set_mins)">Use <i class="fas fa-chevron-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="table-item" v-if="set_val == 'time'">
+                    <div>
+                        <select v-model="set_event">
+                            <option value="" disabled selected>Select an Event...</option>
+                            <option v-for="evnt in events" :value="evnt">
+                            {{ parseName(evnt) }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="">
+                        <a class="btn" v-show="set_event" @click.prevent="setAutomation(set_event)">Use <i class="fas fa-chevron-right"></i></a>
+                    </div>
+
+                </div>
+
+                <div class="table-item" v-else>
                     <div>
                         <input type="text" v-model="automation_key" placeholder="Type the value to trigger the automation">
                     </div>
@@ -84,10 +141,25 @@
             return {
                 msgs:[],
                 set_val: false,
+                set_hours:'',
+                set_mins:'',
+                set_event:'',
+                events:[
+                    'dawn',
+                    'sunrise',
+                    'sunset',
+                    'dusk',
+                    'daylight_dim',
+                    'daylight_bright',
+                    'daylight_sunny'
+                ],
+                hours:[],
+                mins:[],
                 automation_key:''
             }
         },
         computed: mapState([
+                'groups',
                 'sensors',
                 'view'
             ]),
@@ -118,6 +190,9 @@
 
                     return 'Button '+str[0]+' '+press_type
                 }
+            },
+            parseName(str){
+                return str.replace(/_/g,' ')
             },
             parseTemp(str){
                 return (str/100).toFixed(1)
@@ -161,10 +236,28 @@
                 this.$store.dispatch('getEntities','automations')
             }
 
+            for (let hr = 0; hr <= 23;hr++){
+                if (hr < 10){
+                    hr = '0'+hr
+                }
+                this.hours.push(hr)
+            }
+
+            for (let mn = 0; mn <= 59;mn++){
+                if (mn < 10){
+                    mn = '0'+mn
+                }
+                this.mins.push(mn)
+            }
+
         },
         created(){
             Socket.$on("message", this.handleMessage)
             this.msgs = []
+
+            if (this.view && this.view.selected_group && this.groups && this.groups[this.view.selected_group]){
+                this.set_val = 'time'
+            }
         },
         beforeDestroy(){
             Socket.$off("message", this.handleMessage)

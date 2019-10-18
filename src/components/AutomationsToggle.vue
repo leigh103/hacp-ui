@@ -76,61 +76,101 @@
 
                 for (var i in this.automations){
 
-                    if ('s'+this.id == i && typeof this.automations[i] != 'object'){
+                //    console.log(i, this.automations[i])
 
-                        this.automations_arr.push(this.automations[i])
-                        this.$store.dispatch('updateView',{obj:'found_automations', val:this.automations_arr.length})
+                    var re = RegExp('s'+this.id)
 
-                    } else if (typeof this.automations[i] == 'object'){
+                    if (this.type == 'sensors' && i.match(re)){
 
                         for (var ii in this.automations[i]){
 
-                            if (this.automations[i][ii] && this.automations[i][ii].delete && this.automations[i][ii].delete === true){
-                                this.automations[i][ii].time = i
-                            }
-
-                            if (ii.match(/^[pdlv]/)){
-                                this.automations[i][ii].trigger = ii
-                            }
-
-                            if (this.automations[i][ii][type_obj] && this.automations[i][ii][type_obj] == this.id){
-
-                                this.automations_arr.push(this.automations[i][ii])
-                                this.$store.dispatch('updateView',{obj:'found_automations', val:this.automations_arr.length})
-
-                            } else if (typeof this.automations[i][ii] == 'object'){
+                            if (typeof this.automations[i][ii] == 'object'){
 
                                 for (var iii in this.automations[i][ii]){
 
-                                    if (this.automations[i][ii][iii]){
-
-                                        let new_arr = Object.assign(this.automations[i][ii][iii])
-
-                                        if (new_arr[type_obj] && new_arr[type_obj] == this.id){
-
-                                            if (new_arr.delete && new_arr.delete === true){ // if temp automation, get the time it will trigger
-                                                new_arr.time = ii
-                                            }
-
-                                            if (ii.match(/^[pdlv]/)){ // if sensor automation, get the trigger value
-                                                new_arr.trigger = ii
-                                            }
-
-                                            this.automations_arr.push(new_arr)
-                                            this.$store.dispatch('updateView',{obj:'found_automations', val:this.automations_arr.length})
-
-                                        }
-
+                                    if (ii.match(/^[pdlv]/)){
+                                        this.automations[i][ii][iii].trigger = ii
                                     }
+
+                                    this.automations_arr.push(this.automations[i][ii][iii])
+                                    this.$store.dispatch('updateView',{obj:'found_automations', val:this.automations_arr.length})
 
                                 }
 
                             }
                         }
+
                     } else {
-                        this.automations_arr.push(this.automations[i])
-                        this.$store.dispatch('updateView',{obj:'found_automations', val:this.automations_arr.length})
+
+                        for (var ii in this.automations[i]){
+
+                            if (this.automations[i][ii].entity_id == this.id){
+
+                                this.automations[i][ii].time = i
+                                this.automations_arr.push(this.automations[i][ii])
+                                this.$store.dispatch('updateView',{obj:'found_automations', val:this.automations_arr.length})
+
+                            }
+
+                        }
+
                     }
+
+                    // if ('s'+this.id == i && typeof this.automations[i] != 'object'){
+                    //
+                    //     this.automations_arr.push(this.automations[i])
+                    //     this.$store.dispatch('updateView',{obj:'found_automations', val:this.automations_arr.length})
+                    //
+                    // } else if (typeof this.automations[i] == 'object'){
+                    //
+                    //     for (var ii in this.automations[i]){
+                    //
+                    //         if (this.automations[i][ii] && this.automations[i][ii].delete && this.automations[i][ii].delete === true){
+                    //             this.automations[i][ii].time = i
+                    //         }
+                    //
+                    //         if (ii.match(/^[pdlv]/)){
+                    //             this.automations[i][ii].trigger = ii
+                    //         }
+                    //
+                    //         if (this.automations[i][ii][type_obj] && this.automations[i][ii][type_obj] == this.id){
+                    //
+                    //             this.automations_arr.push(this.automations[i][ii])
+                    //             this.$store.dispatch('updateView',{obj:'found_automations', val:this.automations_arr.length})
+                    //
+                    //         } else if (typeof this.automations[i][ii] == 'object'){
+                    //
+                    //             for (var iii in this.automations[i][ii]){
+                    //
+                    //                 if (this.automations[i][ii][iii]){
+                    //
+                    //                     let new_arr = Object.assign(this.automations[i][ii][iii])
+                    //
+                    //                     if (new_arr[type_obj] && new_arr[type_obj] == this.id){
+                    //
+                    //                         if (new_arr.delete && new_arr.delete === true){ // if temp automation, get the time it will trigger
+                    //                             new_arr.time = ii
+                    //                         }
+                    //
+                    //                         if (ii.match(/^[pdlv]/)){ // if sensor automation, get the trigger value
+                    //                             new_arr.trigger = ii
+                    //                         }
+                    //
+                    //                         this.automations_arr.push(new_arr)
+                    //                         this.$store.dispatch('updateView',{obj:'found_automations', val:this.automations_arr.length})
+                    //
+                    //                     }
+                    //
+                    //                 }
+                    //
+                    //             }
+                    //
+                    //         }
+                    //     }
+                    // } else {
+                    //     this.automations_arr.push(this.automations[i])
+                    //     this.$store.dispatch('updateView',{obj:'found_automations', val:this.automations_arr.length})
+                    // }
                 }
 
             },

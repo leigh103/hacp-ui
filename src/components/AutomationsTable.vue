@@ -70,6 +70,14 @@
                 'sensors'
             ])
         },
+        watch: {
+            automations: {
+                handler: function(newValue,oldValue) {
+                    console.log(newValue)
+                },
+                deep: true
+            }
+        },
         methods: {
             showAutomation(automation, key){
 
@@ -91,63 +99,49 @@
 
                 for (var i in this.automations){
 
-                    if ('s'+this.id == i && typeof this.automations[i] != 'object'){
+                    var re = RegExp('s'+this.id)
 
-                        this.automations_arr.push(this.automations[i])
-
-                    } else if (typeof this.automations[i] == 'object'){
+                    if (this.type == 'sensors' && i.match(re)){
 
                         for (var ii in this.automations[i]){
 
-                            if (this.automations[i][ii] && this.automations[i][ii].delete && this.automations[i][ii].delete === true){
-                                this.automations[i][ii].time = i
-                            }
-
-                            if (ii.match(/^[pdlv]/)){
-                                this.automations[i][ii].trigger = ii
-                            }
-
-                            if (this.automations[i][ii][type_obj] && this.automations[i][ii][type_obj] == this.id){
-
-                                this.automations_arr.push(this.automations[i][ii])
-
-
-                            } else if (typeof this.automations[i][ii] == 'object'){
+                            if (typeof this.automations[i][ii] == 'object'){
 
                                 for (var iii in this.automations[i][ii]){
 
-                                    if (this.automations[i][ii][iii]){
-
-                                        let new_arr = Object.assign(this.automations[i][ii][iii])
-
-                                        if (new_arr[type_obj] && new_arr[type_obj] == this.id){
-
-                                            if (new_arr.delete && new_arr.delete === true){ // if temp automation, get the time it will trigger
-                                                new_arr.time = ii
-                                            }
-
-                                            if (ii.match(/^[pdlv]/)){ // if sensor automation, get the trigger value
-                                                new_arr.trigger = ii
-                                            }
-
-                                            this.automations_arr.push(new_arr)
-
-                                        }
-
+                                    if (ii.match(/^[pdlv]/)){
+                                        this.automations[i][ii][iii].trigger = ii
                                     }
+
+                                    this.automations_arr.push(this.automations[i][ii][iii])
+                                    this.$store.dispatch('updateView',{obj:'found_automations', val:this.automations_arr.length})
 
                                 }
 
                             }
                         }
+
                     } else {
-                        this.automations_arr.push(this.automations[i])
+
+                        for (var ii in this.automations[i]){
+
+                            if (this.automations[i][ii].entity_id == this.id){
+
+                                this.automations[i][ii].time = i
+                                this.automations_arr.push(this.automations[i][ii])
+                                this.$store.dispatch('updateView',{obj:'found_automations', val:this.automations_arr.length})
+
+                            }
+
+                        }
+
                     }
+
                 }
 
             },
             deleteAutomation(automation, index){
-
+console.log(automation, index)
                 var conf = confirm('Delete this automation?')
 
                 if (conf){
@@ -158,6 +152,7 @@
 
                     if (!automation.orig_sensor.match(/^d|[0-9]{4}|sunset|sunrise|dusk|dawn|daylight/)){
                         data.sensor = 's'+automation.orig_sensor
+                        data.event = 'v'+data.event
                     }
 
                     if (automation.time){
@@ -171,14 +166,13 @@
                         url:'automations',
                         data: data
                     }
-console.log(payload)
+
                     this.$store.dispatch('hacpCall',payload)
                         .then(res => {
                             console.log(res)
                             this.$store.dispatch('getEntities','automations')
                                 .then(res => {
-                                    console.log(res)
-                                    //TODO Need to reparse the automations_arr arr here
+                                    this.findAutomations()
                                 })
 
 
@@ -195,6 +189,7 @@ console.log(payload)
                 }
             },
             parseStr(str){
+                console.log(str)
                 if (str && str.match(/[0-9]{4}/)){
                     str = str.split('')
                     return str[0]+str[1]+':'+str[2]+str[3]
