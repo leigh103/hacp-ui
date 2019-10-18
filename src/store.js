@@ -90,17 +90,26 @@ export default new Vuex.Store({
         },
 
         all ({ commit }) {
-            axios
-                .get('http://10.0.1.100:3000/all')
-                .then(r => {
-                    commit('SET_GROUPS', r.data.groups)
-                    commit('SET_LIGHTS', r.data.lights)
-                    commit('SET_SENSORS', r.data.sensors)
-                    commit('SET_WEATHER', r.data.weather)
-                    commit('SET_DEVICES', r.data.devices)
-                    commit('SET_TIME', r.data.time)
-                    commit('SET_ALARM', r.data.alarm)
-                })
+            return new Promise((resolve, reject) => {
+                axios
+                    .get('http://10.0.1.100:3000/all')
+                    .then(r => {
+                        commit('SET_GROUPS', r.data.groups)
+                        commit('SET_LIGHTS', r.data.lights)
+                        commit('SET_SENSORS', r.data.sensors)
+                        commit('SET_WEATHER', r.data.weather)
+                        commit('SET_DEVICES', r.data.devices)
+                        commit('SET_TIME', r.data.time)
+                        commit('SET_ALARM', r.data.alarm)
+                        resolve('done');
+                    })
+                    .catch(() => {
+                        let conf = confirm('Error connecting to HACP server')
+                        if (conf){
+                            window.location.href = '/'
+                        }
+                    })
+            })
 
         },
 
@@ -113,10 +122,17 @@ export default new Vuex.Store({
                         commit('SET_'+commit_var, res.data)
                         resolve(res);
                     })
+                    .catch(() => {
+                        let conf = confirm('Error connecting to HACP server')
+                        if (conf){
+                            window.location.href = '/'
+                        }
+                    })
             })
         },
 
         getEntity ({ commit }, payload) {
+        //    console.log('Getting '+payload.type+' '+payload.id)
             return new Promise((resolve, reject) => {
                 axios
                     .get('http://10.0.1.100:3000/'+payload.type+'/'+payload.id)
@@ -124,6 +140,12 @@ export default new Vuex.Store({
                         let commit_var = payload.type.toUpperCase()
                         commit('SET_'+commit_var, {id:payload.id, data:res.data})
                         resolve(res);
+                    })
+                    .catch(() => {
+                        let conf = confirm('Error connecting to HACP server')
+                        if (conf){
+                            window.location.href = '/'
+                        }
                     })
             })
         },
@@ -190,6 +212,12 @@ export default new Vuex.Store({
                                }
 
                            })
+                           .catch(() => {
+                               let conf = confirm('Error connecting to Zigbee server')
+                               if (conf){
+                                   window.location.href = '/'
+                               }
+                           })
                           i++;
                           if (i < its) {
                              myLoop();
@@ -207,6 +235,12 @@ export default new Vuex.Store({
                         data:payload.data
                     }).then(res => {
                         resolve(res);
+                    })
+                    .catch(() => {
+                        let conf = confirm('Error connecting to Zigbee server')
+                        if (conf){
+                            window.location.href = '/'
+                        }
                     })
 
                 }
