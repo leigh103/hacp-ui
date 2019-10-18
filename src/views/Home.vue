@@ -12,14 +12,14 @@
     </div>
 
 
-    <div v-if="favorites.groups">
+    <div v-if="favorites && favorites.groups">
         <h2 class="mt-2 mb-1 text-blue">Groups</h2>
         <div class="scroll-horizontal">
             <group-toggle v-for="gid in favorites.groups" :id="gid"></group-toggle>
         </div>
     </div>
 
-    <div v-if="favorites.sensors">
+    <div v-if="favorites && favorites.sensors">
         <h2 class="mt-2 mb-1 text-blue">Sensors</h2>
         <div class="scroll-horizontal">
             <sensor-info v-for="sid in favorites.sensors" :id="sid"></sensor-info>
@@ -55,14 +55,15 @@
             this.setAlarm = alarm.setAlarm // now you can call this.foo() (in your functions/template)
         },
         mounted () {
-            
+
             this.$store.dispatch('all')
+            .then(res => {
+                this.favorites = localStorage.getItem('favorites')
 
-            this.favorites = localStorage.getItem('favorites')
-
-            if (this.favorites){
-                this.favorites = JSON.parse(this.favorites)
-            }
+                if (this.favorites){
+                    this.favorites = JSON.parse(this.favorites)
+                }
+            })
 
         },
     }
