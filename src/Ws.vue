@@ -58,7 +58,7 @@
         },
         created(){
             Socket.$on("message", this.handleMessage)
-            this.timerID = setInterval(this.updateTime, 60000);
+        //    this.timerID = setInterval(this.updateTime, 60000);
         },
         beforeDestroy(){
             Socket.$off("message", this.handleMessage)

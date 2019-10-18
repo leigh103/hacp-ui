@@ -9,6 +9,7 @@
 
 <script>
 
+    import Socket from "../socket.js"
     import { mapState } from 'vuex'
 
     export default {
@@ -24,6 +25,7 @@
         methods: {
             toggle() {
 
+                Socket.state()
                 var action = true
 
                 if (this.lights[this.id].state.on){

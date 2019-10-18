@@ -20,6 +20,7 @@
 
 <script>
 
+    import Socket from "../socket.js"
     import { mapState } from 'vuex'
 
     export default {
@@ -34,6 +35,8 @@
             ]),
         methods: {
             toggle() {
+
+                Socket.state()
 
                 if (!this.group){ // if the group prop isn't passed
                     var any_on = this.groups[this.id].state.any_on

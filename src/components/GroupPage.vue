@@ -299,7 +299,6 @@
             this.addToHomeScreen = favorites.addToHomeScreen
         },
         mounted () {
-
             this.chkFavorites()
 
         }

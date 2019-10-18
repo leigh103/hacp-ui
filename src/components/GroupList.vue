@@ -49,7 +49,12 @@
 
             },
             selectGroup(key){
-                this.$store.dispatch('updateView',{obj:'selected_group', val:key})
+
+                this.$store.dispatch('getEntity',{type:'groups', id:key}) // get the group data from the server, rather than relying on the socket data
+                .then(res => {
+                    this.$store.dispatch('updateView',{obj:'selected_group', val:key})
+                })
+
             }
         },
         mounted () {
