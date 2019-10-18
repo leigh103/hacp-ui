@@ -94,6 +94,7 @@
         },
         methods: {
             openAddAutomation(){
+                localStorage.setItem('trigger_type','sensor')
                 this.$store.dispatch('updateView',{obj:'popup', val:'add_automation'})
             },
             chkFavorites(){

@@ -3,7 +3,7 @@
 
         <div class="popup-content">
 
-            <div class="row" v-if="view && view.selected_group && groups && groups[view.selected_group]">
+            <div class="row" v-if="trigger_type == 'timer'">
                 <div class="block-50">
                     <h3 class="inline">Add a Timed Automation</h3>
                     <p>Specify a time to trigger your automation</p>
@@ -14,7 +14,7 @@
             </div>
 
 
-            <div class="row" v-else-if="view && view.selected_sensor && sensors && sensors[view.selected_sensor]">
+            <div class="row" v-else-if="trigger_type == 'sensor'">
                 <div class="block-50">
                     <h3 class="inline">Add Automation</h3>
                     <p>Activate the <span class="capitalise">{{sensors[view.selected_sensor].name}}</span> sensor by
@@ -141,6 +141,7 @@
             return {
                 msgs:[],
                 set_val: false,
+                trigger_type:'',
                 set_hours:'',
                 set_mins:'',
                 set_event:'',
@@ -255,7 +256,9 @@
             Socket.$on("message", this.handleMessage)
             this.msgs = []
 
-            if (this.view && this.view.selected_group && this.groups && this.groups[this.view.selected_group]){
+            this.trigger_type = localStorage.getItem('trigger_type')
+
+            if (this.trigger_type == 'group'){
                 this.set_val = 'time'
             }
         },

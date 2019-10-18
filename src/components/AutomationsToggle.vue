@@ -55,7 +55,8 @@
                 if (!automation.delete){
                     localStorage.setItem('automation_sid','s'+this.view.selected_sensor);
                     localStorage.setItem('automation_key',automation.trigger);
-                    localStorage.setItem('automation_update',true)
+                    localStorage.setItem('automation_index',automation.index);
+                    localStorage.setItem('automation_update','true')
                     localStorage.setItem('automation_data',JSON.stringify(automation));
                     this.$store.dispatch('updateView',{obj:'popup', val:'set_automation'})
                 } else {
@@ -92,6 +93,8 @@
                                         this.automations[i][ii][iii].trigger = ii
                                     }
 
+                                    this.automations[i][ii][iii].index = iii
+
                                     this.automations_arr.push(this.automations[i][ii][iii])
                                     this.$store.dispatch('updateView',{obj:'found_automations', val:this.automations_arr.length})
 
@@ -107,6 +110,7 @@
                             if (this.automations[i][ii].entity_id == this.id){
 
                                 this.automations[i][ii].time = i
+                                this.automations[i][ii].index = ii
                                 this.automations_arr.push(this.automations[i][ii])
                                 this.$store.dispatch('updateView',{obj:'found_automations', val:this.automations_arr.length})
 
