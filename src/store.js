@@ -77,6 +77,12 @@ export default new Vuex.Store({
                 state.view[data.obj][data.val] = data.subval
             } else if (data.obj){
                 Vue.set(state.view, data.obj, data.val)
+            } else if (data.reset === true){
+                Vue.set(state.view, 'selected_group', false)
+                Vue.set(state.view, 'selected_light', false)
+                Vue.set(state.view, 'selected_sensor', false)
+                Vue.set(state.view, 'selected_alarm', false)
+                Vue.set(state.view, 'selected_device', false)
             } else {
                 state.view = data
             }
@@ -167,8 +173,14 @@ export default new Vuex.Store({
 
 
             } else {
-                commit('SET_VIEW', payload)
+                commit('SET_VIEW', {reset:true})
             }
+        },
+
+        resetView ({ commit }, payload) {
+
+            commit('SET_VIEW', payload)
+
         },
 
         call ({ commit }, payload) { // call the Zigbee gateway API

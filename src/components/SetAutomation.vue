@@ -149,6 +149,16 @@
 
                     <div class="mt-2 mb-1 row">
                         <div class="block-50 block-s-100">
+                            <a class="" @click.prevent="addCondition()">+ Add Condition</a>
+                            
+                        </div>
+                        <div class="block-50 block-s-100 text-right">
+
+                        </div>
+                    </div>
+
+                    <div class="mt-2 mb-1 row">
+                        <div class="block-50 block-s-100">
                             <a class="btn bg-green text-white" v-if="!saved" @click.prevent="saveAutomation()">Save Automation</a>
                             <a class="btn text-white" v-else @click.prevent="closePopup()">Close</a>
                         </div>
@@ -436,6 +446,8 @@ console.log(data)
                 this.automation_data.entity_id = this.view.selected_light
                 this.lock_entity = 'lights'
             }
+
+            console.log(this.view)
 
         }
     }
