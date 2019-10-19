@@ -144,7 +144,7 @@
 
             },
             deleteAutomation(automation, index){
-console.log(automation, index)
+
                 var conf = confirm('Delete this automation?')
 
                 if (conf){
@@ -155,7 +155,13 @@ console.log(automation, index)
 
                     if (!automation.orig_sensor.match(/^d|[0-9]{4}|sunset|sunrise|dusk|dawn|daylight/)){
                         data.sensor = 's'+automation.orig_sensor
-                        data.event = 'v'+data.event
+
+                        if (automation.trigger == 'ptrue'){
+                            data.event = 'p'+data.event
+                        } else {
+                            data.event = 'v'+data.event
+                        }
+
                     }
 
                     if (automation.time){
@@ -169,7 +175,7 @@ console.log(automation, index)
                         url:'automations',
                         data: data
                     }
-
+console.log(data)
                     this.$store.dispatch('hacpCall',payload)
                         .then(res => {
                             console.log(res)

@@ -85,7 +85,7 @@
                         <h3 class="text-blue inline">Timers</h3>
                     </div>
                     <div class="block-50 text-right">
-                        <a class="btn add" v-show="automations_edit || view.found_automations == 0" @click.prevent="openAddAutomation()"><i class="fas fa-plus"></i></a>
+                        <a class="btn add" @click.prevent="openAddAutomation()"><i class="fas fa-plus"></i></a>
                         <a class="btn close ml-1" v-show="view.found_automations > 0" @click.prevent="automations_edit = !automations_edit"><i class="fas fa-times" v-show="automations_edit"></i><i class="fas fa-edit" v-show="!automations_edit"></i></a>
                     </div>
                 </div>
@@ -170,6 +170,7 @@
                 this.$store.dispatch('updateView',{obj:'popup', val:'manage_lights'})
             },
             openAddAutomation(){
+                localStorage.setItem('trigger_type','timer')
                 this.$store.dispatch('updateView',{obj:'popup', val:'add_automation'})
             },
             deleteGroup(){

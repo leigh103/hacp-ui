@@ -258,7 +258,7 @@
 
             this.trigger_type = localStorage.getItem('trigger_type')
 
-            if (this.trigger_type == 'group'){
+            if (this.trigger_type == 'timer'){
                 this.set_val = 'time'
             }
         },

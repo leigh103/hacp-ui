@@ -109,6 +109,7 @@
 
                             if (this.automations[i][ii].entity_id == this.id){
 
+                                this.automations[i][ii].trigger = i
                                 this.automations[i][ii].time = i
                                 this.automations[i][ii].index = ii
                                 this.automations_arr.push(this.automations[i][ii])

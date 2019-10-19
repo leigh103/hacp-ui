@@ -2,10 +2,10 @@
     <div id="app" class="vh100">
 
         <div class="view-menu main-menu">
-            <router-link to="/" :class="{'selected': $route.name == 'home'}"><i class="fas fa-home"></i></router-link>
-            <router-link to="/rooms" :class="{'selected': $route.name == 'rooms'}"><i class="fas fa-vector-square"></i></router-link>
+            <router-link to="/" :class="{'selected': $route.name == 'home'}" @click.native="resetView('group')"><i class="fas fa-home"></i></router-link>
+            <router-link to="/rooms" :class="{'selected': $route.name == 'rooms'}" @click.native="resetView('group')"><i class="fas fa-vector-square"></i></router-link>
             <router-link to="/groups" :class="{'selected': $route.name == 'groups'}" @click.native="resetView('group')"><i class="fas fa-layer-group"></i></router-link>
-            <router-link to="/lights" :class="{'selected': $route.name == 'lights'}"><i class="fas fa-lightbulb"></i></router-link>
+            <router-link to="/lights" :class="{'selected': $route.name == 'lights'}" @click.native="resetView('group')"><i class="fas fa-lightbulb"></i></router-link>
             <router-link to="/sensors" :class="{'selected': $route.name == 'sensors'}" @click.prevent="resetView('sensor')"><i class="fas fa-eye"></i></router-link>
             <router-link to="/switches" :class="{'selected': $route.name == 'switches'}" @click.prevent="resetView('sensor')"><i class="fas fa-toggle-on"></i></router-link>
             <router-link to="/devices" :class="{'selected': $route.name == 'devices'}" @click.prevent="resetView('device')"><i class="fas fa-mobile"></i></router-link>
@@ -42,8 +42,12 @@
             ]),
         methods: {
             resetView(type){
-                console.log(type)
-                this.$store.dispatch('updateView',{obj:'selected_'+type, val:false})
+            //    console.log(type)
+                this.$store.dispatch('updateView',{obj:'selected_group', val:false})
+                this.$store.dispatch('updateView',{obj:'selected_light', val:false})
+                this.$store.dispatch('updateView',{obj:'selected_sensor', val:false})
+                this.$store.dispatch('updateView',{obj:'selected_device', val:false})
+                this.$store.dispatch('updateView',{obj:'selected_alarm', val:false})
             }
         },
         mounted () {
