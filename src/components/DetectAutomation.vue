@@ -150,6 +150,7 @@
                     'sunrise',
                     'sunset',
                     'dusk',
+                    'daylight_dark',
                     'daylight_dim',
                     'daylight_bright',
                     'daylight_sunny'
