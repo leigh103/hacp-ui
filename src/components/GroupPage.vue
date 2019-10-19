@@ -86,13 +86,13 @@
                     </div>
                     <div class="block-50 text-right">
                         <a class="btn add" @click.prevent="openAddAutomation()"><i class="fas fa-plus"></i></a>
-                        <a class="btn close ml-1" v-show="view.found_automations > 0" @click.prevent="automations_edit = !automations_edit"><i class="fas fa-times" v-show="automations_edit"></i><i class="fas fa-edit" v-show="!automations_edit"></i></a>
+                        <!-- <a class="btn close ml-1" v-show="view.found_automations > 0" @click.prevent="automations_edit = !automations_edit"><i class="fas fa-times" v-show="automations_edit"></i><i class="fas fa-edit" v-show="!automations_edit"></i></a> -->
                     </div>
                 </div>
                 <div class="underline"></div>
                 <div class="toggle-wrap" :class="{'scroll-horizontal-s':!automations_edit}">
                     <automations-toggle v-if="!automations_edit" :id="view.selected_group" :type="'groups'"></automations-toggle>
-                    <automations-table v-if="automations_edit" :id="view.selected_group" :type="'groups'"></automations-table>
+                    <!-- <automations-table v-if="automations_edit" :id="view.selected_group" :type="'groups'"></automations-table> -->
                 </div>
             </div>
 
@@ -153,6 +153,7 @@
             }
         },
         computed: mapState([
+            'automations',
             'groups',
             'lights',
             'view'
@@ -170,7 +171,15 @@
                 this.$store.dispatch('updateView',{obj:'popup', val:'manage_lights'})
             },
             openAddAutomation(){
+
+                localStorage.removeItem('automation_key');
+                localStorage.removeItem('automation_index');
+                localStorage.removeItem('automation_update')
+                localStorage.removeItem('automation_data');
+
                 localStorage.setItem('trigger_type','timer')
+                localStorage.setItem('automation_sid','timer');
+
                 this.$store.dispatch('updateView',{obj:'popup', val:'add_automation'})
             },
             deleteGroup(){

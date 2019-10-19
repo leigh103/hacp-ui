@@ -13,10 +13,10 @@
                 </div>
             </div>
 
-            <div class="py-3">
+            <div class="py-2">
 
                 <div class="row">
-                    <div class="mb-1">
+                    <div class="mb-1" v-if="view.selected_sensor">
 
                         <select v-model="automation_data.action" @change="updateAutomation()">
                             <option value="" disabled>Select an Action...</option>
@@ -35,20 +35,50 @@
                         </select>
 
                     </div>
-                    <div class="mb-1" v-if="automation_data.action">
+
+                    <div class="mb-1" v-if="view.selected_group">
+
+                        <div class="mb-1">At <span class="capitalise text-bold" v-text="key"></span></div>
+
+
+
+                        <select v-model="automation_data.action" @change="updateAutomation()">
+                            <option value="" disabled>Select an Action...</option>
+                            <option value="groups_turn_on">Turn On</option>
+                            <option value="groups_turn_off">Turn Off</option>
+                            <option value="groups_toggle">Toggle</option>
+                            <option value="groups_colorTemp">set the Color Temperature</option>
+                            <option value="groups_brightness">set the Brightness</option>
+                            <option value="activate_scene">Activate a Scene</option>
+                            <!-- <option value="play_audio">Play Audio</option> TODO play audio in this room -->
+                        </select>
+
+                        <div class="mt-1 mb-1" v-if="automation_data.entity_id && lock_entity">
+
+                                <p>
+                                    <span v-show="match(automation_data.action,'colorTemp|brightness')">of </span>
+                                    <span v-show="match(automation_data.action,'scene')">in </span>
+                                    the <b>{{this[lock_entity][automation_data.entity_id].name}}</b> group
+                                    </p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="mb-1" v-if="automation_data.action && !lock_entity">
 
                         <select v-if="match(automation_data.action,'light')" v-model="automation_data.entity_id" @change="updateAutomation()">
-                            <option value="" disabled selected>Select a Light...</option>
+                            <option value="" disabled>Select a Light...</option>
                             <option v-for="(light, key) in lights" :value="key" v-text="light.name"></option>
                         </select>
 
                         <select v-if="match(automation_data.action,'group|scene')" v-model="automation_data.entity_id" @change="updateAutomation()">
-                            <option value="" disabled selected>Select a Group...</option>
+                            <option value="" disabled>Select a Group...</option>
                             <option v-for="(group, key) in groups" :value="key" v-text="group.name"></option>
                         </select>
 
                         <select v-if="automation_data.action == 'play_audio'" v-model="automation_data.entity_id" @change="updateAutomation()">
-                            <option value="" disabled selected>What would you like to play...</option>
+                            <option value="" disabled>What would you like to play...</option>
                             <option value="sayall">Say a phrase</option>
                             <option value="clipall">Play an audio file through Sonos</option>
                             <option value="playaudio">Play an audio file through HACP</option>
@@ -80,7 +110,7 @@
                     <div class="mb-1" v-if="match(automation_data.action,'scene') && automation_data.entity_id">
 
                         <select v-model="automation_data.value" @change="updateAutomation()">
-                            <option value="" disabled selected>Select a scene...</option>
+                            <option value="" disabled>Select a scene...</option>
                             <option v-for="scene in groups[automation_data.entity_id].scenes" :value="scene.id" v-text="scene.name"></option>
                         </select>
 
@@ -89,7 +119,7 @@
                     <div class="mb-1" v-if="match(automation_data.action,'scene') && automation_data.entity_id && automation_data.value">
 
                         <select v-model="automation_data.transitiontime" @change="updateAutomation()">
-                            <option value="" disabled selected>Scene transition time... (optional)</option>
+                            <option value="" disabled>Scene transition time... (optional)</option>
                             <option v-for="transition in transitions" :value="transition.val" v-text="transition.name"></option>
                         </select>
 
@@ -117,9 +147,14 @@
 
                     </div>
 
-                    <div class="mb-1">
-                        <a class="btn bg-green text-white" v-if="!saved" @click.prevent="saveAutomation()">Save Automation</a>
-                        <a class="btn text-white" v-else @click.prevent="closePopup()">Close</a>
+                    <div class="mt-2 mb-1 row">
+                        <div class="block-50 block-s-100">
+                            <a class="btn bg-green text-white" v-if="!saved" @click.prevent="saveAutomation()">Save Automation</a>
+                            <a class="btn text-white" v-else @click.prevent="closePopup()">Close</a>
+                        </div>
+                        <div class="block-50 block-s-100 text-right">
+                            <a class="btn bg-red text-white" v-if="index" @click.prevent="deleteAutomation()">Delete Automation</a>
+                        </div>
                     </div>
 
                 </div>
@@ -143,6 +178,7 @@
             return {
                 msgs:[],
                 set_val: false,
+                lock_entity:false,
                 saved: false,
                 automation_data:{
                     action:"",
@@ -154,6 +190,10 @@
                     value:"",
                     transitiontime:10
                 },
+                key: localStorage.getItem('automation_key'),
+                sid: localStorage.getItem('automation_sid'),
+                index: localStorage.getItem('automation_index'),
+                update: localStorage.getItem('automation_update'),
                 transitions:[
                     {val:0, name:"No Transition"},
                     {val:100, name:"10 seconds"},
@@ -186,10 +226,15 @@
             ]),
         methods: {
             closePopup(){
-                localStorage.setItem('automation_key', '')
-                localStorage.setItem('automation_sid', '')
-                localStorage.setItem('automation_data', '')
+
+                localStorage.removeItem('automation_sid');
+                localStorage.removeItem('automation_key');
+                localStorage.removeItem('automation_index');
+                localStorage.removeItem('automation_update')
+                localStorage.removeItem('automation_data');
+
                 this.$store.dispatch('updateView',{obj:'popup'})
+
             },
             parseButton(str){
 
@@ -240,86 +285,126 @@
             checkAutomation(){
                 return true
             },
-            saveAutomation(){
+            saveAutomation(){ // new - add new obj to automations, update existing element in automation array, push new obj to automation array
 
-                var new_automation_key = localStorage.getItem('automation_key')
-                var new_automation_sid = localStorage.getItem('automation_sid')
-                var new_automation_index = localStorage.getItem('automation_index')
-                var new_automation_update = localStorage.getItem('automation_update')
-console.log(new_automation_update, new_automation_key, new_automation_sid)
-                this.automation_data.orig_sensor = new_automation_sid.replace(/^s/,'')
-                this.automation_data.orig_value = new_automation_key.replace(/^[svdltp]/,'')
+                var new_automation = {}
 
-                if (this.view.selected_group){
-                    this.automation_data.orig_group = this.view.selected_group
-                }
-
-                let new_automation = {}
-
-                if (new_automation_update == 'true'){ // update existing automation
-
-console.log('updating existing')
-
-                    if (new_automation_sid == 'sfalse' && this.automations[new_automation_key] && this.automations[new_automation_key][new_automation_index]){ // timed automation that already exists
-
-                        this.automation_data.orig_sensor = new_automation_key
-                        this.automations[new_automation_key][new_automation_index] = this.automation_data
-                        new_automation[new_automation_key] = this.automations[new_automation_key]
-
-                    } else if (this.automations[new_automation_sid] && this.automations[new_automation_sid][new_automation_key] && this.automations[new_automation_sid][new_automation_key][new_automation_index]){ //sensor automation that already exists
-
-                        this.automations[new_automation_sid][new_automation_key][new_automation_index] = this.automation_data
-                        new_automation[new_automation_sid] = this.automations[new_automation_sid]
-
-                    }
-
+                this.automation_data.orig_sensor = this.sid.replace(/^s/,'')
+                if (this.key.match(/^[svdltp]([0-9]|true)/,'')){
+                    this.automation_data.orig_value = this.key.replace(/^[svdltp]/,'')
                 } else {
-console.log('no')
-                    if (new_automation_sid == 'sfalse' && this.automations[new_automation_key]){ // timed automation that already exists
+                    this.automation_data.orig_value = this.key
+                }
 
-                        this.automation_data.orig_sensor = new_automation_key
-                        this.automations[new_automation_key].push(this.automation_data)
-                        new_automation[new_automation_key] = this.automations[new_automation_key]
+                // console.log(key, sid, index, update)
 
-                    } else if (new_automation_sid == 'sfalse' && !this.automations[new_automation_key]){ // timed automation that doesn't exists
+                if (this.sid == 'timer'){  // timed automation
 
-                        this.automation_data.orig_sensor = new_automation_key
-                        this.automations[new_automation_key] = []
-                        this.automations[new_automation_key].push(this.automation_data)
-                        new_automation[new_automation_key] = this.automations[new_automation_key]
+                    if (!this.automations[this.key]) {  // new automation
+                    //    console.log('adding new timer')
 
-                    } else if (this.automations[new_automation_sid] && this.automations[new_automation_sid][new_automation_key] && this.automations[new_automation_sid][new_automation_key].length>0){ //sensor automation that already exists
+                        new_automation[this.key] = []
+                        new_automation[this.key].push(this.automation_data)
 
-                        this.automations[new_automation_sid][new_automation_key].push(this.automation_data)
-                        new_automation[new_automation_sid] = this.automations[new_automation_sid]
+                    } else if (this.automations[this.key] && this.automations[this.key][this.index]) {  // update existing obj in automation arr
+                    //    console.log('updating existing timer')
 
-                    } else if (this.automations[new_automation_sid] && !this.automations[new_automation_sid][new_automation_key]){ // sensor automation where the sensor exists, but doesn't contain anything
+                        new_automation[this.key] = this.automations[this.key]
+                        new_automation[this.key][this.index] = this.automation_data
 
-                        this.automations[new_automation_sid][new_automation_key] = []
-                        this.automations[new_automation_sid][new_automation_key].push(this.automation_data)
-                        new_automation[new_automation_sid] = this.automations[new_automation_sid]
+                    } else if (this.automations[this.key]){ // add new to existing auto arr
+                    //    console.log('adding new to existing timer')
 
-                    } else { // new sensor automation
+                        new_automation[this.key] = this.automations[this.key]
+                        new_automation[this.key].push(this.automation_data)
 
-                        new_automation[new_automation_sid] = {}
-                        new_automation[new_automation_sid][new_automation_key] = []
-                        new_automation[new_automation_sid][new_automation_key].push(this.automation_data)
+                    }
 
+                } else { // sensor automation
+
+                    if (!this.automations[this.sid]) {  // new automation
+                    //    console.log('adding new sensor')
+
+                        new_automation[this.sid] = {}
+                        new_automation[this.sid][this.key] = []
+                        new_automation[this.sid][this.key].push(this.automation_data)
+
+                    } else if (this.automations[this.sid] && this.automations[this.sid][this.key] && this.automations[this.sid][this.key][this.index]) {  // update existing obj in automation arr
+                    //    console.log('updating existing sensor')
+
+                        new_automation[this.sid] = this.automations[this.sid]
+                        new_automation[this.sid][this.key][this.index] = this.automation_data
+
+                    } else if (this.automations[this.sid]) { // add new to existing auto arr
+                    //    console.log('adding new to existing sensor')
+
+                        new_automation[this.sid] = this.automations[this.sid]
+
+                        if (!new_automation[this.sid][this.key]){
+                            new_automation[this.sid][this.key] = []
+                        }
+
+                        new_automation[this.sid][this.key].push(this.automation_data)
                     }
 
                 }
 
+                console.log(new_automation)
 
-                //
-                localStorage.setItem('automation_update','false')
-console.log(new_automation)
                 this.$store.dispatch('hacpCall',{method:'put', url:'automations',data: new_automation})
                     .then(res => {
                         this.$store.dispatch('getEntities','automations')
                         this.saved = true
                     })
 
+            },
+            deleteAutomation(){
+
+                var conf = confirm('Delete this automation?')
+
+                if (conf){
+                    var data = {
+                        event:this.automation_data.orig_value,
+                        key:this.index
+                    }
+
+                    if (!this.automation_data.orig_sensor.match(/^d|[0-9]{4}|sunset|sunrise|dusk|dawn|daylight/)){
+                        data.sensor = 's'+this.automation_data.orig_sensor
+
+                        if (this.automation_data.trigger == 'ptrue'){
+                            data.event = 'p'+data.event
+                        } else {
+                            data.event = 'v'+data.event
+                        }
+
+                    }
+
+                    if (this.automation_data.time){
+                        data.sensor = this.automation_data.time
+                        data.event = this.index
+                        delete(data.key)
+                    }
+
+                    let payload = {
+                        method:'POST',
+                        url:'automations',
+                        data: data
+                    }
+console.log(data)
+                    this.$store.dispatch('hacpCall',payload)
+                        .then(res => {
+                            console.log(res)
+                            this.$store.dispatch('getEntities','automations')
+                                .then(res => {
+                                    this.closePopup()
+                                })
+
+                        })
+
+
+                }
             }
+
         },
         created () {
 
@@ -343,15 +428,14 @@ console.log(new_automation)
                 this.automation_data = JSON.parse(localStorage.getItem('automation_data'))
             }
 
-            // if (this.view.selected_group){
-            //     this.automation_data.entity_id = this.view.selected_group
-            // }
-            // if (this.view.selected_sensor){
-            //     this.automation_data.entity_id = this.view.selected_sensor
-            // }
-            // if (this.view.selected_light){
-            //     this.automation_data.entity_id = this.view.selected_light
-            // }
+            if (this.view.selected_group){
+                this.automation_data.entity_id = this.view.selected_group
+                this.lock_entity = 'groups'
+            }
+            if (this.view.selected_light){
+                this.automation_data.entity_id = this.view.selected_light
+                this.lock_entity = 'lights'
+            }
 
         }
     }

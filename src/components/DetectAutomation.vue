@@ -214,9 +214,9 @@
             },
             setAutomation(automation_key){
 
-                localStorage.setItem('automation_sid','s'+this.view.selected_sensor);
                 localStorage.setItem('automation_key',automation_key);
                 this.$store.dispatch('updateView',{obj:'popup', val:'set_automation'})
+
             }
         },
         mounted () {

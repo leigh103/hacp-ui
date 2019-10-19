@@ -94,6 +94,13 @@
         },
         methods: {
             openAddAutomation(){
+
+                localStorage.removeItem('automation_key');
+                localStorage.removeItem('automation_index');
+                localStorage.removeItem('automation_update')
+                localStorage.removeItem('automation_data');
+
+                localStorage.setItem('automation_sid','s'+this.view.selected_sensor);
                 localStorage.setItem('trigger_type','sensor')
                 this.$store.dispatch('updateView',{obj:'popup', val:'add_automation'})
             },

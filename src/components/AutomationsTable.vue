@@ -67,7 +67,8 @@
                 'automations',
                 'groups',
                 'lights',
-                'sensors'
+                'sensors',
+                'view'
             ])
         },
         watch: {
@@ -90,6 +91,7 @@
             findAutomations(){
 
                 this.automations_arr = []
+                this.$store.dispatch('updateView',{obj:'found_automations', val:this.automations_arr.length})
 
                 let type_obj = 'entity_id'
 
@@ -99,9 +101,11 @@
 
                 for (var i in this.automations){
 
+                    //    console.log(i, this.automations[i])
+
                     var re = RegExp('s'+this.id)
 
-                    if (this.type == 'sensors' && i.match(re)){
+                    if (this.type == 'sensors' && i.match(re)){ // sensor automations
 
                         for (var ii in this.automations[i]){
 
@@ -123,23 +127,27 @@
                             }
                         }
 
-                    } else {
+                    } else if (!i.match(re)){ // timed automations
 
                         for (var ii in this.automations[i]){
 
                             if (this.automations[i][ii].entity_id == this.id){
 
-                                this.automations[i][ii].time = i
-                                this.automations[i][ii].index = ii
-                                this.automations_arr.push(this.automations[i][ii])
-                                this.$store.dispatch('updateView',{obj:'found_automations', val:this.automations_arr.length})
+                                if (this.automations[i][ii].action.match(/group|scene/) && this.view.selected_group || this.automations[i][ii].action.match(/light/) && this.view.selected_light){
+
+                                    this.automations[i][ii].trigger = i
+                                    this.automations[i][ii].time = i
+                                    this.automations[i][ii].index = ii
+                                    this.automations_arr.push(this.automations[i][ii])
+                                    this.$store.dispatch('updateView',{obj:'found_automations', val:this.automations_arr.length})
+
+                                }
 
                             }
 
                         }
 
                     }
-
                 }
 
             },
