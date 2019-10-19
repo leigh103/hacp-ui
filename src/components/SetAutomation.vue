@@ -147,10 +147,102 @@
 
                     </div>
 
+                    <div class="mt-2 mb-1 row" v-for="(condition, index) in automation_data.conditions">
+
+                        <div class="block-90">
+                            <div class="row">
+                                <div class="block-100">
+                                    <select v-model="condition.type">
+                                        <option value="" disabled>Select Entity type...</option>
+                                        <option value="sensors">Sensors</option>
+                                        <option value="groups">Groups</option>
+                                        <option value="lights">Lights</option>
+                                        <option value="devices">Devices</option>
+                                        <option value="alarm">Alarm</option>
+                                        <option value="time">Time</option>
+                                    </select>
+                                </div>
+
+                                <div class="block-100" v-if="condition.type && !match(condition.type,'time|alarm')">
+                                    <select v-model="condition.id">
+                                        <option value="" disabled>Select Entity...</option>
+                                        <option v-for="(entity,id) in _self[condition.type]" :value="id" v-text="entity.name"></option>
+                                    </select>
+                                </div>
+
+                                <div class="block-25 margin" v-if="condition.type && match(condition.type,'time|alarm')">
+                                    <select v-model="condition.id">
+                                        <option value="" disabled>Select Entity...</option>
+                                        <option v-for="(entity,key) in _self[condition.type]" :value="key">{{key}}</option>
+                                    </select>
+                                </div>
+
+
+                                <!-- <div class="block-25 block-s-50 margin" ng-if="condition.type == 'time'">
+                                    <select ng-model="condition.id">
+                                        <option ng-repeat="time in ['weekday','weekend','day','day_num','hours','minutes','HHmm','sunset','sunrise']" ng-value="time">{{time | parse_name}}</option>
+                                    </select>
+                                </div>
+                                <div class="block-25 block-s-50 margin" ng-if="condition.type == 'alarm'">
+                                    <select ng-model="condition.id">
+                                        <option ng-repeat="alarm in ['triggered','setting','armed']" ng-value="alarm">{{alarm | parse_name}}</option>
+                                    </select>
+                                </div> -->
+                                <div class="block-25 block-s-50 margin" v-if="!match(condition.type,'time|alarm') && condition.id">
+                                    <select v-model="condition.key">
+                                        <option v-for="(obj,key) in _self[condition.type][condition.id]" :value="key">{{key}}</option>
+                                    </select>
+                                </div>
+                                <div class="block-25 block-s-50 margin" v-if="!match(condition.type,'time|alarm') && condition.id">
+                                    <select v-model="condition.child_key">
+                                        <option v-for="(obj,key) in _self[condition.type][condition.id][condition.key]" :value="key">{{key}}</option>
+                                    </select>
+                                </div>
+                                <div class="block-25 block-s-50 margin">
+                                    <select v-model="condition.op">
+                                        <option value="=">=</option>
+                                        <option value="==">==</option>
+                                        <option value=">">></option>
+                                        <option value=">=">>=</option>
+                                        <option value="<"><</option>
+                                        <option value="<="><=</option>
+                                    </select>
+                                </div>
+                                <div class="block-25 block-s-50 margin" v-if="condition.id">
+
+                                    <span v-if="condition.child_key">
+                                        <input v-if="getType(_self[condition.type][condition.id][condition.key][condition.child_key]) == 'string'" type="text" v-model="condition.value">
+                                        <input v-if="getType(_self[condition.type][condition.id][condition.key][condition.child_key]) == 'number'" type="text" v-model="condition.value">
+                                        <select v-model="condition.value" v-if="getType(_self[condition.type][condition.id][condition.key][condition.child_key]) == 'boolean'" class="mb-1">
+                                            <option value="true">True</option>
+                                            <option value="false">False</option>
+                                        </select>
+                                    </span>
+
+                                    <span v-else>
+                                        <input v-if="getType(_self[condition.type][condition.id]) == 'string'" type="text" v-model="condition.value" >
+                                        <input v-if="getType(_self[condition.type][condition.id]) == 'number'" type="text" v-model="condition.value" >
+                                        <select v-model="condition.value" v-if="getType(_self[condition.type][condition.id]) == 'boolean'" class="mb-1">
+                                            <option value="true">True</option>
+                                            <option value="false">False</option>
+                                        </select>
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="block-10 text-right">
+                            <a class="btn bg-red text-white" @click.prevent="delCondition(index)"><i class="fa fa-times"></i></a>
+                        </div>
+
+                    </div>
+
                     <div class="mt-2 mb-1 row">
                         <div class="block-50 block-s-100">
-                            <a class="" @click.prevent="addCondition()">+ Add Condition</a>
-                            
+                            <a class="" @click.prevent="addNewCondition()">+ Add Condition</a>
+
                         </div>
                         <div class="block-50 block-s-100 text-right">
 
@@ -232,7 +324,9 @@
                 'lights',
                 'groups',
                 'sensors',
-                'view'
+                'view',
+                'time',
+                'devices'
             ]),
         methods: {
             closePopup(){
@@ -294,6 +388,37 @@
             },
             checkAutomation(){
                 return true
+            },
+            getType(input){
+                if (typeof input != 'undefined'){
+                    if (parseInt(input)){
+                        return 'number'
+                    } else if (input === true || input === false){
+                        return 'boolean'
+                    } else {
+                        return 'string'
+                    }
+                }
+            },
+            addNewCondition(){
+
+                if (!this.automation_data.conditions){
+                    this.automation_data.conditions = []
+                }
+                this.automation_data.conditions.push({
+                    child_key:"",
+                    id:"",
+                    key:"",
+                    value:"",
+                    type:"",
+                    op:""
+                })
+
+            },
+            delCondition(index){
+
+                this.automation_data.conditions.splice(index, 1)
+
             },
             saveAutomation(){ // new - add new obj to automations, update existing element in automation array, push new obj to automation array
 
@@ -434,6 +559,9 @@ console.log(data)
                 this.$store.dispatch('getEntities','automations')
             }
 
+            this.$store.dispatch('getEntities','time')
+            console.log(this.time)
+
             if (localStorage.getItem('automation_data')){
                 this.automation_data = JSON.parse(localStorage.getItem('automation_data'))
             }
@@ -446,8 +574,6 @@ console.log(data)
                 this.automation_data.entity_id = this.view.selected_light
                 this.lock_entity = 'lights'
             }
-
-            console.log(this.view)
 
         }
     }
