@@ -4,7 +4,7 @@
         <div class="view-list vh100 overflow-y" :class="{'hidden-s':view.selected_sensor}">
             <sensor-list />
         </div>
-        <div class="view-page vh100 overflow-y">
+        <div class="view-page vh100 overflow-y" :class="{'selected-open':view.selected_sensor}">
 
             <sensor-page v-if="view.selected_sensor"/>
 
