@@ -18,7 +18,7 @@
 
             <div class="float-left mr-1" @click.prevent="view.selected_group = ''" style="margin-top: 2px"><h2><i class="fas fa-chevron-left text-blue"></i></h2></div>
 
-            <h1 class="text-blue" v-text="groups[view.selected_group].name"></h1>
+            <h1 class="text-blue" @click.prevent="view.selected_group = ''" v-text="groups[view.selected_group].name"></h1>
             <h4 class="">This group contains <span v-show="groups[view.selected_group].scenes.length>0">{{ groups[view.selected_group].scenes.length }} scenes and </span>{{ groups[view.selected_group].lights.length }} lights</h4>
 
             <div class="mt-2">

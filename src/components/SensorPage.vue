@@ -3,9 +3,9 @@
 
         <div class="text-left pb-5">
 
-            <div class="float-left mr-1" @click.prevent="view.selected_group = ''" style="margin-top: 2px"><h2><i class="fas fa-chevron-left text-blue"></i></h2></div>
-            
-            <h1 class="text-blue" v-text="sensors[this.view.selected_sensor].name"></h1>
+            <div class="float-left mr-1" @click.prevent="view.selected_sensor = ''" style="margin-top: 2px"><h2><i class="fas fa-chevron-left text-blue"></i></h2></div>
+
+            <h1 class="text-blue" @click.prevent="view.selected_sensor = ''" v-text="sensors[this.view.selected_sensor].name"></h1>
             <h4 class="">This {{sensors[this.view.selected_sensor].type}} provides {{Object.keys(sensors[this.view.selected_sensor].state).length}} points of data. It is <span v-if="sensors[this.view.selected_sensor].config.reachable === true">online, and has {{sensors[this.view.selected_sensor].config.battery}}% battery.</span><span v-else>currently not reachable.</span></h4>
 
             <div class="mt-2">

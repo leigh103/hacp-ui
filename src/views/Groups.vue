@@ -7,7 +7,7 @@
         <div class="view-page vh100 overflow-y">
             <group-page v-if="view.selected_group"/>
 
-            <div v-else class="text-left">
+            <div v-else class="text-left" :class="{'hidden-s':!view.selected_group}">
 
                 <div class="view-page-header">
                     <h1 class="mb-1 text-blue">Groups</h1>
