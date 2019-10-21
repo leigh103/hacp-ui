@@ -1,8 +1,7 @@
 <template>
     <div class="toggle" v-if="hideStat()">
         <div class="indicator">
-            <div class="stat capitalise" v-html="parseStat()">
-            </div>
+            <div class="stat capitalise" :class="battery_class" v-html="parseStat()"></div>
         </div>
         <div class="name">
             <span v-if="name">{{ name }}</span>
@@ -21,7 +20,7 @@
         props: ['id','name','val'],
         data: function () {
             return {
-
+                battery_class:''
             }
         },
         computed: mapState([
@@ -50,6 +49,13 @@
                 } else if (this.val === false ){
                     return '<div class="led off"></div>'
                 } else if (this.name == 'battery' && this.sensors[this.id] && this.sensors[this.id].config.battery){
+                    if (this.sensors[this.id].config.battery >= 0 && this.sensors[this.id].config.battery <= 20){
+                        this.battery_class = 'replace'
+                    } else if (this.sensors[this.id].config.battery > 20 && this.sensors[this.id].config.battery <= 30){
+                        this.battery_class = 'warn'
+                    } else {
+                        this.battery_class = ''
+                    }
                     return this.sensors[this.id].config.battery+'%'
                 } else {
 
