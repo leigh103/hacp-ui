@@ -110,10 +110,10 @@ export default new Vuex.Store({
                         resolve('done');
                     })
                     .catch(() => {
-                        let conf = confirm('Error connecting to HACP server')
-                        if (conf){
-                            window.location.href = '/'
-                        }
+                        // let conf = confirm('Error connecting to HACP server')
+                        // if (conf){
+                        //     window.location.href = '/'
+                        // }
                     })
             })
 
@@ -129,10 +129,10 @@ export default new Vuex.Store({
                         resolve(res);
                     })
                     .catch(() => {
-                        let conf = confirm('Error connecting to HACP server')
-                        if (conf){
-                            window.location.href = '/'
-                        }
+                        // let conf = confirm('Error connecting to HACP server')
+                        // if (conf){
+                        //     window.location.href = '/'
+                        // }
                     })
             })
         },
@@ -148,10 +148,10 @@ export default new Vuex.Store({
                         resolve(res);
                     })
                     .catch(() => {
-                        let conf = confirm('Error connecting to HACP server')
-                        if (conf){
-                            window.location.href = '/'
-                        }
+                        // let conf = confirm('Error connecting to HACP server')
+                        // if (conf){
+                        //     window.location.href = '/'
+                        // }
                     })
             })
         },
@@ -249,10 +249,10 @@ export default new Vuex.Store({
                         resolve(res);
                     })
                     .catch(() => {
-                        let conf = confirm('Error connecting to Zigbee server')
-                        if (conf){
-                            window.location.href = '/'
-                        }
+                        // let conf = confirm('Error connecting to Zigbee server')
+                        // if (conf){
+                        //     window.location.href = '/'
+                        // }
                     })
 
                 }
