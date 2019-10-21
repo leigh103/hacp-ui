@@ -10,22 +10,6 @@
             <div class="name">{{ alrm.name }}</div>
         </div>
     </div>
-
-
-    <div v-if="favorites && favorites.groups">
-        <h2 class="mt-2 mb-1 text-blue">Groups</h2>
-        <div class="scroll-horizontal">
-            <group-toggle v-for="gid in favorites.groups" :id="gid"></group-toggle>
-        </div>
-    </div>
-
-    <div v-if="favorites && favorites.sensors">
-        <h2 class="mt-2 mb-1 text-blue">Sensors</h2>
-        <div class="scroll-horizontal">
-            <sensor-info v-for="sid in favorites.sensors" :id="sid"></sensor-info>
-        </div>
-    </div>
-
   </div>
 </template>
 

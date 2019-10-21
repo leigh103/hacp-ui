@@ -23,20 +23,19 @@
                     </div>
                 </div>
                 <div class="m-1"></div>
-                    <automations-toggle v-if="!automations_edit" :id="view.selected_sensor" :type="'sensors'"></automations-toggle>
-            
+                <automations-toggle v-if="!automations_edit" :id="view.selected_sensor" :type="'sensors'"></automations-toggle>
+
             </div>
 
             <div class="mt-2">
                 <h3 class="mb-1 text-blue">Sensor Config</h3>
                 <div class="m-1"></div>
-                <div class="toggle-wrap scroll-horizontal-s">
-                    <sensor-info v-for="(stat, key) in sensors[this.view.selected_sensor].config" :id="view.selected_sensor" :name="key" :val="stat"></sensor-info>
-                </div>
+                <sensor-info-list v-for="(stat, key) in sensors[this.view.selected_sensor].config" :id="view.selected_sensor" :name="key" :val="stat"></sensor-info-list>
+
             </div>
 
             <div class="mt-2">
-                <div class="row mt-1 text-center border-bottom">
+                <div class="row mt-1 text-center">
                     <div class="block-50 text-left align-middle pb-1 text-blue">
                         <h4>Settings</h4>
                     </div>
@@ -44,11 +43,11 @@
 
                     </div>
                 </div>
-                <div class="row mt-1 mb-1 text-center">
+                <div class="row mt-1 mb-1 ml-3 text-center">
                     <div class="block-50 text-left align-middle">
-                        Add to home screen
+                        Add to favorites
                     </div>
-                    <div class="block-50 text-right align-middle">
+                    <div class="block-50 text-left align-middle">
                         <input type="checkbox" class="toggle" id="fav"><label @click.prevent="addToHomeScreen('sensors',view.selected_sensor)" for="fav"></label>
                     </div>
                 </div>

@@ -92,11 +92,11 @@
                 <div class="m-1"></div>
 
                     <automations-toggle :id="view.selected_group" :type="'groups'"></automations-toggle>
-                
+
             </div>
 
             <div class="mt-2">
-                <div class="row mt-1 text-center border-bottom">
+                <div class="row mt-1 text-center">
                     <div class="block-50 text-left align-middle pb-1 text-blue">
                         <h4>Settings</h4>
                     </div>
@@ -106,13 +106,13 @@
                 </div>
                 <div class="row mt-1 mb-1 text-center">
                     <div class="block-50 text-left align-middle">
-                        Add to home screen
+                        Add to favorites
                     </div>
-                    <div class="block-50 text-right align-middle">
+                    <div class="block-50 text-left align-middle">
                         <input type="checkbox" class="toggle" id="fav"><label @click.prevent="addToHomeScreen('groups',view.selected_group)" for="fav"></label>
                     </div>
                 </div>
-                <div class="row mt-3 mb-1 text-center">
+                <div class="row mt-3 mb-1 ml-3 text-center">
                     <div class="block-50 text-left align-middle">
 
                     </div>

@@ -26,7 +26,7 @@
                 <div class="block-50 text-right">
                     <a class="btn save mr-1" v-if="show_save === true" @click.prevent="saveAlarm()"><i class="fas fa-save"></i></a>
                     <span v-if="alarm.alarms[view.selected_alarm].code != '****' && alarm.alarms[view.selected_alarm].sensors.length>0">
-                        <a @click.prevent="setAlarm()" v-if="alarm.armed === true && alarm.key == view.selected_alarm || alarm.armed === false" class="btn delete"><span v-if="alarm.armed === true || alarm.setting !== false">Disarm</span><span v-else>Set Alarm</span></a>
+                        <a @click.prevent="setAlarm()" v-if="alarm.armed === true && alarm.key == view.selected_alarm || alarm.armed === false" class="btn add"><span v-if="alarm.armed === true || alarm.setting !== false">Disarm</span><span v-else>Set Alarm</span></a>
                     </span>
                 </div>
             </div>
