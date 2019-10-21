@@ -34,7 +34,7 @@
                     </div>
                 </div>
 
-                <div class="underline"></div>
+                <div class="m-1"></div>
                 <div class="toggle-wrap" :class="{'scroll-horizontal-s':!light_edit}">
                     <light-table :key="light" :id="light" v-for="light in groups[view.selected_group].lights" v-if="light_edit"></light-table>
                     <light-toggle :key="light" :id="light" v-for="light in groups[view.selected_group].lights" v-if="!light_edit"></light-toggle>
@@ -73,7 +73,7 @@
 
                     </div>
                 </div>
-                <div class="underline"></div>
+                <div class="m-1"></div>
                 <div class="toggle-wrap scroll-horizontal-s">
                     <scene-toggle :scene="scene" :id="scene.id" :gid="view.selected_group" :del="scene_edit" v-for="scene in groups[view.selected_group].scenes"></scene-toggle>
                 </div>
@@ -89,7 +89,7 @@
                         <!-- <a class="btn close ml-1" v-show="view.found_automations > 0" @click.prevent="automations_edit = !automations_edit"><i class="fas fa-times" v-show="automations_edit"></i><i class="fas fa-edit" v-show="!automations_edit"></i></a> -->
                     </div>
                 </div>
-                <div class="underline"></div>
+                <div class="m-1"></div>
                 <div class="toggle-wrap" :class="{'scroll-horizontal-s':!automations_edit}">
                     <automations-toggle v-if="!automations_edit" :id="view.selected_group" :type="'groups'"></automations-toggle>
                     <!-- <automations-table v-if="automations_edit" :id="view.selected_group" :type="'groups'"></automations-table> -->

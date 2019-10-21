@@ -7,8 +7,8 @@
 
             <div class="mt-2">
                 <h3 class="mb-1 text-blue">Sensor Values</h3>
-                <div class="underline"></div>
-                <div class="toggle-wrap">
+                <div class="m-1"></div>
+                <div class="toggle-wrap scroll-horizontal-s">
                     <sensor-info v-for="(stat, key) in sensors[this.view.selected_sensor].state" :id="view.selected_sensor" :name="key" :val="stat"></sensor-info>
                 </div>
             </div>
@@ -20,20 +20,18 @@
                     </div>
                     <div class="block-50 text-right">
                         <a class="btn add" @click.prevent="openAddAutomation()"><i class="fas fa-plus"></i></a>
-                        <a class="btn close ml-1" v-show="view.found_automations > 0" @click.prevent="automations_edit = !automations_edit"><i class="fas fa-times" v-show="automations_edit"></i><i class="fas fa-edit" v-show="!automations_edit"></i></a>
                     </div>
                 </div>
-                <div class="underline"></div>
-                <div class="toggle-wrap">
+                <div class="m-1"></div>
+                <div class="toggle-wrap scroll-horizontal-s">
                     <automations-toggle v-if="!automations_edit" :id="view.selected_sensor" :type="'sensors'"></automations-toggle>
-                    <automations-table v-if="automations_edit" :id="view.selected_sensor" :type="'sensors'"></automations-table>
                 </div>
             </div>
 
             <div class="mt-2">
                 <h3 class="mb-1 text-blue">Sensor Config</h3>
-                <div class="underline"></div>
-                <div class="toggle-wrap">
+                <div class="m-1"></div>
+                <div class="toggle-wrap scroll-horizontal-s">
                     <sensor-info v-for="(stat, key) in sensors[this.view.selected_sensor].config" :id="view.selected_sensor" :name="key" :val="stat"></sensor-info>
                 </div>
             </div>
