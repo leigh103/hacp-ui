@@ -200,10 +200,12 @@ h4 {
     position: relative;
     border-radius: $border-radius;
     margin-bottom: 0.2em;
-    color: #444;
+    color: #fff;
+    font-size: 0.8em;
 
     &-bg {
         background-color: #ccc;
+        color: #444;
     }
 
     &.delete, &.close {
@@ -283,7 +285,7 @@ div.toggle {
     position: relative;
     vertical-align: top;
     text-align: left;
-    margin: 0 1em 1em 0;
+    margin: 0 0.5em 0.5em 0;
     background: rgba(43,46,48,1);
     background: -moz-linear-gradient(-45deg, rgba(43,46,48,1) 0%, rgba(57,60,66,1) 100%);
     background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(43,46,48,1)), color-stop(100%, rgba(57,60,66,1)));
@@ -294,7 +296,7 @@ div.toggle {
     border-radius: $border-radius;
     padding: 1.5em;
     width: 9.35em;
-    height: 13em;
+    height: 10.5em;
     color: #fff;
 
     &-wrap {
@@ -310,36 +312,7 @@ div.toggle {
         text-transform: capitalize;
     }
 
-    .indicator {
-        position: relative;
-        width: 100%;
-        text-align: left;
-        color: $color-blue;
-        font-weight: 200;
-
-        .led {
-            display:block;
-            width: 0.5em;
-            height: 0.5em;
-            border-radius:0.25em;
-
-            &.on {
-                background-color: $color-led-on;
-            }
-
-            &.off {
-                background-color: $color-led-off;
-            }
-
-            &.replace, &.delete {
-                background-color: $color-led-replace !important;
-            }
-
-            &.warn {
-                background-color: $color-led-warn;
-            }
-        }
-    }
+    @import 'partials/indicator.styl'
 
     &.on {
         .indicator .led {
@@ -420,7 +393,7 @@ input[type="checkbox"].toggle {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     position: relative;
     text-align: left;
     border-radius: $border-radius;
@@ -441,7 +414,7 @@ input[type="checkbox"].toggle {
 
     & > div {
         height:100%;
-        padding: 1em 2em;
+        padding: 1em 1.5em;
     }
 
     .name {
@@ -454,37 +427,7 @@ input[type="checkbox"].toggle {
         cursor: pointer;
     }
 
-    .indicator {
-        flex: 0 0 4em;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        padding:0;
-
-        .led {
-            display:block;
-            width: 0.5em;
-            height: 0.5em;
-            border-radius:0.25em;
-
-            &.on {
-                background-color: $color-led-on;
-            }
-
-            &.off {
-                background-color: $color-led-off;
-            }
-
-            &.replace {
-                background-color: $color-led-replace;
-            }
-
-            &.warn {
-                background-color: $color-led-warn;
-            }
-        }
-    }
+    @import 'partials/indicator.styl'
 
     &.on {
         .indicator .led {
@@ -525,36 +468,7 @@ input[type="checkbox"].toggle {
         // padding: 0;
     }
 
-    .indicator {
-        flex: 0 0 5em;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-
-        .led {
-            display:block;
-            width: 0.5em;
-            height: 0.5em;
-            border-radius:0.25em;
-
-            &.on {
-                background-color: $color-led-on;
-            }
-
-            &.off {
-                background-color: $color-led-off;
-            }
-
-            &.replace {
-                background-color: $color-led-replace;
-            }
-
-            &.warn {
-                background-color: $color-led-warn;
-            }
-        }
-    }
+    @import 'partials/indicator.styl'
 
     &.unavailable {
         opacity: 0.5;
@@ -646,32 +560,7 @@ i.fas {
     }
 }
 
-.popup {
-    position: fixed;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    width: 100vw;
-    top: 0;
-    left: 0;
-    z-index: 500;
-    background-color: rgba(0,0,0,0.75);
-    transition: all 1s ease;
-
-    & > div {
-        background-color: white;
-        text-align: left;
-        padding: 2em;
-        min-width: 50vw;
-        max-width: 80vw;
-        max-height: 80vh;
-        overflow-y: auto;
-        overflow-x: hidden;
-        color: #444;
-    }
-}
+@import 'partials/popup.styl';
 
 .spinner {
     display: block;

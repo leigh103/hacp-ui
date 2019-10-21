@@ -1,0 +1,50 @@
+    .indicator {
+        flex: 0 0 2em;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        cursor: pointer;
+        color: $color-blue;
+
+        .led {
+            display:block;
+            width: 0.5em;
+            height: 0.5em;
+            border-radius:0.25em;
+
+            &.on {
+                background-color: $color-led-on;
+            }
+
+            &.off {
+                background-color: $color-led-off;
+            }
+
+            &.replace {
+                background-color: $color-led-replace;
+            }
+
+            &.warn {
+                background-color: $color-led-warn;
+            }
+        }
+
+        .stat {
+
+            &.on {
+                color: $color-led-on;
+            }
+
+            &.off {
+                color: $color-led-off;
+            }
+
+            &.replace {
+                color: $color-led-replace;
+            }
+
+            &.warn {
+                color: $color-led-warn;
+            }
+        }
+    }
