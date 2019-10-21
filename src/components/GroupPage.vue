@@ -90,10 +90,9 @@
                     </div>
                 </div>
                 <div class="m-1"></div>
-                <div class="toggle-wrap" :class="{'scroll-horizontal-s':!automations_edit}">
-                    <automations-toggle v-if="!automations_edit" :id="view.selected_group" :type="'groups'"></automations-toggle>
-                    <!-- <automations-table v-if="automations_edit" :id="view.selected_group" :type="'groups'"></automations-table> -->
-                </div>
+
+                    <automations-toggle :id="view.selected_group" :type="'groups'"></automations-toggle>
+                
             </div>
 
             <div class="mt-2">

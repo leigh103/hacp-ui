@@ -23,9 +23,8 @@
                     </div>
                 </div>
                 <div class="m-1"></div>
-                <div class="toggle-wrap scroll-horizontal-s">
                     <automations-toggle v-if="!automations_edit" :id="view.selected_sensor" :type="'sensors'"></automations-toggle>
-                </div>
+            
             </div>
 
             <div class="mt-2">

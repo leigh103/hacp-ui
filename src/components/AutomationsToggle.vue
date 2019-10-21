@@ -1,6 +1,5 @@
 <template>
-    <div>
-
+<div class="toggle-wrap scroll-horizontal-s">
         <div class="toggle" v-for="(automation, index) in automations_arr" :class="hidePrev(automation.trigger, automations_arr[index-1])" @click.prevent="showAutomation(automation, index)">
 
             <div class="indicator">
@@ -25,8 +24,7 @@
             </div>
 
         </div>
-
-    </div>
+</div>
 </template>
 
 <script>
