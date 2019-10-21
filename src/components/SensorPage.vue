@@ -1,7 +1,7 @@
 <template>
     <div v-if="sensors[this.view.selected_sensor]">
 
-        <div class="text-left">
+        <div class="text-left pb-5">
             <h1 class="text-blue" v-text="sensors[this.view.selected_sensor].name"></h1>
             <h4 class="">This {{sensors[this.view.selected_sensor].type}} provides {{Object.keys(sensors[this.view.selected_sensor].state).length}} points of data. It is <span v-if="sensors[this.view.selected_sensor].config.reachable === true">online, and has {{sensors[this.view.selected_sensor].config.battery}}% battery.</span><span v-else>currently not reachable.</span></h4>
 
@@ -34,7 +34,7 @@
 
             </div>
 
-            <div class="mt-2">
+            <div class="mt-2 pb-5">
                 <div class="row mt-1 text-center">
                     <div class="block-50 text-left align-middle pb-1 text-blue">
                         <h4>Settings</h4>

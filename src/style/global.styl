@@ -18,7 +18,7 @@ html, body {
 
 @media screen and (max-width: 850px) {
     html, body {
-        font-size: 3vw !important;
+        font-size: 3.5vw !important;
     }
 }
 
@@ -179,11 +179,11 @@ h4 {
         }
         &-page {
             width: 100%;
-            padding: 2em 2em 0 2em;
+            padding: 2em;
 
             &.home {
                 width: 100%;
-                padding: 3em;
+                padding: 2em;
             }
         }
     }
@@ -390,7 +390,7 @@ input[type="checkbox"].toggle {
 }
 
 .list-item {
-    display: flex;
+    display: inline-flex;
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
@@ -640,6 +640,17 @@ i.fas {
 }
 
 @media screen and (max-width: 850px) {
+
+    .list-item {
+        width: calc(50% - 0.5em);
+        margin-right: 0.25em;
+
+        &:nth-of-type(2n){
+            margin-right: 0;
+            margin-left: 0.25em;
+        }
+    }
+
     .scroll {
         &-horizontal-s {
             width: calc(100% + 4em);

@@ -14,7 +14,9 @@
 
         </div>
 
-        <div class="text-left" v-if="view.selected_group != 'new'">
+        <div class="text-left pb-5" v-if="view.selected_group != 'new'">
+
+            <div class="hidden hidden-m float-left mr-1" @click.prevent="view.selected_group = ''" style="margin-top: 2px"><h2><i class="fas fa-chevron-left text-blue"></i></h2></div>
 
             <h1 class="text-blue" v-text="groups[view.selected_group].name"></h1>
             <h4 class="">This group contains <span v-show="groups[view.selected_group].scenes.length>0">{{ groups[view.selected_group].scenes.length }} scenes and </span>{{ groups[view.selected_group].lights.length }} lights</h4>
@@ -95,7 +97,7 @@
 
             </div>
 
-            <div class="mt-2">
+            <div class="mt-2 pb-5">
                 <div class="row mt-1 text-center">
                     <div class="block-50 text-left align-middle pb-1 text-blue">
                         <h4>Settings</h4>
@@ -108,7 +110,7 @@
                     <div class="block-50 text-left align-middle">
                         Add to favorites
                     </div>
-                    <div class="block-50 text-left align-middle">
+                    <div class="block-50 text-left text-right-s align-middle">
                         <input type="checkbox" class="toggle" id="fav"><label @click.prevent="addToHomeScreen('groups',view.selected_group)" for="fav"></label>
                     </div>
                 </div>
@@ -121,9 +123,6 @@
                     </div>
                 </div>
 
-            </div>
-
-            <div class="p-5">
             </div>
 
         </div>
