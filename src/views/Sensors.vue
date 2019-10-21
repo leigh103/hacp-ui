@@ -1,7 +1,7 @@
 <template>
 
     <div class="row">
-        <div class="view-list vh100 overflow-y">
+        <div class="view-list vh100 overflow-y" :class="{'hidden-s':view.selected_group}">
             <sensor-list />
         </div>
         <div class="view-page vh100 overflow-y">

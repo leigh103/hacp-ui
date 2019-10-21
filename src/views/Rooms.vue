@@ -1,7 +1,7 @@
 <template>
 
     <div>
-        <div class="view-list vh100 overflow-y pt-2">
+        <div class="view-list vh100 overflow-y pt-2" :class="{'hidden-s':view.selected_room}">
             <room-list />
         </div>
         <div class="view-page vh100 overflow-y">
