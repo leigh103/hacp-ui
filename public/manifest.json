@@ -1,0 +1,6 @@
+{
+  "name": "HACP",
+  "short_name": "HACP",
+  "start_url": "index.html",
+  "display": "standalone"
+}
