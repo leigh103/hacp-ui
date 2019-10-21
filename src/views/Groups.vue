@@ -6,10 +6,17 @@
         </div>
         <div class="view-page vh100 overflow-y">
             <group-page v-if="view.selected_group"/>
-            <div v-else-if="favorites && favorites.groups" class="text-left">
-                <h1 class="mb-1 text-blue">Groups</h1>
-                <div class="toggle-wrap scroll-horizontal-s">
-                    <group-toggle v-for="gid in favorites.groups" :id="gid"></group-toggle>
+
+            <div v-else class="text-left">
+
+                <div class="view-page-header">
+                    <h1 class="mb-1 text-blue">Groups</h1>
+                    <h4 class="mb-2">You have {{ Object.keys(groups).length }} groups of lights.<br>To add a new group, tap the button at the bottom of the group list on the left.</h4>
+                </div>
+                <div class="view-page-footer">
+                    <div class="toggle-wrap scroll-horizontal-s">
+                        <group-toggle v-for="gid in favorites.groups" :id="gid"></group-toggle>
+                    </div>
                 </div>
             </div>
         </div>
@@ -30,7 +37,8 @@ export default {
         }
     },
     computed: mapState([
-        'view'
+        'view',
+        'groups'
     ]),
     mounted(){
         this.favorites = localStorage.getItem('favorites')

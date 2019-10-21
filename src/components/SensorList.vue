@@ -8,10 +8,10 @@
             <div class="indicator">
                 <div class="led"
                     :class="{
-                        'off':!sensor.config.on,
-                        'replace':sensor.config.on && sensor.config.battery > 1 && sensor.config.battery <= 20,
-                        'warn':sensor.config.on && sensor.config.battery > 20 && sensor.config.battery <= 30 || !sensor.config.battery && !sensor.config.configured,
-                        'on':sensor.config.on && sensor.config.battery > 30 || !sensor.config.battery && sensor.config.on
+                        'off':!sensor.config.reachable,
+                        'replace':sensor.config.reachable && sensor.config.battery > 1 && sensor.config.battery <= 20,
+                        'warn':sensor.config.reachable && sensor.config.battery > 20 && sensor.config.battery <= 30 || !sensor.config.battery && !sensor.config.configured,
+                        'on':sensor.config.reachable && sensor.config.battery > 30 || !sensor.config.battery && sensor.config.on
                     }
                 ">
 
