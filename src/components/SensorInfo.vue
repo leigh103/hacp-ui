@@ -69,8 +69,8 @@
 
                             if (this.name == 'lightlevel'){
                                 return this.sensors[this.id].state.lightlevel;
-                            } else if (this.name == 'lux'){
-                                return this.sensors[this.id].state.lux;
+                            } else {
+                                return this.sensors[this.id].state.lux+' lux';
                             }
                         }
 

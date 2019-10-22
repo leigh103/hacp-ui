@@ -26,6 +26,8 @@
                     this.$store.dispatch('getEntities','lights')
                 } else if (msg.r == 'groups'){
                     this.$store.dispatch('getEntities','groups')
+                } else if (msg.r == 'sensors'){
+                    this.$store.dispatch('getEntities','sensors')
                 } else if (msg.r == 'scenes'){
                 //    console.log(this.view.selected_group)
                     this.$store.dispatch('getEntity',{type:'groups',id:this.view.selected_group})
