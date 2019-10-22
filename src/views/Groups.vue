@@ -14,7 +14,7 @@
                     <h4 class="mb-2">You have {{ Object.keys(groups).length }} groups of lights.<br>To add a new group, tap the button at the bottom of the group list on the left.</h4>
                 </div>
                 <div class="view-page-footer">
-                    <div class="toggle-wrap scroll-horizontal-s">
+                    <div class="toggle-wrap scroll-horizontal-s" v-if="favorites && favorites.groups">
                         <group-toggle v-for="gid in favorites.groups" :id="gid"></group-toggle>
                     </div>
                 </div>

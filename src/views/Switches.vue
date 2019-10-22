@@ -5,6 +5,7 @@
             <switch-list />
         </div>
         <div class="view-page vh100 overflow-y" :class="{'selected-open':view.selected_sensor}">
+
             <sensor-page v-if="view.selected_sensor"/>
 
             <div v-else class="text-left" :class="{'hidden-s':!view.selected_sensor}">
@@ -17,7 +18,7 @@
                     </h4>
                 </div>
                 <div class="view-page-footer">
-                    <div class="toggle-wrap scroll-horizontal-s">
+                    <div class="toggle-wrap scroll-horizontal-s" v-if="favorites && favorites.sensors">
                         <sensor-info v-for="sid in favorites.sensors" :id="sid"></sensor-info>
                     </div>
                 </div>

@@ -19,7 +19,7 @@
 
                 </div>
                 <div class="view-page-footer">
-                    <div class="toggle-wrap scroll-horizontal-s">
+                    <div class="toggle-wrap scroll-horizontal-s" v-if="favorites && favorites.sensors">
                         <sensor-info v-for="sid in favorites.sensors" :id="sid"></sensor-info>
                     </div>
                 </div>
