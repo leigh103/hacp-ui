@@ -111,7 +111,15 @@
                         Add to favorites
                     </div>
                     <div class="block-50 text-left text-right-s align-middle">
-                        <input type="checkbox" class="toggle" id="fav"><label @click.prevent="addToHomeScreen('groups',view.selected_group)" for="fav"></label>
+                        <input type="checkbox" class="toggle" id="fav"><label @click.prevent="addToFavorites('groups',view.selected_group)" for="fav"></label>
+                    </div>
+                </div>
+                <div class="row mt-1 mb-1 ml-3 text-center">
+                    <div class="block-50 text-left align-middle">
+                        Add to home screen
+                    </div>
+                    <div class="block-50 text-left text-right-s align-middle">
+                        <input type="checkbox" class="toggle" id="home"><label @click.prevent="addToHomeScreen('groups',view.selected_group)" for="fav"></label>
                     </div>
                 </div>
                 <div class="row mt-3 mb-1 ml-3 text-center">
@@ -302,11 +310,23 @@
                     } else {
                         document.getElementById('fav').checked = false
                     }
+
+                }
+                if (localStorage.getItem('home_screen')){
+                    var count_data = JSON.parse(localStorage.getItem('home_screen'))
+
+                    if (count_data.groups && count_data.groups.indexOf(this.view.selected_group) >= 0){
+                        document.getElementById('home').checked = true
+                    } else {
+                        document.getElementById('home').checked = false
+                    }
+
                 }
             }
 
         },
         created() {
+            this.addToFavorites = favorites.addToFavorites
             this.addToHomeScreen = favorites.addToHomeScreen
         },
         mounted () {

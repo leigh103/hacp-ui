@@ -6,11 +6,9 @@
         <h2 v-if="weather && weather.daily">{{weather.daily.summary}}</h2>
     </div>
     <div class="view-page-footer">
-        <div class="toggle-wrap scroll-horizontal">
-            <div class="toggle selected" @click.prevent="setAlarm(key)" v-for="(alrm, key) in alarm.alarms">
-                <div class="indicator"><div class="led" :class="{'on':alarm.armed === true && alarm.key === key,'off': alarm.key != key || alarm.key === false}"></div></div>
-                <div class="name">{{ alrm.name }}</div>
-            </div>
+        <div class="toggle-wrap scroll-horizontal-s" v-if="home_screen && home_screen.groups">
+            <group-toggle v-for="gid in home_screen.groups" :id="gid"></group-toggle>
+            <sensor-info v-for="sid in home_screen.sensors" :id="sid"></sensor-info>
         </div>
     </div>
   </div>
@@ -25,7 +23,7 @@
         name: 'home',
         data () {
             return {
-                favorites: {}
+                home_screen:{}
             }
         },
         computed: mapState([
@@ -45,10 +43,11 @@
 
             this.$store.dispatch('all')
             .then(res => {
-                this.favorites = localStorage.getItem('favorites')
 
-                if (this.favorites){
-                    this.favorites = JSON.parse(this.favorites)
+                this.home_screen = localStorage.getItem('home_screen')
+
+                if (this.home_screen){
+                    this.home_screen = JSON.parse(this.home_screen)
                 }
             })
 
