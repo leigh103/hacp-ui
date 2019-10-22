@@ -42,7 +42,6 @@
             ]),
         methods: {
             resetView(){
-                console.log('resetting')
                 this.$store.dispatch('resetView',{val:false})
             }
         },
