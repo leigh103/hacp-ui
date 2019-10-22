@@ -21,6 +21,8 @@ body {
   position: relative;
   -ms-overflow-style: none;
   -webkit-backface-visibility: hidden;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
   color: #222; }
 
 body::-webkit-scrollbar {
